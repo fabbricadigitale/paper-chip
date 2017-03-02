@@ -1,0 +1,63 @@
+{
+  "name": "paper-chip",
+  "version": "0.1.0",
+  "description": "paper-chip",
+  "main": "paper-chip.html",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fabbricadigitale/paper-chip.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-plugin-transform-es2015-for-of": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
+    "bower": "^1.8.0",
+    "conventional-changelog-cli": "^1.2.0",
+    "dom5": "^2.1.0",
+    "git-rev-sync": "^1.8.0",
+    "globby": "^6.1.0",
+    "parse5": "^3.0.1",
+    "polyserve": "^0.15.0",
+    "read-pkg": "^2.0.0",
+    "rollup": "^0.41.4",
+    "rollup-plugin-includepaths": "^0.1.8",
+    "rollup-plugin-node-resolve": "^2.0.0",
+    "shx": "^0.2.2"
+  },
+  "directories": {
+    "example": "demo",
+    "lib": "bundle",
+    "component": "paper-chip",
+    "deps": "node_modules/@browser"
+  },
+  "scripts": {
+    "reset": "shx rm -rf node_modules/ $npm_package_directories_deps *.log",
+    "clean": "shx rm -rf *.log $npm_package_directories_lib $npm_package_directories_deps/$npm_package_directories_component",
+    "get:deps": "bower install --config.directory=$npm_package_directories_deps",
+    "bundle:done": "TARGET=$npm_package_directories_lib node -e 'if (!require(\"fs\").existsSync(process.env.TARGET)) console.error(\"Create bundle please\") && process.exit(1)'",
+    "preserve": "npm run bundle && shx mkdir -p $npm_package_directories_deps/$npm_package_directories_component && shx cp -R $npm_package_directories_lib/* $npm_package_directories_deps/$npm_package_directories_component",
+    "serve": "polyserve -c $npm_package_directories_deps --root $npm_package_directories_deps/$npm_package_directories_component",
+    "prebundle": "npm run clean && shx mkdir -p $npm_package_directories_lib && shx cp *.html $npm_package_directories_lib && shx cp -R $npm_package_directories_example $npm_package_directories_lib",
+    "bundle": "babel-node ./rollup.js",
+    "postinstall": "npm run get:deps",
+    "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s",
+    "from:master": "node -e 'process.exit(require(\"git-rev-sync\").branch(process.cwd()) !== \"master\")'",
+    "changelog:edit": "$(git var GIT_EDITOR) CHANGELOG.md",
+    "version:bower": "VERSION=$npm_package_version node -e 'const b = require(\"./bower.json\"); b.version = process.env.VERSION; require(\"fs\").writeFileSync(\"./bower.json\", JSON.stringify(b, null, 2))'",
+    "preversion": "npm run from:master",
+    "version": "npm run changelog && npm run changelog:edit && git add CHANGELOG.md && npm run version:bower && git add bower.json",
+    "postversion": "git push && git push --tags && git checkout develop && git merge master && git push && git checkout master"
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ],
+    "plugins": [
+      [
+        "transform-es2015-for-of", {
+          "loose": true
+        }
+      ]
+    ]
+  }
+}
