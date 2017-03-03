@@ -1,0 +1,55 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="./paper-chip.html">
+
+<dom-module id="paper-chip-input">
+    <template>
+        <style>
+            div[container] {
+                @apply --layout-horizontal;
+                @apply --layout-flex-auto;
+            }
+
+            /*#tags label {
+                line-height: 40px;
+            }
+            */
+
+            div[container] {
+                min-height: 32px;
+                padding: 4px 0;
+                z-index: 1;
+            }
+
+            paper-input-container {
+                z-index:0;
+            }
+
+            paper-chip {
+                z-index: 10;
+                margin: 0 4px 0 0;
+            }
+        </style>
+
+
+        <paper-input-container id="tags">
+            <label>Tags</label>
+            <div container slot="prefix">
+                <dom-repeat items="{{tags}}" as="tag">
+                    <template>
+                        <paper-chip removable single-line>
+                            <span slot="label" class="label">{{tag}}</span>
+                        </paper-chip>
+                    </template>
+                </dom-repeat>
+            </div>
+            <input slot="input" id="tagInput" type="text" class="flex">
+<!--            <iron-input bind-value="{{currentValue}}" id="input1"><input slot="input" id="tagInput" value="{{value::input}}"></iron-input>-->
+        </paper-input-container>
+
+
+    </template>
+    <script src="scripts/paper-chip-input.js"></script>
+</dom-module>
