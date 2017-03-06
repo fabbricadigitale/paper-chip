@@ -6,6 +6,11 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
   static get properties() {
     return {
 
+      index: {
+        type: Number,
+        reflectToAttribute: true
+      },
+
       /**
        * Whether or not the chip is removable. If `true`, a remove button will
        * be shown.
@@ -79,18 +84,18 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
   disconnectedCallback() {
     super.disconnectedCallback()
 
-    this.removeEventListener("tap")
-    this.removeEventListener("blur")
+    this.removeEventListener("tap", this._onTap)
+    this.removeEventListener("blur", this._onBlur)
   }
 
   _computeElevation(opened, focused, pressed) {
     if (focused || pressed) {
-      return 1;
+      return 1
     }
     if (opened) {
-      return 4;
+      return 4
     }
-    return 0;
+    return 0
   }
 
   _onTap() {
@@ -108,51 +113,52 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
    */
   remove(evt) {
     evt.stopPropagation();
-    this.dispatchEvent(new CustomEvent("remove", { bubbles: false, cancelable: true }))
-    this.parentNode.removeChild(this);
+    console.log("Are you removing this chip?")
+    this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
+    //this.parentNode.removeChild(this)
   }
 
   toggleOpened() {
     if (!this.singleLine) {
-      this.opened = !this.opened;
+      this.opened = !this.opened
     }
   }
 
   _singleLineChanged(singleLine) {
     if (singleLine && this.opened) {
-      this.opened = false;
+      this.opened = false
     }
   }
 
   _openedChanged(opened) {
     if (opened && this.singleLine) {
       // single-line chips don't open
-      this.opened = false;
-      return;
+      this.opened = false
+      return
     }
     if (this.animated) {
-      var $content, width, height;
-      $content = this.$.content;
-      width = height = '';
+      var $content, width, height
+      $content = this.$.content
+      width = height = ''
       if (this.opened) {
         // temporarily disable transitions in order to take measurements of
         // the content area, allowing for a proper css transision.
-        this.animated = false;
-        this.opened = true;
-        width = $content.offsetWidth + 'px';
-        height = $content.offsetHeight + 'px';
-        this.opened = false;
-        this._forceReflow();
-        this.opened = true;
-        this.animated = true;
+        this.animated = false
+        this.opened = true
+        width = $content.offsetWidth + 'px'
+        height = $content.offsetHeight + 'px'
+        this.opened = false
+        this._forceReflow()
+        this.opened = true
+        this.animated = true
       }
-      $content.style.width = width;
-      $content.style.height = height;
+      $content.style.width = width
+      $content.style.height = height
     }
   }
 
   _forceReflow() {
-    return this.offsetHeight;
+    return this.offsetHeight
   }
 
   get behaviors() {

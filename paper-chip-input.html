@@ -39,14 +39,13 @@
             <div container slot="prefix">
                 <dom-repeat items="{{tags}}" as="tag">
                     <template>
-                        <paper-chip removable single-line>
+                        <paper-chip index="{{index}}" on-remove-chip="_removeChip" removable single-line>
                             <span slot="label" class="label">{{tag}}</span>
                         </paper-chip>
                     </template>
                 </dom-repeat>
             </div>
             <input slot="input" id="tagInput" type="text" class="flex">
-<!--            <iron-input bind-value="{{currentValue}}" id="input1"><input slot="input" id="tagInput" value="{{value::input}}"></iron-input>-->
         </paper-input-container>
 
 

@@ -26,12 +26,10 @@ class PaperChipInput extends Polymer.Element {
     tagInput.addEventListener('keydown',  (event) => {
        if (tagInput.value === '' && event.code === 'Backspace') {
             this.tags.pop()
-            console.log(this.tags)
             this.forceNotify()
         } else if (tagInput.value && event.code === 'Enter') {
             this.tags.push(tagInput.value.trim())
             tagInput.value = ''
-            console.log(this.tags)
             this.forceNotify()
         }
     })
@@ -41,6 +39,14 @@ class PaperChipInput extends Polymer.Element {
     let arr = this.tags
     this.tags = []
     this.tags = arr
+  }
+
+  _removeChip(evt) {
+    const index = evt.currentTarget.index
+    if(index in this.tags){
+      this.tags.splice(index, 1)
+      this.forceNotify()
+    }
   }
 }
 
