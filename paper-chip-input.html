@@ -7,11 +7,22 @@
 <dom-module id="paper-chip-input">
     <template>
         <style>
+            :host {
+                --paper-input-container-underline: {
+                    display: none;
+                };
+                --paper-input-container-underline-focus: {
+                    display: none;
+                };
+                --paper-input-container-underline-disabled: {
+                    display: none;
+                };
+            }
+
             div[container] {
                 @apply --layout-horizontal;
                 @apply --layout-flex-auto;
             }
-
             /*#tags label {
                 line-height: 40px;
             }
@@ -24,7 +35,7 @@
             }
 
             paper-input-container {
-                z-index:0;
+                z-index: 0;
             }
 
             paper-chip {
@@ -34,8 +45,7 @@
         </style>
 
 
-        <paper-input-container id="tags">
-            <label>Tags</label>
+        <paper-input-container no-label-float id="tags">
             <div container slot="prefix">
                 <dom-repeat items="{{tags}}" as="tag">
                     <template>
