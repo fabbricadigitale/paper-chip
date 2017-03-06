@@ -16,23 +16,27 @@ class PaperChipInput extends Polymer.Element {
     super.connectedCallback()
 
     let tagInput = this.shadowRoot.querySelector("#tagInput")
-    /*tagInput.addEventListener('input', (event) => {
-        var value = tagInput.value
-        if (value.slice(-1) === ' ') {
-            console.log("value ", value)
-            tagInput.value = ''
-        }
-    })*/
     tagInput.addEventListener('keydown',  (event) => {
        if (tagInput.value === '' && event.code === 'Backspace') {
-            this.tags.pop()
-            this.forceNotify()
+            this._popChip()
         } else if (tagInput.value && event.code === 'Enter') {
-            this.tags.push(tagInput.value.trim())
-            tagInput.value = ''
-            this.forceNotify()
+            this._pushChip()
         }
     })
+  }
+
+   _popChip() {
+    this.tags.pop()
+    this.forceNotify()
+  }
+
+  _pushChip() {
+    let tagInput = this.shadowRoot.querySelector("#tagInput")
+    if( tagInput.value){
+      this.tags.push(tagInput.value.trim())
+      tagInput.value = ''
+      this.forceNotify()
+    }
   }
 
   forceNotify() {
