@@ -20,27 +20,37 @@
             }
 
             div[container] {
-                @apply --layout-horizontal;
-                @apply --layout-flex-auto;
-            }
-            /*#tags label {
-                line-height: 40px;
-            }
-            */
-
-            div[container] {
+                display: block;
                 min-height: 32px;
                 padding: 4px 0;
                 z-index: 1;
             }
 
+            input {
+                position: relative;
+                outline: none;
+                box-shadow: none;
+                border: none;
+                resize: horizontal;
+                background: inherit;
+                font-size: inherit;
+                font-family: inherit;
+                line-height: inherit;
+                max-width: 100%;
+                color: var(--paper-input-container-input-color, var(--primary-text-color));
+                -webkit-appearance: none;
+                text-align: inherit;
+                vertical-align:-webkit-baseline-middle;
+            }
+
             paper-input-container {
                 z-index: 0;
+                @apply --layout-wrap;
             }
 
             paper-chip {
                 z-index: 10;
-                margin: 0 4px 0 0;
+                margin: 0 4px 4px 0;
             }
         </style>
 
@@ -54,8 +64,9 @@
                         </paper-chip>
                     </template>
                 </dom-repeat>
+                <input id="tagInput" type="text">
             </div>
-            <input slot="input" id="tagInput" type="text" class="flex">
+
         </paper-input-container>
 
 
