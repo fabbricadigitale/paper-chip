@@ -1,6 +1,7 @@
 {
   "name": "paper-chip",
   "version": "0.1.0",
+  "main": "paper-chip.html",
   "description": "paper-chip",
   "main": "paper-chip.html",
   "repository": {
@@ -27,7 +28,7 @@
   "directories": {
     "example": "demo",
     "lib": "bundle",
-    "component": "paper-chip",
+    "component": "paper-chip-input",
     "deps": "node_modules/@browser"
   },
   "scripts": {
