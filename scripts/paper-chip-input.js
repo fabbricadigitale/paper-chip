@@ -43,6 +43,7 @@ class PaperChipInput extends Polymer.Element {
     let arr = this.tags
     this.tags = []
     this.tags = arr
+    this._notifyOut()
   }
 
   _removeChip(evt) {
@@ -52,6 +53,11 @@ class PaperChipInput extends Polymer.Element {
       this.forceNotify()
     }
   }
+
+  _notifyOut() {
+    this.dispatchEvent(new CustomEvent("submit-intent-chips", {bubbles: true, detail: this.tags}));
+  }
+
 }
 
 customElements.define(PaperChipInput.is, PaperChipInput)
