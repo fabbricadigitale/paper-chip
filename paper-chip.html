@@ -6,6 +6,7 @@
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
+<link rel="import" href="../paper-styles/typography.html">
 
 <!--
 Material Design: [Chips](http://www.google.com/design/spec/components/chips.html)
@@ -29,28 +30,30 @@ Removable chip with iron-icon
 <dom-module id="paper-chip">
     <template>
         <style>
-            :host {
+             :host {
                 display: inline-block;
                 vertical-align: top;
                 position: relative;
                 outline: none;
-                font-size: 14px;
                 cursor: default;
                 margin: 8px 0;
                 height: 32px;
                 overflow: visible;
+                @apply --paper-font-body1;
                 @apply --paper-chip;
             }
 
-            :host([animated]) *,
-            :host([animated])::slotted(*) {
+             :host([animated]) *,
+             :host([animated])::slotted(*) {
                 transition: 200ms ease-in;
             }
+
 
             #main,
             #chip {
                 border-radius: 16px;
             }
+
 
             #main {
                 background-color: var(--paper-chip-background-color, var(--paper-grey-200));
@@ -59,6 +62,7 @@ Removable chip with iron-icon
                 @apply --layout-vertical;
             }
 
+
             #chip {
                 box-sizing: border-box;
                 height: 32px;
@@ -66,9 +70,11 @@ Removable chip with iron-icon
                 @apply --layout-center;
             }
 
+
             paper-material {
                 border-radius: 16px;
             }
+
 
             #icon {
                 @apply --layout-horizontal;
@@ -76,7 +82,7 @@ Removable chip with iron-icon
                 @apply --layout-center-justified;
             }
 
-            ::slotted([slot="icon"]) {
+             ::slotted([slot="icon"]) {
                 margin-right: -4px;
                 width: 32px;
                 height: 32px;
@@ -92,12 +98,13 @@ Removable chip with iron-icon
                 @apply --layout-flex;
             }
 
-            ::slotted([class="icon"]) {
+             ::slotted([class="icon"]) {
                 /* FIXME: only top-level selectors allowed */
                 width: 32px;
                 height: 32px;
                 vertical-align: bottom;
             }
+
 
             #label {
                 padding: 0 4px 0 12px;
@@ -105,45 +112,43 @@ Removable chip with iron-icon
                 @apply --layout-self-center;
             }
 
-            :host([single-line]) #label {
+             :host([single-line]) #label {
                 padding-right: 12px;
             }
 
-            :host([single-line][removable]) #label {
+             :host([single-line][removable]) #label {
                 padding-right: 0px;
             }
 
-            ::slotted([slot="label"]) {
-                display: block;
+             ::slotted([slot="label"]) {
+                @apply --layout-block;
                 white-space: nowrap;
                 margin: 0;
-                font-weight: normal;
-                font-size: 14px;
+                @apply --paper-font-body2;
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-            ::slotted([slot="caption"]) {
+             ::slotted([slot="caption"]) {
                 display: none;
                 white-space: nowrap;
                 margin: 0;
-                font-weight: normal;
-                font-size: 14px;
+                @apply --paper-font-body1;
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-            :host([opened]) ::slotted([slot="caption"]) {
+             :host([opened]) ::slotted([slot="caption"]) {
                 display: block;
             }
 
-            :host([opened]) {
-                z-index:1;
+             :host([opened]) {
+                z-index: 1;
             }
 
-            ::slotted([slot="label"]) {
+             ::slotted([slot="label"]) {
                 @apply --paper-chip-label;
             }
 
-            ::slotted([slot="caption"]) {
+             ::slotted([slot="caption"]) {
                 @apply --paper-chip-caption;
             }
 
@@ -155,43 +160,36 @@ Removable chip with iron-icon
                 position: relative;
                 margin: 0 8px 0 4px;
                 padding: 2px;
-                width: 12px;
-                height: 12px;
-                border-radius: 100%;
-                background-color: var(--paper-chip-removebtn-background-color, var(--paper-grey-400));
-                color: var(--paper-chip-removebtn-icon-color, var(--text-primary-color));
                 cursor: pointer;
                 @apply --paper-chip-removebtn;
             }
 
+
             #removeBtn iron-icon {
-                width: 12px;
-                height: 12px;
                 display: block;
                 @apply --paper-chip-removebtn-icon;
             }
+
 
             #removeBtn {
                 display: none;
             }
 
-            :host([removable]) #removeBtn {
+             :host([removable]) #removeBtn {
                 display: block;
             }
-
             /* pressed state */
 
-            :host([pressed]) #main {
+             :host([pressed]) #main {
                 background-color: var(--paper-chip-pressed-background-color, var(--paper-grey-300));
             }
-
-
             /* opened state */
 
-            :host([opened]) #main,
-            :host([opened]) #chip {
+             :host([opened]) #main,
+             :host([opened]) #chip {
                 border-radius: 0;
             }
+
 
             #content {
                 width: 0;
@@ -200,7 +198,7 @@ Removable chip with iron-icon
                 overflow: hidden;
             }
 
-            :host([opened]) #content {
+             :host([opened]) #content {
                 height: auto;
                 width: auto;
                 min-width: 100%;
@@ -208,61 +206,60 @@ Removable chip with iron-icon
                 @apply --paper-chip-content;
             }
 
-            :host([opened]) #chip {
+             :host([opened]) #chip {
                 height: 72px;
             }
 
-            :host([opened]) #chip,
-            :host([opened]) ::slotted([slot="content"]) {
+             :host([opened]) #chip,
+             :host([opened]) ::slotted([slot="content"]) {
                 padding: 16px 12px;
                 background-color: var(--paper-chip-opened-background-color, var(--paper-grey-50));
             }
 
-            :host([opened])::slotted([slot="label"]) {
+             :host([opened])::slotted([slot="label"]) {
                 color: var(--paper-chip-primary-text-color, var(--primary-text-color));
                 font-size: 16px;
                 @apply --paper-chip-label-opened;
             }
 
-            :host([opened]) paper-material {
+             :host([opened]) paper-material {
                 border-radius: 0;
             }
 
-            :host([opened])::slotted([slot="icon"]) {
+             :host([opened])::slotted([slot="icon"]) {
                 font-size: 20px;
                 width: 40px;
                 height: 40px;
                 line-height: 40px;
             }
 
-            :host([opened]) #removeBtn {
+             :host([opened]) #removeBtn {
                 padding: 4px;
-                margin-left: 20px;
-                width: 16px;
-                height: 16px;
+                margin-left: 16px;
             }
             /* open + active state */
 
-            :host([opened][active]) #chip,
-            :host([opened][active])::slotted {
+             :host([opened][active]) #chip,
+             :host([opened][active])::slotted {
                 background-color: var(--paper-chip-active-color, var(--accent-color));
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-            :host([opened][active]) #removeBtn {
+             :host([opened][active]) #removeBtn {
                 color: var(--paper-chip-active-color, var(--accent-color));
                 background-color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
-            :host([opened][removable]) iron-icon {
+
+             :host([opened][removable]) iron-icon {
                 padding-top: 2px;
                 padding-left: 2px;
             }
 
-            :host([opened][active])::slotted([slot="label"]) {
+             :host([opened][active])::slotted([slot="label"]) {
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-            :host([opened][active])::slotted(h2) {
+             :host([opened][active])::slotted(h2) {
                 color: var(--paper-chip-active-secondary-text-color, var(--text-primary-color));
             }
         </style>
@@ -289,7 +286,7 @@ Removable chip with iron-icon
 
                     <div id="removeBtn" on-tap="remove" aria-label="remove button">
 
-                        <iron-icon icon="close" class="icon"></iron-icon>
+                        <iron-icon icon="cancel" class="icon"></iron-icon>
 
                     </div>
 
