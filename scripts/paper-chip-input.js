@@ -1,14 +1,21 @@
+let props = {
+  tags: {
+    type: Array,
+    notify: true,
+    value: () => []
+  }
+};
+
 class PaperChipInput extends Polymer.Element {
   static get is() {
     return "paper-chip-input"
   }
   static get properties() {
+    return props
+  }
+  static get config() {
     return {
-      tags: {
-        type: Array,
-        notify: true,
-        value: () => []
-      }
+      properties: props
     }
   }
 
@@ -16,23 +23,23 @@ class PaperChipInput extends Polymer.Element {
     super.connectedCallback()
 
     let tagInput = this.shadowRoot.querySelector("#tagInput")
-    tagInput.addEventListener('keydown',  (event) => {
-       if (tagInput.value === '' && event.code === 'Backspace') {
-            this._popChip()
-        } else if (tagInput.value && event.code === 'Enter') {
-            this._pushChip()
-        }
+    tagInput.addEventListener('keydown', (event) => {
+      if (tagInput.value === '' && event.code === 'Backspace') {
+        this._popChip()
+      } else if (tagInput.value && event.code === 'Enter') {
+        this._pushChip()
+      }
     })
   }
 
-   _popChip() {
+  _popChip() {
     this.tags.pop()
     this.forceNotify()
   }
 
   _pushChip() {
     let tagInput = this.shadowRoot.querySelector("#tagInput")
-    if( tagInput.value){
+    if (tagInput.value) {
       this.tags.push(tagInput.value.trim())
       tagInput.value = ''
       this.forceNotify()
@@ -48,14 +55,14 @@ class PaperChipInput extends Polymer.Element {
 
   _removeChip(evt) {
     const index = evt.currentTarget.index
-    if(index in this.tags){
+    if (index in this.tags) {
       this.tags.splice(index, 1)
       this.forceNotify()
     }
   }
 
   _notifyOut() {
-    this.dispatchEvent(new CustomEvent("submit-intent-chips", {bubbles: true, detail: this.tags}));
+    this.dispatchEvent(new CustomEvent("submit-intent-chips", { bubbles: true, detail: this.tags }));
   }
 
 }

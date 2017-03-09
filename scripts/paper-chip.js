@@ -1,74 +1,82 @@
-class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer.mixinBehaviors(Polymer.IronButtonState, Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element) )) {
+let props = {
+
+  index: {
+    type: Number,
+    reflectToAttribute: true
+  },
+
+  /**
+   * Whether or not the chip is removable. If `true`, a remove button will
+   * be shown.
+   *
+   * @attribute removable
+   * @type boolean
+   * @default false
+   */
+  removable: {
+    type: Boolean,
+    value: false,
+    reflectToAttribute: true
+  },
+
+  /**
+   * Whether or not the chip contains additional content. Single-line chips do not open.
+   */
+  singleLine: {
+    type: Boolean,
+    value: false,
+    reflectToAttribute: true,
+    observer: '_singleLineChanged'
+  },
+
+  /**
+   * Whether or not the chip uses an animated transition between opened and
+   * closed states
+   *
+   * @attribute animated
+   * @type boolean
+   * @default true
+   */
+  animated: {
+    type: Boolean,
+    value: false,
+    reflectToAttribute: true
+  },
+
+  /**
+   * Whether or not the chip is in its opened state.
+   *
+   * @attribute opened
+   * @type boolean
+   * @default false
+   */
+  opened: {
+    type: Boolean,
+    value: false,
+    reflectToAttribute: true,
+    notify: true,
+    observer: '_openedChanged'
+  },
+
+  _elevation: {
+    type: Number,
+    computed: "_computeElevation(opened, focused, disabled, active, pressed)"
+
+  }
+};
+
+class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer.mixinBehaviors(Polymer.IronButtonState, Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element))) {
 
   static get is() {
     return "paper-chip"
   }
   static get properties() {
+    return props;
+  }
+
+  static get config() {
     return {
-
-      index: {
-        type: Number,
-        reflectToAttribute: true
-      },
-
-      /**
-       * Whether or not the chip is removable. If `true`, a remove button will
-       * be shown.
-       *
-       * @attribute removable
-       * @type boolean
-       * @default false
-       */
-      removable: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true
-      },
-
-      /**
-       * Whether or not the chip contains additional content. Single-line chips do not open.
-       */
-      singleLine: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true,
-        observer: '_singleLineChanged'
-      },
-
-      /**
-       * Whether or not the chip uses an animated transition between opened and
-       * closed states
-       *
-       * @attribute animated
-       * @type boolean
-       * @default true
-       */
-      animated: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true
-      },
-
-      /**
-       * Whether or not the chip is in its opened state.
-       *
-       * @attribute opened
-       * @type boolean
-       * @default false
-       */
-      opened: {
-        type: Boolean,
-        value: false,
-        reflectToAttribute: true,
-        notify: true,
-        observer: '_openedChanged'
-      },
-
-      _elevation: {
-        type: Number,
-        computed: "_computeElevation(opened, focused, disabled, active, pressed)"
-
-      }
+      properties: props
     }
   }
 
@@ -165,11 +173,11 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
   }
 
   get keyBindings() {
-        return {
-            "delete": "remove",
-            "backspace": "remove"
-        }
+    return {
+      "delete": "remove",
+      "backspace": "remove"
     }
+  }
 
 }
 
