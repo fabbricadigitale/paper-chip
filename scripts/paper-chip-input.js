@@ -1,21 +1,25 @@
-let props = {
-  tags: {
-    type: Array,
-    notify: true,
-    value: () => []
-  }
-};
-
 class PaperChipInput extends Polymer.Element {
   static get is() {
     return "paper-chip-input"
   }
   static get properties() {
-    return props
+    return {
+      tags: {
+        type: Array,
+        notify: true,
+        value: () => []
+      }
+    }
   }
   static get config() {
     return {
-      properties: props
+      properties: {
+        tags: {
+          type: Array,
+          notify: true,
+          value: () => []
+        }
+      }
     }
   }
 
