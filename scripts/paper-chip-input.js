@@ -37,14 +37,27 @@ class PaperChipInput extends Polymer.Element {
   _pushChip() {
     let tagInput = this.shadowRoot.querySelector("#tagInput")
     if (tagInput.value) {
-      this.tags.push(tagInput.value.trim())
+      const value = tagInput.value.trim()
+      if (!this._checkDuplicate(value)) {
+        this.tags.push(value)
+        this.forceNotify()
+      }
       tagInput.value = ''
-      this.forceNotify()
     }
   }
 
-  _checkDuplicate(value){
-    if(this.tags.length > 0 && this.tags.indexOf(value) == -1l)
+  _checkDuplicate(value) {
+    if (this.tags.length == 0) {
+      return false;
+    }
+    else {
+      if (this.tags.indexOf(value) == -1) {
+        return false
+      }
+      else {
+        return true;
+      }
+    }
   }
 
   forceNotify() {
