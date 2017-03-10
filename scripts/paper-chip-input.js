@@ -15,21 +15,6 @@ class PaperChipInput extends Polymer.Element {
       }
     }
   }
-  static get config() {
-    return {
-      properties: {
-        label: {
-          type: String,
-          value: () => "Tags"
-        },
-        tags: {
-          type: Array,
-          notify: true,
-          value: () => []
-        }
-      }
-    }
-  }
 
   connectedCallback() {
     super.connectedCallback()
@@ -56,6 +41,10 @@ class PaperChipInput extends Polymer.Element {
       tagInput.value = ''
       this.forceNotify()
     }
+  }
+
+  _checkDuplicate(value){
+    if(this.tags.length > 0 && this.tags.indexOf(value) == -1l)
   }
 
   forceNotify() {
