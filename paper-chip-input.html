@@ -51,7 +51,8 @@
         </style>
 
 
-        <paper-input-container no-label-float id="tags">
+        <paper-input-container always-float-label id="tags">
+            <label slot="label">[[label]]</label>
             <div container slot="prefix">
                 <dom-repeat items="{{tags}}" as="tag">
                     <template>
@@ -60,7 +61,7 @@
                         </paper-chip>
                     </template>
                 </dom-repeat>
-                <input id="tagInput" type="text">
+                 <input id="tagInput" type="text">
             </div>
 
         </paper-input-container>

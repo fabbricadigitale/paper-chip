@@ -4,6 +4,10 @@ class PaperChipInput extends Polymer.Element {
   }
   static get properties() {
     return {
+      label: {
+        type: String,
+        value: () => "Tags"
+      },
       tags: {
         type: Array,
         notify: true,
@@ -14,6 +18,10 @@ class PaperChipInput extends Polymer.Element {
   static get config() {
     return {
       properties: {
+        label: {
+          type: String,
+          value: () => "Tags"
+        },
         tags: {
           type: Array,
           notify: true,
