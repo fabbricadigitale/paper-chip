@@ -11,7 +11,8 @@ class PaperChipInput extends Polymer.Element {
       tags: {
         type: Array,
         notify: true,
-        value: () => []
+        value: () => [],
+        observer: "_onTagsChanged"
       }
     }
   }
@@ -29,57 +30,46 @@ class PaperChipInput extends Polymer.Element {
     })
   }
 
+  _onTagsChanged(tags) {
+    if (!tags) {
+      return
+    }
+
+    const uniqueTags = [...new Set(tags)]
+    if (tags.length !== uniqueTags.length) {
+      this.tags = uniqueTags
+    }
+  }
+
+  _ensureTags() {
+    if (!this.tags) {
+      this.tags = []
+    }
+  }
+
   _popChip() {
-    this.tags.pop()
-    this.forceNotify()
+    this._ensureTags()
+    this.pop("tags")    
   }
 
   _pushChip() {
     let tagInput = this.shadowRoot.querySelector("#tagInput")
     if (tagInput.value) {
       const value = tagInput.value.trim()
-      if (!this._checkDuplicate(value)) {
-        this.tags.push(value)
-        this.forceNotify()
+      this._ensureTags()
+      if (!this.tags.includes(value)) {
+        this.push("tags", value)        
       }
       tagInput.value = ''
     }
   }
 
-  _checkDuplicate(value) {
-    if (this.tags === undefined ){
-      this.tags = []
-      return false
-    } else if (this.tags.length == 0) {
-      return false
-    }
-    else {
-      if (this.tags.indexOf(value) == -1) {
-        return false
-      }
-      else {
-        return true;
-      }
-    }
-  }
-
-  forceNotify() {
-    let arr = this.tags
-    this.tags = []
-    this.tags = arr
-    this._notifyOut()
-  }
-
   _removeChip(evt) {
     const index = evt.currentTarget.index
-    if (index in this.tags) {
-      this.tags.splice(index, 1)
-      this.forceNotify()
+    this._ensureTags()
+    if (index in this.tags) {      
+      this.splice("tags", index, 1)    
     }
-  }
-
-  _notifyOut() {
-    this.dispatchEvent(new CustomEvent("submit-intent-chips", { bubbles: true, detail: this.tags }));
   }
 
 }
