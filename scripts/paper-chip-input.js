@@ -47,8 +47,11 @@ class PaperChipInput extends Polymer.Element {
   }
 
   _checkDuplicate(value) {
-    if (this.tags.length == 0) {
-      return false;
+    if (this.tags === undefined ){
+      this.tags = []
+      return false
+    } else if (this.tags.length == 0) {
+      return false
     }
     else {
       if (this.tags.indexOf(value) == -1) {
