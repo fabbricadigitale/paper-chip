@@ -13,6 +13,10 @@ class PaperChipInput extends Polymer.Element {
         notify: true,
         value: () => [],
         observer: "_onTagsChanged"
+      },
+      placeholder: {
+        type: String,
+        value: undefined
       }
     }
   }
@@ -35,6 +39,8 @@ class PaperChipInput extends Polymer.Element {
       return
     }
 
+    this._ensurePlaceholder()
+
     const uniqueTags = [...new Set(tags)]
     if (tags.length !== uniqueTags.length) {
       this.tags = uniqueTags
@@ -47,9 +53,18 @@ class PaperChipInput extends Polymer.Element {
     }
   }
 
+  _ensurePlaceholder() {
+    if(this.tags.length > 0) {
+      this._removePlaceholder()
+    } else {
+      this._addPlaceholder()
+    }
+  }
+
   _popChip() {
     this._ensureTags()
-    this.pop("tags")    
+    this.pop("tags")
+    this._ensurePlaceholder()
   }
 
   _pushChip() {
@@ -58,7 +73,8 @@ class PaperChipInput extends Polymer.Element {
       const value = tagInput.value.trim()
       this._ensureTags()
       if (!this.tags.includes(value)) {
-        this.push("tags", value)        
+        this.push("tags", value)
+        this._ensurePlaceholder()
       }
       tagInput.value = ''
     }
@@ -67,9 +83,18 @@ class PaperChipInput extends Polymer.Element {
   _removeChip(evt) {
     const index = evt.currentTarget.index
     this._ensureTags()
-    if (index in this.tags) {      
-      this.splice("tags", index, 1)    
+    if (index in this.tags) {
+      this.splice("tags", index, 1)
+      this._ensurePlaceholder()
     }
+  }
+
+  _removePlaceholder(){
+    this.$.tagInput.removeAttribute("placeholder")
+  }
+
+  _addPlaceholder(){
+    if(this.placeholder) this.$.tagInput.setAttribute("placeholder", this.placeholder)
   }
 
 }
