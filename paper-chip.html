@@ -122,10 +122,15 @@ Removable chip with iron-icon
 
              ::slotted([slot="label"]) {
                 @apply --layout-block;
-                white-space: nowrap;
+
                 margin: 0;
                 @apply --paper-font-body2;
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
+            }
+
+            :host(*:not([opened])) ::slotted([slot="label"]) {
+                @apply --paper-font-common-nowrap;
+                max-width: 80px;
             }
 
              ::slotted([slot="caption"]) {
