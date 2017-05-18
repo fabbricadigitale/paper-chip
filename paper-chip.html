@@ -7,9 +7,13 @@
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/paper-styles.html">
 <link rel="import" href="../paper-styles/typography.html">
-
 <!--
+
+`paper-chip`
+
 Material Design: [Chips](http://www.google.com/design/spec/components/chips.html)
+
+Paper-chip's represent complex entities in small blocks, such as a contact.
 
 The `removable` attribute can be used to add a button which removes the chip
 from the DOM.
@@ -289,7 +293,7 @@ Removable chip with iron-icon
 
                     </div>
 
-                    <div id="removeBtn" on-tap="remove" aria-label="remove button">
+                    <div id="removeBtn" on-tap="_remove" aria-label="remove button">
 
                         <iron-icon icon="paper-chip-icons:cancel" class="icon"></iron-icon>
 

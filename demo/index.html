@@ -23,25 +23,6 @@
         demo-snippet {
             max-width: 760px;
         }
-
-        #chip3 .icon {
-            background-color: var(--default-primary-color);
-        }
-
-        #tags label {
-            line-height: 40px;
-        }
-
-        #tags .tags-input {
-            min-height: 32px;
-            padding: 4px 0;
-            z-index: 10;
-        }
-
-        .tags-input > paper-chip {
-            z-index: 1;
-            margin: 0 4px 0 0;
-        }
     </style>
 
 </head>
@@ -51,51 +32,44 @@
         <h3>Single-line removable chip (does not open)</h3>
 
         <paper-chip removable single-line>
-            <div slot="label" class="label">Example Chip</div>
+            <div slot="label">Example Chip</div>
         </paper-chip>
-
 
         <h3>Removable, double-line removable</h3>
 
         <paper-chip removable>
-            <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
-            <div slot="label" class="label">John Doe</div>
-            <div slot="caption" class="caption">doeboy@example.com</div>
+            <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
+            <div slot="label">John Doe</div>
+            <div slot="caption">doeboy@example.com</div>
         </paper-chip>
-
-
 
         <h3>Same chip, with animated transition</h3>
 
         <paper-chip removable animated>
-            <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
-            <div slot="label" class="label">John Doe</div>
-            <div slot="caption" class="caption">doeboy@example.com</div>
+            <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
+            <div slot="label">John Doe</div>
+            <div slot="caption">doeboy@example.com</div>
         </paper-chip>
-
 
         <h3>Animated chip with more content</h3>
 
         <paper-chip removable animated>
-            <iron-icon slot="icon" class="icon" icon="avatars:avatar-13"></iron-icon>
-            <div slot="label" class="label">Jane Doe</div>
-            <div slot="caption" class="caption">janedoe@example.com</div>
+            <iron-icon slot="icon" icon="avatars:avatar-13"></iron-icon>
+            <div slot="label">Jane Doe</div>
+            <div slot="caption">janedoe@example.com</div>
             <address slot="content">
                 123 Avenue Way<br> Anytown, USA 12345<br>
                 <br> 555-123-4567
             </address>
         </paper-chip>
 
-
         <h3>Chip with single letter instead of an icon</h3>
 
         <paper-chip>
-            <div slot="icon" class="icon">P</div>
-            <div slot="label" id="label" class="label">Peter Parker</div>
-            <div slot="caption" class="caption">pete@dailybugle.com</div>
+            <div slot="icon">P</div>
+            <div slot="label" id="label">Peter Parker</div>
+            <div slot="caption">pete@dailybugle.com</div>
         </paper-chip>
-
-
 
         <h3>Example chip input field using paper-input-container</h3>
 

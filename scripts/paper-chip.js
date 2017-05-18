@@ -115,10 +115,10 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
    *
    * @evt remove
    */
-  remove(evt) {
+  _remove(evt) {
     evt.stopPropagation();
     this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
-    //this.parentNode.removeChild(this)
+    this.parentNode.removeChild(this)
   }
 
   toggleOpened() {
@@ -170,8 +170,8 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
 
   get keyBindings() {
     return {
-      "delete": "remove",
-      "backspace": "remove"
+      "delete": "_remove",
+      "backspace": "_remove"
     }
   }
 
