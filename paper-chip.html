@@ -137,6 +137,10 @@ Removable chip with iron-icon
                 max-width: 80px;
             }
 
+            :host(*:not([removable])) ::slotted([slot="label"]) {
+                padding-right: 20px;
+            }
+
              ::slotted([slot="caption"]) {
                 display: none;
                 white-space: nowrap;
