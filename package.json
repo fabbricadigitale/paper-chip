@@ -9,11 +9,15 @@
   },
   "devDependencies": {
     "babel-cli": "^6.23.0",
+    "babel-eslint": "^7.1.1",
     "babel-plugin-transform-es2015-for-of": "^6.23.0",
     "babel-preset-es2015": "^6.22.0",
     "bower": "^1.8.0",
     "conventional-changelog-cli": "^1.2.0",
     "dom5": "^2.1.0",
+    "eslint": "^3.12.2",
+    "eslint-config-walmart": "^1.1.0",
+    "eslint-plugin-filenames": "^1.1.0",
     "git-rev-sync": "^1.8.0",
     "globby": "^6.1.0",
     "parse5": "^3.0.1",
@@ -35,6 +39,7 @@
     "clean": "shx rm -rf *.log $npm_package_directories_lib $npm_package_directories_deps/$npm_package_directories_component",
     "get:deps": "bower install --config.directory=$npm_package_directories_deps",
     "bundle:done": "TARGET=$npm_package_directories_lib node -e 'if (!require(\"fs\").existsSync(process.env.TARGET)) console.error(\"Create bundle please\") && process.exit(1)'",
+    "lint": "eslint scripts/**/*.js",
     "preserve": "npm run bundle && shx mkdir -p $npm_package_directories_deps/$npm_package_directories_component && shx cp -R $npm_package_directories_lib/* $npm_package_directories_deps/$npm_package_directories_component",
     "serve": "polyserve -c $npm_package_directories_deps --root $npm_package_directories_deps/$npm_package_directories_component",
     "prebundle": "npm run clean && shx mkdir -p $npm_package_directories_lib && shx cp *.html $npm_package_directories_lib && shx cp -R $npm_package_directories_example $npm_package_directories_lib",
@@ -59,5 +64,16 @@
         }
       ]
     ]
+  },
+  "eslintConfig": {
+    "extends": "walmart/configurations/es6-browser",
+    "rules": {
+      "semi": "off",
+      "no-console": "off",
+      "max-statements": "warn"
+    },
+    "globals": {
+        "Polymer": true
+    }
   }
 }

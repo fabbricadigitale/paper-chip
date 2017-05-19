@@ -1,4 +1,7 @@
-class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer.mixinBehaviors(Polymer.IronButtonState, Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element))) {
+class PaperChip extends
+  Polymer.mixinBehaviors(Polymer.IronControlState,
+  Polymer.mixinBehaviors(Polymer.IronButtonState,
+  Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element))) {
 
   static get is() {
     return "paper-chip"
@@ -36,7 +39,7 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
         type: Boolean,
         value: false,
         reflectToAttribute: true,
-        observer: '_singleLineChanged'
+        observer: "_singleLineChanged"
       },
 
       /**
@@ -65,7 +68,7 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
         value: false,
         reflectToAttribute: true,
         notify: true,
-        observer: '_openedChanged'
+        observer: "_openedChanged"
       },
 
       _elevation: {
@@ -93,13 +96,16 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
   }
 
   _computeElevation(opened, focused, pressed) {
+    const elevationMax = 4
+    const elevationMin = 1
+    const noElevation = 0
     if (focused || pressed) {
-      return 1
+      return elevationMin
     }
     if (opened) {
-      return 4
+      return elevationMax
     }
-    return 0
+    return noElevation
   }
 
   _onTap() {
@@ -110,11 +116,6 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
     this.opened = false
   }
 
-  /**
-   * Fired before the element is removed. This event is cancelable.
-   *
-   * @evt remove
-   */
   _remove(evt) {
     evt.stopPropagation();
     this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
@@ -135,28 +136,25 @@ class PaperChip extends Polymer.mixinBehaviors(Polymer.IronControlState, Polymer
 
   _openedChanged(opened) {
     if (opened && this.singleLine) {
-      // single-line chips don't open
       this.opened = false
       return
     }
     if (this.animated) {
-      var $content, width, height
-      $content = this.$.content
-      width = height = ''
+      let width = ""
+      let height = ""
+      const content = this.$.content
       if (this.opened) {
-        // temporarily disable transitions in order to take measurements of
-        // the content area, allowing for a proper css transision.
         this.animated = false
         this.opened = true
-        width = $content.offsetWidth + 'px'
-        height = $content.offsetHeight + 'px'
+        width = `${content.offsetWidth} px`
+        height = `${content.offsetHeight} px`
         this.opened = false
         this._forceReflow()
         this.opened = true
         this.animated = true
       }
-      $content.style.width = width
-      $content.style.height = height
+      content.style.width = width
+      content.style.height = height
     }
   }
 

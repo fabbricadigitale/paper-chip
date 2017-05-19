@@ -24,11 +24,11 @@ class PaperChipInput extends Polymer.Element {
   connectedCallback() {
     super.connectedCallback()
 
-    let tagInput = this.shadowRoot.querySelector("#tagInput")
-    tagInput.addEventListener('keydown', (event) => {
-      if (tagInput.value === '' && event.code === 'Backspace') {
+    const tagInput = this.shadowRoot.querySelector("#tagInput")
+    tagInput.addEventListener("keydown", (event) => {
+      if (tagInput.value === "" && event.code === "Backspace") {
         this._popChip()
-      } else if (tagInput.value && event.code === 'Enter') {
+      } else if (tagInput.value && event.code === "Enter") {
         this._pushChip()
       }
     })
@@ -54,7 +54,7 @@ class PaperChipInput extends Polymer.Element {
   }
 
   _ensurePlaceholder() {
-    if(this.tags.length > 0) {
+    if (this.tags.length > 0) {
       this._removePlaceholder()
     } else {
       this._addPlaceholder()
@@ -68,7 +68,7 @@ class PaperChipInput extends Polymer.Element {
   }
 
   _pushChip() {
-    let tagInput = this.shadowRoot.querySelector("#tagInput")
+    const tagInput = this.shadowRoot.querySelector("#tagInput")
     if (tagInput.value) {
       const value = tagInput.value.trim()
       this._ensureTags()
@@ -76,7 +76,7 @@ class PaperChipInput extends Polymer.Element {
         this.push("tags", value)
         this._ensurePlaceholder()
       }
-      tagInput.value = ''
+      tagInput.value = ""
     }
   }
 
@@ -89,12 +89,12 @@ class PaperChipInput extends Polymer.Element {
     }
   }
 
-  _removePlaceholder(){
+  _removePlaceholder() {
     this.$.tagInput.removeAttribute("placeholder")
   }
 
-  _addPlaceholder(){
-    if(this.placeholder) this.$.tagInput.setAttribute("placeholder", this.placeholder)
+  _addPlaceholder() {
+    if (this.placeholder) this.$.tagInput.setAttribute("placeholder", this.placeholder)
   }
 
 }
