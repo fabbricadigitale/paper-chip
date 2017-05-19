@@ -5,6 +5,9 @@ Material design: [Chips](https://material.io/guidelines/components/chips.html#).
 
 Polymer 2.x `<paper-chip>` may contain a icon or a photo, some line of text or a contact information with Material Design styling.
 
+### Examples
+
+Basic paper-chip
 ```html
 <paper-chip single-line>
     <div slot="label" class="label">Single-line Chip</div>
@@ -37,3 +40,21 @@ You can choose to set animation in openable chip.
     <div slot="caption" class="caption">jfoo@doh.com</div>
 </paper-chip>
 ```
+
+You can use paper-chip-input to collect a set of tags
+
+```html
+<template>
+    <paper-chip-input></paper-chip-input>
+</template>
+```
+
+### Styling
+The following custom properties and mixins are available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-chip-secondary-text-color` | The paper-chip label-color |
+`--paper-chip-background-color` | The paper-chip background-color |
+`--paper-chip-icon-background-color` | The paper-chip avatar background-color |
+`--paper-chip-icon-text-color` | The paper-chip icon color |
