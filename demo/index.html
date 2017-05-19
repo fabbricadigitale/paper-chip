@@ -21,7 +21,7 @@
 
     <style is="custom-style" include="demo-pages-shared-styles">
         demo-snippet {
-            max-width: 760px;
+            width: 100%;
         }
     </style>
 
@@ -30,54 +30,81 @@
 <body unresolved>
     <div>
         <h3>Single-line removable chip (does not open)</h3>
-
-        <paper-chip removable single-line>
-            <div slot="label">Example Chip</div>
-        </paper-chip>
+        <demo-snippet>
+            <template>
+                <paper-chip removable single-line>
+                    <div slot="label">Single-line Chip</div>
+                </paper-chip>
+            </template>
+        </demo-snippet>
 
         <h3>Removable, double-line removable</h3>
 
-        <paper-chip removable>
-            <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
-            <div slot="label">John Doe</div>
-            <div slot="caption">doeboy@example.com</div>
-        </paper-chip>
+        <demo-snippet>
+            <template>
+                <paper-chip removable>
+                    <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
+                    <div slot="label">John Foo</div>
+                    <div slot="caption">jfoo@doh.com</div>
+                </paper-chip>
+            </template>
+        </demo-snippet>
 
         <h3>Same chip, with animated transition</h3>
 
-        <paper-chip removable animated>
-            <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
-            <div slot="label">John Doe</div>
-            <div slot="caption">doeboy@example.com</div>
-        </paper-chip>
+        <demo-snippet>
+            <template>
+                <paper-chip removable animated>
+                    <iron-icon slot="icon" icon="avatars:avatar-1"></iron-icon>
+                    <div slot="label">John Foo</div>
+                    <div slot="caption">jfoo@doh.com</div>
+                </paper-chip>
+            </template>
+        </demo-snippet>
 
         <h3>Animated chip with more content</h3>
 
-        <paper-chip removable animated>
-            <iron-icon slot="icon" icon="avatars:avatar-13"></iron-icon>
-            <div slot="label">Jane Doe</div>
-            <div slot="caption">janedoe@example.com</div>
-            <address slot="content">
-                123 Avenue Way<br> Anytown, USA 12345<br>
-                <br> 555-123-4567
-            </address>
-        </paper-chip>
+        <demo-snippet>
+            <template>
+                <paper-chip removable animated>
+                    <iron-icon slot="icon" icon="avatars:avatar-13"></iron-icon>
+                    <div slot="label">Jane Foo</div>
+                    <div slot="caption">jfoo@doh.com</div>
+                    <address slot="content">
+                        742 Evergreen Terrace<br> Springfield, USA 12345<br>
+                        <br> 555-123-4567
+                    </address>
+                </paper-chip>
+            </template>
+        </demo-snippet>
 
         <h3>Chip with single letter instead of an icon</h3>
 
-        <paper-chip>
-            <div slot="icon">P</div>
-            <div slot="label" id="label">Peter Parker</div>
-            <div slot="caption">pete@dailybugle.com</div>
-        </paper-chip>
+        <demo-snippet>
+            <template>
+                <paper-chip>
+                    <div slot="icon">J</div>
+                    <div slot="label" id="label">John Smith</div>
+                    <div slot="caption">jsmith@doh.com</div>
+                </paper-chip>
+            </template>
+        </demo-snippet>
 
         <h3>Example chip input field using paper-input-container</h3>
 
-        <paper-chip-input on-remove-chip="_removeChip"></paper-chip-input>
+        <demo-snippet>
+            <template>
+                <paper-chip-input on-remove-chip="_removeChip"></paper-chip-input>
+            </template>
+        </demo-snippet>
 
         <h3>Example chip input field using paper-input-container(with placeholder)</h3>
 
-        <paper-chip-input on-remove-chip="_removeChip" placeholder="Add chip"></paper-chip-input>
+        <demo-snippet>
+            <template>
+                <paper-chip-input on-remove-chip="_removeChip" placeholder="Add chip"></paper-chip-input>
+        </demo-snippet>
+        </template>
 
     </div>
 
