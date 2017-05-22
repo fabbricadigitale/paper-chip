@@ -11,7 +11,7 @@
     "tag"
   ],
   "dependencies": {
-    "polymer": "polymer/polymer#^v2.0.0-rc.3",
+    "polymer": "polymer/polymer#^v2.0.0",
     "iron-behaviors": "polymerelements/iron-behaviors#2.0-preview",
     "paper-material": "polymerelements/paper-material#2.0-preview",
     "iron-flex-layout": "polymerelements/iron-flex-layout#2.0-preview",
@@ -19,14 +19,10 @@
     "iron-input": "PolymerElements/iron-input#2.0-preview"
   },
   "devDependencies": {
-    "web-component-tester": "v6.0.0-prerelease.5",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#v1",
+    "web-component-tester": "v6.0.0-prerelease.6",
+    "webcomponentsjs":  "webcomponents/webcomponentsjs#^1.0.0-rc.1",
     "iron-component-page": "PolymerElements/iron-component-page#2.0-preview",
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0-preview"
   },
-  "homepage": "https://github.com/fabbricadigitale/paper-chip",
-  "resolutions": {
-    "shadycss": "master",
-    "polymer": "^2.0.0-rc.3"
-  }
+  "homepage": "https://github.com/fabbricadigitale/paper-chip"
 }
