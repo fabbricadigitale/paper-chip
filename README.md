@@ -3,9 +3,9 @@
 
 Material design: [Chips](https://material.io/guidelines/components/chips.html#).
 
-Polymer 2.x `<paper-chip>` may contain a icon or a photo, some line of text or a contact information with Material Design styling.
+> Polymer 2.x `<paper-chip>` may contain a icon or a photo, some line of text or a contact information with Material Design styling.
 
-### Examples
+## Usage
 
 Basic paper-chip
 ```html
@@ -44,12 +44,10 @@ You can choose to set animation in openable chip.
 You can use paper-chip-input to collect a set of tags
 
 ```html
-<template>
     <paper-chip-input></paper-chip-input>
-</template>
 ```
 
-### Styling
+## Styling
 The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
@@ -58,3 +56,28 @@ Custom property | Description | Default
 `--paper-chip-background-color` | The paper-chip background-color |
 `--paper-chip-icon-background-color` | The paper-chip avatar background-color |
 `--paper-chip-icon-text-color` | The paper-chip icon color |
+
+## Testing
+You can run a basic test suite with `wct` command line tool.
+
+Install it via:
+
+```sh
+npm install web-component-tester
+```
+
+The `wct` tool will run your tests in all the browsers you have installed. Just
+run it:
+
+```sh
+wct
+```
+
+By default, any tests under `test/` will be run. You can override this by
+specifying particular files (or globs of files) via `wct path/to/files`.
+
+## License
+MIT © fabbricadigitale
+
+
+
