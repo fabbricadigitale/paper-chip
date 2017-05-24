@@ -58,7 +58,11 @@ Custom property | Description | Default
 `--paper-chip-icon-text-color` | The paper-chip icon color |
 
 ## Testing
-You can run a basic test suite with `wct` command line tool.
+If you are using **polyserve** navigate to the `test/` directory of your element to run its tests. You can view results in browser console.
+
+### web-component-tester
+
+The tests are compatible with [web-component-tester](https://github.com/Polymer/web-component-tester).
 
 Install it via:
 
