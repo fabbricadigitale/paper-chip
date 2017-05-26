@@ -16,7 +16,7 @@
     "paper-material": "polymerelements/paper-material#2.0-preview",
     "iron-flex-layout": "polymerelements/iron-flex-layout#2.0-preview",
     "paper-input": "PolymerElements/paper-input#2.0-preview",
-    "iron-input": "PolymerElements/iron-input#2.0-preview"
+    "iron-scroll-target-behavior": "polymerelements/iron-scroll-target-behavior#2.0-preview"
   },
   "devDependencies": {
     "web-component-tester": "v6.0.0",
