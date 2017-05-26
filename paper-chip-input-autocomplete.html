@@ -1,0 +1,108 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="./paper-chip.html">
+<link rel="import" href="./content-scrollable.html">
+
+<dom-module id="paper-chip-input-autocomplete">
+    <template>
+        <style>
+             :host {
+                --paper-input-container-underline: {
+                    display: none;
+                }
+                ;
+                --paper-input-container-underline-focus: {
+                    display: none;
+                }
+                ;
+                --paper-input-container-underline-disabled: {
+                    display: none;
+                }
+                ;
+            }
+
+            div[container] {
+                min-height: 32px;
+                padding: 4px 0;
+            }
+
+            input {
+                position: relative;
+                outline: none;
+                box-shadow: none;
+                border: none;
+                resize: horizontal;
+                background: inherit;
+                font-size: inherit;
+                font-family: inherit;
+                line-height: inherit;
+                max-width: 100%;
+                color: var(--paper-input-container-input-color, var(--primary-text-color));
+                -webkit-appearance: none;
+                text-align: inherit;
+                vertical-align: -webkit-baseline-middle;
+            }
+
+            paper-input-container {
+                @apply --layout-wrap;
+            }
+
+            paper-chip {
+                margin: 0 4px 4px 0;
+            }
+
+            paper-material {
+                @apply --layout-wrap;
+                display: block;
+                max-height: var(--paper-chip-input-autocomplete-height, 300px);
+                overflow-y: auto;
+                background: var(--paper-chip-input-autocomplete-background, white);
+                z-index: 1;
+            }
+
+            [hidden] {
+                display: none;
+            }
+            paper-item.iron-selected {
+                font-weight: inherit;
+            }
+        </style>
+
+
+        <paper-input-container always-float-label id="tags">
+            <label slot="label">[[label]]</label>
+            <div container slot="prefix">
+                <dom-repeat items="{{tags}}" as="tag">
+                    <template>
+                        <paper-chip index="{{index}}" on-remove-chip="_removeChip" removable single-line>
+                            <span slot="label" class="label">{{tag}}</span>
+                        </paper-chip>
+                    </template>
+                </dom-repeat>
+                <input id="tagInput" placeholder="[[placeholder]]" type="text" placeholder="[[placeholder]]">
+            </div>
+        </paper-input-container>
+
+        <paper-material id="scrollable-element" elevation="1" hidden$=[[hidden]]>
+            <content-scrollable scroll-target="scrollable-element">
+                <paper-listbox tabindex="0" id="list" slot="content">
+                    <dom-repeat items="[[_source]]">
+                        <template>
+                            <paper-item tabindex="0" label-text="[[item.name]]" on-tap="_select">[[item.name]]
+                                <paper-ripple></paper-ripple>
+                            </paper-item>
+                        </template>
+                    </dom-repeat>
+                </paper-listbox>
+            </content-scrollable>
+        </paper-material>
+
+    </template>
+    <script src="scripts/paper-chip-input-autocomplete.js"></script>
+</dom-module>
