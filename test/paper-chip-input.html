@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -10,21 +11,70 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../paper-chip-input.html">
-  </head>
-  <body>
+</head>
+
+<body>
     <test-fixture id="basic">
-      <template>
-        <paper-chip-input></paper-chip-input>
-      </template>
+        <template>
+            <paper-chip-input></paper-chip-input>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="add">
+        <template>
+            <paper-chip-input></paper-chip-input>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="backspace">
+        <template>
+            <paper-chip-input></paper-chip-input>
+        </template>
     </test-fixture>
 
     <script>
-      suite('paper-chip-input', function() {
-        test('instantiating the element works', function() {
-          var element = fixture('basic');
-          assert.instanceOf(element, PaperChipInput)
-        });
-      });
+        function pressEnter(dom) {
+            const e = new Event("keydown")
+            e.keyCode = 13
+            e.which = 13
+            e.code = "Enter"
+            dom.dispatchEvent(e)
+        }
+
+        function pressBackspace(dom) {
+            const e = new Event("keydown")
+            e.keyCode = 8
+            e.which = 8
+            e.code = "Backspace"
+            dom.dispatchEvent(e)
+        }
+
+        suite('paper-chip-input', () => {
+            test('instantiating the element works', function (done) {
+                var element = fixture('basic')
+                assert.instanceOf(element, PaperChipInput)
+                done()
+            })
+
+            test('add a new chip', (done) => {
+                const input = fixture('add')
+                input.$.tagInput.value = "foo"
+                pressEnter(input.$.tagInput)
+                expect(input.tags).to.deep.equal(["foo"])
+                done()
+            })
+
+            test("remove a chip pressing backspace", (done) => {
+                const input = fixture('backspace')
+                input.$.tagInput.value = "foo"
+                pressEnter(input.$.tagInput)
+                expect(input.tags).to.deep.equal(["foo"])
+                pressBackspace(input.$.tagInput)
+                expect(input.tags).to.deep.equal([])
+                done()
+            })
+        })
     </script>
-  </body>
+</body>
+
 </html>
