@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -10,21 +11,91 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <link rel="import" href="../paper-chip.html">
-  </head>
-  <body>
+</head>
+
+<body>
     <test-fixture id="basic">
-      <template>
-        <paper-chip></paper-chip>
-      </template>
+        <template>
+            <paper-chip></paper-chip>
+        </template>
     </test-fixture>
 
+    <test-fixture id="has-tabindex">
+        <template>
+            <paper-chip tabindex="0"></paper-chip>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="openable">
+        <template>
+            <paper-chip></paper-chip>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="removable">
+        <template>
+            <paper-chip removable></paper-chip>
+        </template>
+    </test-fixture>
+
+
     <script>
-      suite('paper-chip', function() {
-        test('instantiating the element works', function() {
-          var element = fixture('basic');
-          assert.instanceOf(element, PaperChip)
+        function ensureDocumentHasFocus() {
+            window.top && window.top.focus();
+            window.focus();
+        }
+
+        suite('paper-chip', function () {
+            test('instantiating the element works', function () {
+                var element = fixture('basic');
+                assert.instanceOf(element, PaperChip)
+            });
+
+            test('focus a paper-chip with tabindex', function (done) {
+                ensureDocumentHasFocus();
+                // If the document doesn't have focus, we can't test focus.
+                if (!window.top.document.hasFocus()) {
+                    this.skip();
+                }
+
+                const chip = fixture('has-tabindex');
+
+                // Mutation observer is async, so wait one tick.
+                Polymer.Base.async(function () {
+                    chip.focus();
+                    assert.equal(chip.shadowRoot ? chip.shadowRoot.activeElement :
+                        document.activeElement, chip._focusableElement);
+                    done();
+                }, 1);
+            });
+
+            test('click on a paper-chip openable', function (done) {
+
+                const chip = fixture('openable');
+
+                // Mutation observer is async, so wait one tick.
+                Polymer.Base.async(function () {
+                    chip.click();
+                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened");
+                    done();
+                }, 1);
+            });
+
+            test('remove a paper-chip', function (done) {
+
+                const chip = fixture('removable');
+
+                // Mutation observer is async, so wait one tick.
+                Polymer.Base.async(function () {
+                    window.addEventListener("remove-chip", () => {
+                        assert.isOk("ok", "paper-chip has been removed");
+                        done();
+                    }, false);
+                    chip.$.removeBtn.click();
+                }, 1);
+            });
         });
-      });
     </script>
-  </body>
+</body>
+
 </html>
