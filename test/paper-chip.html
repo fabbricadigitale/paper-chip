@@ -41,60 +41,60 @@
 
     <script>
         function ensureDocumentHasFocus() {
-            window.top && window.top.focus();
-            window.focus();
+            window.top && window.top.focus()
+            window.focus()
         }
 
-        suite('paper-chip', function () {
-            test('instantiating the element works', function () {
-                var element = fixture('basic');
+        suite('paper-chip', () => {
+            test('instantiating the element works', () => {
+                const element = fixture('basic')
                 assert.instanceOf(element, PaperChip)
-            });
+            })
 
-            test('focus a paper-chip with tabindex', function (done) {
+            test('focus a paper-chip with tabindex', (done) => {
                 ensureDocumentHasFocus();
                 // If the document doesn't have focus, we can't test focus.
                 if (!window.top.document.hasFocus()) {
-                    this.skip();
+                    this.skip()
                 }
 
-                const chip = fixture('has-tabindex');
+                const chip = fixture('has-tabindex')
 
                 // Mutation observer is async, so wait one tick.
-                Polymer.Base.async(function () {
-                    chip.focus();
+                Polymer.Base.async(() => {
+                    chip.focus()
                     assert.equal(chip.shadowRoot ? chip.shadowRoot.activeElement :
-                        document.activeElement, chip._focusableElement);
-                    done();
-                }, 1);
-            });
+                        document.activeElement, chip._focusableElement)
+                    done()
+                }, 1)
+            })
 
-            test('click on a paper-chip openable', function (done) {
+            test('click on a paper-chip openable', (done) => {
 
-                const chip = fixture('openable');
+                const chip = fixture('openable')
 
                 // Mutation observer is async, so wait one tick.
                 Polymer.Base.async(function () {
-                    chip.click();
-                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened");
-                    done();
-                }, 1);
-            });
+                    chip.click()
+                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
+                    done()
+                }, 1)
+            })
 
-            test('remove a paper-chip', function (done) {
+            test('remove a paper-chip clicking on remove button', (done) => {
 
-                const chip = fixture('removable');
+                let chip = fixture('removable')
 
                 // Mutation observer is async, so wait one tick.
                 Polymer.Base.async(function () {
                     window.addEventListener("remove-chip", () => {
-                        assert.isOk("ok", "paper-chip has been removed");
-                        done();
-                    }, false);
-                    chip.$.removeBtn.click();
-                }, 1);
-            });
-        });
+                        assert.isOk("ok", "paper-chip has been removed")
+                        done()
+                    }, false)
+                    chip.$.removeBtn.click()
+                }, 1)
+            })
+        })
     </script>
 </body>
 
