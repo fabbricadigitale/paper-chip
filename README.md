@@ -41,11 +41,19 @@ You can choose to set animation in openable chip.
 </paper-chip>
 ```
 
-You can use paper-chip-input to collect a set of tags
+You can use paper-chip input field to collect a set of tags
 
 ```html
     <paper-chip-input></paper-chip-input>
 ```
+
+You can use paper-chip input field with autocomplete feature
+
+```html
+    <paper-chip-input-autocomplete></paper-chip-input-autocomplete>
+```
+You can use `datasource` property to load all your inputs alternative
+
 
 ## Styling
 The following custom properties and mixins are available for styling:
