@@ -13,6 +13,11 @@ class PaperChip extends
   static get properties() {
     return {
 
+      value: {
+        type: String,
+        observer: "_valueChanged"
+      },
+
       index: {
         type: Number,
         reflectToAttribute: true
@@ -85,8 +90,10 @@ class PaperChip extends
     this.addEventListener("tap", this._onTap)
     this.addEventListener("blur", this._onBlur)
     this._ensureAttribute("tabindex", 0)
-
+    this._setDefaultValue()
   }
+
+
 
   disconnectedCallback() {
     super.disconnectedCallback()
@@ -118,8 +125,8 @@ class PaperChip extends
 
   _remove(evt) {
     evt.stopPropagation();
-    this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
-    this.parentNode.removeChild(this)
+    this.dispatchEvent(new CustomEvent("remove-chip", { cancelable: true }))
+    //this.parentNode.removeChild(this)
   }
 
   toggleOpened() {
@@ -158,6 +165,12 @@ class PaperChip extends
     }
   }
 
+  _valueChanged(value) {
+    if(value === undefined || value ==""){
+      this._setDefaultValue()
+    }
+  }
+
   _forceReflow() {
     return this.offsetHeight
   }
@@ -171,6 +184,10 @@ class PaperChip extends
       "delete": "_remove",
       "backspace": "_remove"
     }
+  }
+
+  _setDefaultValue() {
+    this.value = Polymer.dom(this).querySelector("[slot='label']") ? Polymer.dom(this).querySelector("[slot='label']").textContent : undefined
   }
 
 }
