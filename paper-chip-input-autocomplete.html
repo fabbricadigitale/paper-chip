@@ -6,6 +6,7 @@
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
+<link rel="import" href="../paper-styles/default-theme.html">
 <link rel="import" href="./paper-chip.html">
 <link rel="import" href="./content-scrollable.html">
 
@@ -13,23 +14,34 @@
     <template>
         <style>
              :host {
+                display: inline-block;
+                position: relative;
+                text-align: left;
+
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: transparent;
+
+                --paper-input-container-input: {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    max-width: 100%;
+                    box-sizing: border-box;
+                    cursor: pointer;
+                };
+
+                @apply --paper-dropdown-menu;
+
                 --paper-input-container-underline: {
                     display: none;
-                }
-                ;
+                };
                 --paper-input-container-underline-focus: {
                     display: none;
-                }
-                ;
+                };
                 --paper-input-container-underline-disabled: {
                     display: none;
-                }
-                ;
-            }
-
-            div[container] {
-                min-height: 32px;
-                padding: 4px 0;
+                };
+                width: 100%;
             }
 
             input {
@@ -53,24 +65,44 @@
                 @apply --layout-wrap;
             }
 
-            paper-chip {
-                margin: 0 4px 4px 0;
+            paper-ripple {
+                top: 12px;
+                left: 0px;
+                bottom: 8px;
+                right: 0px;
+
+                @apply --paper-dropdown-menu-ripple;
             }
 
             paper-material {
-                @apply --layout-wrap;
+                position: absolute;
                 display: block;
                 max-height: var(--paper-chip-input-autocomplete-height, 300px);
                 overflow-y: auto;
                 background: var(--paper-chip-input-autocomplete-background, white);
                 z-index: 1;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+                box-sizing: border-box;
+                cursor: pointer;
+            }
+
+            paper-item.iron-selected {
+                font-weight: inherit;
+            }
+
+            div[container] {
+                min-height: 32px;
+                padding: 4px 0;
+            }
+
+            paper-chip {
+                margin: 0 4px 4px 0;
             }
 
             [hidden] {
                 display: none;
-            }
-            paper-item.iron-selected {
-                font-weight: inherit;
             }
         </style>
 
@@ -78,10 +110,10 @@
         <paper-input-container always-float-label id="tags">
             <label slot="label">[[label]]</label>
             <div container slot="prefix">
-                <dom-repeat items="{{tags}}" as="tag">
+                <dom-repeat items="[[values]]" as="item">
                     <template>
-                        <paper-chip index="{{index}}" on-remove-chip="_removeChip" removable single-line>
-                            <span slot="label" class="label">{{tag}}</span>
+                        <paper-chip index="[[index]]" value="[[_computeValue(item)]]" on-remove-chip="_removeChip" removable single-line>
+                            <span slot="label" class="label">[[_computeLabel(item)]]</span>
                         </paper-chip>
                     </template>
                 </dom-repeat>
@@ -94,7 +126,7 @@
                 <paper-listbox tabindex="0" id="list" slot="content">
                     <dom-repeat items="[[_source]]">
                         <template>
-                            <paper-item tabindex="0" label-text="[[item.name]]" on-tap="_select">[[item.name]]
+                            <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                         </template>

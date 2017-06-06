@@ -8,11 +8,11 @@ class PaperChipInput extends Polymer.Element {
         type: String,
         value: () => "Tags"
       },
-      tags: {
+      values: {
         type: Array,
         notify: true,
         value: () => [],
-        observer: "_onTagsChanged"
+        observer: "_onValuesChanged"
       },
       placeholder: {
         type: String,
@@ -34,27 +34,27 @@ class PaperChipInput extends Polymer.Element {
     })
   }
 
-  _onTagsChanged(tags) {
-    if (!tags) {
+  _onValuesChanged(values) {
+    if (!values) {
       return
     }
 
     this._ensurePlaceholder()
 
-    const uniqueTags = [...new Set(tags)]
-    if (tags.length !== uniqueTags.length) {
-      this.tags = uniqueTags
+    const uniqueValues = [...new Set(values)]
+    if (values.length !== uniqueValues.length) {
+      this.values = uniqueValues
     }
   }
 
-  _ensureTags() {
-    if (!this.tags) {
-      this.tags = []
+  _ensureValues() {
+    if (!this.values) {
+      this.values = []
     }
   }
 
   _ensurePlaceholder() {
-    if (this.tags.length > 0) {
+    if (this.values.length > 0) {
       this._removePlaceholder()
     } else {
       this._addPlaceholder()
@@ -62,8 +62,8 @@ class PaperChipInput extends Polymer.Element {
   }
 
   _popChip() {
-    this._ensureTags()
-    this.pop("tags")
+    this._ensureValues()
+    this.pop("values")
     this._ensurePlaceholder()
   }
 
@@ -71,9 +71,9 @@ class PaperChipInput extends Polymer.Element {
     const tagInput = this.shadowRoot.querySelector("#tagInput")
     if (tagInput.value) {
       const value = tagInput.value.trim()
-      this._ensureTags()
-      if (!this.tags.includes(value)) {
-        this.push("tags", value)
+      this._ensureValues()
+      if (!this.values.includes(value)) {
+        this.push("values", value)
         this._ensurePlaceholder()
       }
       tagInput.value = ""
@@ -82,9 +82,9 @@ class PaperChipInput extends Polymer.Element {
 
   _removeChip(evt) {
     const index = evt.currentTarget.index
-    this._ensureTags()
-    if (index in this.tags) {
-      this.splice("tags", index, 1)
+    this._ensureValues()
+    if (index in this.values) {
+      this.splice("values", index, 1)
       this._ensurePlaceholder()
     }
   }
