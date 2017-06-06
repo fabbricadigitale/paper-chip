@@ -112,8 +112,8 @@
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
-                        <paper-chip index="[[index]]" value="[[item.value]]" on-remove-chip="_removeChip" removable single-line>
-                            <span slot="label" class="label">[[item.label]]</span>
+                        <paper-chip index="[[index]]" value="[[_computeValue(item)]]" on-remove-chip="_removeChip" removable single-line>
+                            <span slot="label" class="label">[[_computeLabel(item)]]</span>
                         </paper-chip>
                     </template>
                 </dom-repeat>
@@ -126,7 +126,7 @@
                 <paper-listbox tabindex="0" id="list" slot="content">
                     <dom-repeat items="[[_source]]">
                         <template>
-                            <paper-item tabindex="0" value="[[item.value]]" label-text="[[item.label]]" on-tap="_select">[[item.label]]
+                            <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
                                 <paper-ripple></paper-ripple>
                             </paper-item>
                         </template>

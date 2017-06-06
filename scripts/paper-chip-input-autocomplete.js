@@ -4,6 +4,14 @@ class PaperChipInputAutocomplete extends Polymer.Element {
   }
   static get properties() {
     return {
+      displayProperty: {
+        type: String,
+        value: () => { return "label" }
+      },
+      valueProperty: {
+        type: String,
+        value: () => { return "value" }
+      },
       hidden: {
         type: Boolean,
         value: true
@@ -65,10 +73,10 @@ class PaperChipInputAutocomplete extends Polymer.Element {
 
   _select(event) {
     const tagInput = this.shadowRoot.querySelector("#tagInput")
-    const item = {
-      label: event.target.labelText,
-      value: event.target.value
-    }
+    const item = {}
+    item[this.displayProperty] = event.target.labelText
+    item[this.valueProperty] = event.target.value
+
     //if (!this.values.includes(value)) {
       this.push("values", item)
     //}
@@ -85,7 +93,6 @@ class PaperChipInputAutocomplete extends Polymer.Element {
       this.splice("values", index, 1)
       this._prefilterSource()
     }
-
   }
 
   _popChip() {
@@ -95,7 +102,7 @@ class PaperChipInputAutocomplete extends Polymer.Element {
   }
 
   _filterSource(selectedItem) {
-    const index = this._source.findIndex((item) => { return item.label === selectedItem.label })
+    const index = this._source.findIndex((item) => { return item[this.displayProperty] === selectedItem[this.displayProperty] })
     if (index !== -1) {
       this.splice("_source", index, 1)
     }
@@ -111,14 +118,23 @@ class PaperChipInputAutocomplete extends Polymer.Element {
 
   _includes(value) {
     return this._source.filter((item) => {
-      return item.label.toLowerCase().includes(value.toLowerCase())
+      return item[this.displayProperty].toLowerCase().includes(value.toLowerCase())
     })
   }
 
   _startsWith(value) {
     return this._source.filter((item) => {
-      return item.label.toLowerCase().startsWith(value.toLowerCase())
+      return item[this.displayProperty].toLowerCase().startsWith(value.toLowerCase())
     })
+  }
+
+  _computeValue(item) {
+    console.log(this.valueProperty, item[this.valueProperty])
+    return item[this.valueProperty]
+  }
+
+  _computeLabel(item) {
+    return item[this.displayProperty]
   }
 }
 
