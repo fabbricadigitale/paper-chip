@@ -54,10 +54,10 @@
         <paper-input-container always-float-label id="tags">
             <label slot="label">[[label]]</label>
             <div container slot="prefix">
-                <dom-repeat items="{{tags}}" as="tag">
+                <dom-repeat items="[[values]]" as="value">
                     <template>
-                        <paper-chip index="{{index}}" on-remove-chip="_removeChip" removable single-line>
-                            <span slot="label" class="label">{{tag}}</span>
+                        <paper-chip value="[[value]]" index="[[index]]" on-remove-chip="_removeChip" removable single-line>
+                            <span slot="label" class="label">[[value]]</span>
                         </paper-chip>
                     </template>
                 </dom-repeat>

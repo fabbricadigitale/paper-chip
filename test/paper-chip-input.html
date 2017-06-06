@@ -60,7 +60,7 @@
                 const input = fixture('add')
                 input.$.tagInput.value = "foo"
                 pressEnter(input.$.tagInput)
-                expect(input.tags).to.deep.equal(["foo"])
+                expect(input.values).to.deep.equal(["foo"])
                 done()
             })
 
@@ -68,9 +68,9 @@
                 const input = fixture('backspace')
                 input.$.tagInput.value = "foo"
                 pressEnter(input.$.tagInput)
-                expect(input.tags).to.deep.equal(["foo"])
+                expect(input.values).to.deep.equal(["foo"])
                 pressBackspace(input.$.tagInput)
-                expect(input.tags).to.deep.equal([])
+                expect(input.values).to.deep.equal([])
                 done()
             })
         })

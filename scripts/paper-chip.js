@@ -187,6 +187,7 @@ class PaperChip extends
   }
 
   _setDefaultValue() {
+    if(this.value !== undefined) return
     this.value = Polymer.dom(this).querySelector("[slot='label']") ? Polymer.dom(this).querySelector("[slot='label']").textContent : undefined
   }
 
