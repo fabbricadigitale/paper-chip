@@ -129,7 +129,6 @@ class PaperChipInputAutocomplete extends Polymer.Element {
   }
 
   _computeValue(item) {
-    console.log(this.valueProperty, item[this.valueProperty])
     return item[this.valueProperty]
   }
 
