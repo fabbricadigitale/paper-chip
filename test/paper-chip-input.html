@@ -9,6 +9,7 @@
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <script src="../../web-component-tester/browser.js"></script>
+    <script src='../../iron-test-helpers/mock-interactions.js'></script>
 
     <link rel="import" href="../paper-chip-input.html">
 </head>
@@ -33,24 +34,8 @@
     </test-fixture>
 
     <script>
-        function pressEnter(dom) {
-            const e = new Event("keydown")
-            e.keyCode = 13
-            e.which = 13
-            e.code = "Enter"
-            dom.dispatchEvent(e)
-        }
-
-        function pressBackspace(dom) {
-            const e = new Event("keydown")
-            e.keyCode = 8
-            e.which = 8
-            e.code = "Backspace"
-            dom.dispatchEvent(e)
-        }
-
         suite('paper-chip-input', () => {
-            test('instantiating the element works', function (done) {
+            test('instantiating the element works', (done) => {
                 var element = fixture('basic')
                 assert.instanceOf(element, PaperChipInput)
                 done()
@@ -58,8 +43,9 @@
 
             test('add a new chip', (done) => {
                 const input = fixture('add')
-                input.$.tagInput.value = "foo"
-                pressEnter(input.$.tagInput)
+                const target = input.$.tagInput
+                target.value = "foo"
+                MockInteractions.keyDownOn(target, "Enter");
                 expect(input.values).to.deep.equal(["foo"])
                 done()
             })
@@ -67,9 +53,9 @@
             test("remove a chip pressing backspace", (done) => {
                 const input = fixture('backspace')
                 input.$.tagInput.value = "foo"
-                pressEnter(input.$.tagInput)
+                MockInteractions.keyDownOn(input.$.tagInput, "Enter");
                 expect(input.values).to.deep.equal(["foo"])
-                pressBackspace(input.$.tagInput)
+                MockInteractions.keyDownOn(input.$.tagInput, "Backspace");
                 expect(input.values).to.deep.equal([])
                 done()
             })
