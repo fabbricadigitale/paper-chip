@@ -125,7 +125,7 @@ class PaperChip extends
 
   _remove(evt) {
     evt.stopPropagation();
-    this.dispatchEvent(new CustomEvent("remove-chip", { cancelable: true }))
+    this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
     //this.parentNode.removeChild(this)
   }
 
