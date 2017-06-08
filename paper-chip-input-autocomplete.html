@@ -8,7 +8,6 @@
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../paper-styles/default-theme.html">
 <link rel="import" href="./paper-chip.html">
-<link rel="import" href="./content-scrollable.html">
 
 <dom-module id="paper-chip-input-autocomplete">
     <template>
@@ -121,18 +120,16 @@
             </div>
         </paper-input-container>
 
-        <paper-material id="scrollable-element" elevation="1" hidden$=[[hidden]]>
-            <content-scrollable scroll-target="scrollable-element">
-                <paper-listbox tabindex="0" id="list" slot="content">
-                    <dom-repeat items="[[_source]]">
-                        <template>
-                            <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
-                                <paper-ripple></paper-ripple>
-                            </paper-item>
-                        </template>
-                    </dom-repeat>
-                </paper-listbox>
-            </content-scrollable>
+        <paper-material elevation="1" hidden$=[[hidden]]>
+            <paper-listbox tabindex="0" id="list">
+                <dom-repeat items="[[_source]]">
+                    <template>
+                        <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
+                            <paper-ripple></paper-ripple>
+                        </paper-item>
+                    </template>
+                </dom-repeat>
+            </paper-listbox>
         </paper-material>
 
     </template>

@@ -19,8 +19,7 @@
     "iron-input": "PolymerElements/iron-input#2.0-preview",
     "paper-item": "polymerelements/paper-item#2.0-preview",
     "paper-listbox": "polymerelements/paper-listbox#2.0-preview",
-    "paper-ripple": "polymerelements/paper-ripple#2.0-preview",
-    "iron-scroll-target-behavior": "polymerelements/iron-scroll-target-behavior#2.0-preview"
+    "paper-ripple": "polymerelements/paper-ripple#2.0-preview"
   },
   "devDependencies": {
     "web-component-tester": "v6.0.0",
