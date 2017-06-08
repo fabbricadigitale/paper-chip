@@ -14,7 +14,7 @@ Basic paper-chip
 </paper-chip>
 ```
 
-It can show **single-line** or **multi-line** text. You can open multi-line chip tapping on it.
+It can show **single-line** or **multi-line** text. You can open a multi-line chip tapping on it.
 ```html
 <paper-chip>
     <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
@@ -23,7 +23,7 @@ It can show **single-line** or **multi-line** text. You can open multi-line chip
 </paper-chip>
 ```
 
-You can configure some basic behavior. It may be removable or not.
+Configure some basic behavior. It may be removable or not.
 
 ```html
 <paper-chip removable>
@@ -31,7 +31,7 @@ You can configure some basic behavior. It may be removable or not.
 </paper-chip>
 ```
 
-You can choose to set animation in openable chip.
+Choose to set animation in openable chip.
 
 ```html
 <paper-chip removable animated>
@@ -41,19 +41,29 @@ You can choose to set animation in openable chip.
 </paper-chip>
 ```
 
-You can use paper-chip input field to collect a set of tags
+Use `<paper-chip-input>` component to collect a set of `chip`
 
 ```html
     <paper-chip-input></paper-chip-input>
 ```
 
-You can use paper-chip input field with autocomplete feature
+Use `<paper-chip-input-autocomplete>` when you have a preset input values
 
 ```html
     <paper-chip-input-autocomplete></paper-chip-input-autocomplete>
 ```
-You can use `datasource` property to load all your inputs alternative
+You can load input values with `datasource` property.
 
+The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
+
+```html
+<paper-chip-input-autocomplete display-property="value" value-property="key">
+</paper-chip-input-autocomplete>
+```
+```json
+{ "value": "apple", "key": 0 },
+{ "value": "apricot", "key": 1 }
+```
 
 ## Styling
 The following custom properties and mixins are available for styling:
@@ -87,6 +97,12 @@ wct
 
 By default, any tests under `test/` will be run. You can override this by
 specifying particular files (or globs of files) via `wct path/to/files`.
+
+Otherwise you can run the test suite via npm script
+
+```sh
+npm test
+```
 
 ## License
 MIT © fabbricadigitale
