@@ -23,13 +23,14 @@
     "parse5": "^3.0.1",
     "polyserve": "^0.15.0",
     "read-pkg": "^2.0.0",
-    "shx": "^0.2.2"
+    "shx": "^0.2.2",
+    "web-component-tester": "v6.0.0"
   },
   "directories": {
     "src": "scripts",
     "demo": "demo",
     "component": "paper-chip",
-    "deps": "node_modules/@browser"
+    "deps": "bower_components"
   },
   "scripts": {
     "reset": "shx rm -rf node_modules/ $npm_package_directories_deps *.log",
@@ -44,7 +45,8 @@
     "preversion": "npm run from:master",
     "version": "npm run changelog && npm run changelog:edit && git add CHANGELOG.md && npm run version:bower && git add bower.json",
     "postversion": "git push && git push --tags && git checkout develop && git merge master && git push && git checkout master",
-    "serve": "polyserve -c $npm_package_directories_deps"
+    "serve": "polyserve -c $npm_package_directories_deps",
+    "test": "wct"
   },
   "babel": {
     "presets": [
