@@ -2,7 +2,7 @@
   "name": "paper-chip",
   "description": "A chip web component made with Polymer 2 following Material Design guidelines",
   "main": "paper-chip.html",
-  "version": "0.8.0",
+  "version": "",
   "license": "MIT",
   "keywords": [
     "polymer",
@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "web-component-tester": "v6.0.0",
-    "webcomponentsjs":  "webcomponents/webcomponentsjs#^1.0.0",
+    "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
     "iron-component-page": "^v2.0.0",
     "iron-demo-helpers": "^v2.0.0",
     "iron-test-helpers": "^v2.0.0"
