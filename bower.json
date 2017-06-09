@@ -2,6 +2,7 @@
   "name": "paper-chip",
   "description": "A chip web component made with Polymer 2 following Material Design guidelines",
   "main": "paper-chip.html",
+  "version": "0.8.0",
   "license": "MIT",
   "keywords": [
     "polymer",
