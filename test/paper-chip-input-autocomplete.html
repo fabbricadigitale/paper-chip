@@ -130,6 +130,14 @@
                 }, 1)
             })
 
+            test("clicking on escape key the tips hiding works", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+                expect(element.hidden).to.equal(false)
+                MockInteractions.keyUpOn(element.$.tagInput, "Escape");
+                expect(element.hidden).to.equal(true)
+                done()
+            })
+
             function enterCharacter(input, char) {
                 input.value += char;
                 MockInteractions.keyUpOn(input, char.charCodeAt(char.length - 1));
