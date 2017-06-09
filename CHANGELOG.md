@@ -1,3 +1,13 @@
+<a name="0.9.1"></a>
+## [0.9.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.0...v0.9.1) (2017-06-09)
+
+
+### Docs
+
+* Docs about default styles ([171ec1e96a2a13d35b8085b35c977a954fd029cf](https://github.com/fabbricadigitale/paper-chip/commit/171ec1e96a2a13d35b8085b35c977a954fd029cf))
+
+
+
 <a name="0.9.0"></a>
 # 0.9.0 (2017-06-09)
 
