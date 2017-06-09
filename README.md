@@ -1,5 +1,7 @@
-`paper-chip`
-===========
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://www.webcomponents.org/element/fabbricadigitale/paper-chip)
+ [![License](https://img.shields.io/badge/license-MIT-yellowgreen.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+
+# \<paper-chip\>
 
 Material design: [Chips](https://material.io/guidelines/components/chips.html#).
 
