@@ -16,7 +16,7 @@
     "git-rev-sync": "^1.8.0",
     "polyserve": "^0.15.0",
     "shx": "^0.2.2",
-    "web-component-tester": "v6.0.0"
+    "web-component-tester": "^6.0.0"
   },
   "config": {
     "directories": {
