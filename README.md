@@ -19,6 +19,17 @@ This elements family may provide a icon or a photo, some line of text or a conta
 
 A basic paper-chip ...
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
 <paper-chip single-line>
     <div slot="label" class="label">Single-line Chip</div>
@@ -59,6 +70,17 @@ You can do it via attribute.
 
 Use `<paper-chip-input>` when you desire an input field where the strings digited by the user are collected as `paper-chip`s.
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
     <paper-chip-input></paper-chip-input>
 ```
