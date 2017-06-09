@@ -44,16 +44,16 @@ class PaperChipInputAutocomplete extends Polymer.Element {
     super.connectedCallback()
 
     const tagInput = this.shadowRoot.querySelector("#tagInput")
-    tagInput.addEventListener("keyup", () => {
-      if (tagInput.value !== "") {
+    tagInput.addEventListener("keyup", (event) => {
+      if (tagInput.value !== "" && event.code !== "Escape") {
         this._filter()
       } else {
-         this.hidden = true
+         this._hideTips()
       }
     })
     tagInput.addEventListener("keydown", (event) => {
       if (event.code === "Escape" && !this.hidden) {
-        this.hidden = true
+        this._hideTips()
       } else if (tagInput.value === "" && event.code === "Backspace") {
         this._popChip()
       }
@@ -65,9 +65,11 @@ class PaperChipInputAutocomplete extends Polymer.Element {
     if (tagInput.value) {
       this._prefilterSource()
       this._source = this._startsWith(tagInput.value.toLowerCase())
-      this.hidden = !this._source.length
-    } else {
-      this.hidden = true
+      if (!this._source.length) {
+        this._hideTips()
+      } else {
+        this.hidden = false
+      }
     }
   }
 
@@ -81,13 +83,14 @@ class PaperChipInputAutocomplete extends Polymer.Element {
       this.push("values", item)
     //}
     tagInput.value = ""
-    this.hidden = true
+    this._hideTips()
+
     this.$.tagInput.focus()
   }
 
   _removeChip(evt) {
     evt.stopPropagation()
-    this.hidden = true
+    this._hideTips()
     const index = evt.currentTarget.index
     if (index in this.values) {
       this.splice("values", index, 1)
@@ -96,7 +99,7 @@ class PaperChipInputAutocomplete extends Polymer.Element {
   }
 
   _popChip() {
-    this.hidden = true
+    this._hideTips()
     this.pop("values")
     this._prefilterSource()
   }
@@ -134,6 +137,11 @@ class PaperChipInputAutocomplete extends Polymer.Element {
 
   _computeLabel(item) {
     return item[this.displayProperty]
+  }
+
+  _hideTips() {
+    this.shadowRoot.querySelector("#tips").scrollTop = 0
+    this.hidden = true
   }
 }
 
