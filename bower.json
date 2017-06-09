@@ -13,7 +13,7 @@
     "es2015"
   ],
   "dependencies": {
-    "polymer": "^v2.0.0",
+    "polymer": "polymer/polymer#^v2.0.0",
     "iron-behaviors": "^v2.0.0",
     "paper-material": "^v2.0.0",
     "iron-flex-layout": "^v2.0.0",

@@ -38,6 +38,17 @@ A basic paper-chip ...
 
 It can show **single-line** or **multi-line** text. You can **open a multi-line chip** tapping on it.
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
 <paper-chip>
     <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
@@ -50,6 +61,17 @@ Following snippet of code shows how to configure (via attributes) some basic beh
 
 It may be **removable** or not.
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
 <paper-chip removable>
     <div slot="label" class="label">Removable Chip</div>
@@ -60,6 +82,17 @@ Do you want to **animate** the chip when it is opening?
 
 You can do it via attribute.    
 
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
 <paper-chip removable animated>
     <div slot="icon" class="icon">P</div>
@@ -82,7 +115,7 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 ```
 -->
 ```html
-    <paper-chip-input></paper-chip-input>
+<paper-chip-input></paper-chip-input>
 ```
 
 Do you need **autocomplete** ?
@@ -90,7 +123,7 @@ Do you need **autocomplete** ?
 Use `<paper-chip-input-autocomplete>` when you have a predefined and finite set of input values.
 
 ```html
-    <paper-chip-input-autocomplete></paper-chip-input-autocomplete>
+<paper-chip-input-autocomplete></paper-chip-input-autocomplete>
 ```
 
 You can set the predefined values with `datasource` property.
@@ -119,10 +152,10 @@ The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
 ----------------|-------------|----------
-`--paper-chip-secondary-text-color` | The paper-chip label-color |
-`--paper-chip-background-color` | The paper-chip background-color |
-`--paper-chip-icon-background-color` | The paper-chip avatar background-color |
-`--paper-chip-icon-text-color` | The paper-chip icon color |
+`--paper-chip-secondary-text-color` | The paper-chip label-color | `--secondary-text-color`
+`--paper-chip-background-color` | The paper-chip background-color | `--paper-grey-200`
+`--paper-chip-icon-background-color` | The paper-chip avatar background-color | `--paper-grey-500`
+`--paper-chip-icon-text-color` | The paper-chip icon color | `--text-primary-color`
 
 ## Testing
 
