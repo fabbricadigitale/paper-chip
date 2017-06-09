@@ -1,6 +1,6 @@
 {
   "name": "paper-chip",
-  "description": "Polymer 2.x WebComponent to show brief information like a tag or a contact",
+  "description": "A chip web component made with Polymer 2 following Material Design guidelines",
   "main": "paper-chip.html",
   "license": "MIT",
   "keywords": [
@@ -8,7 +8,8 @@
     "web component",
     "material design",
     "chip",
-    "tag"
+    "tag",
+    "es2015"
   ],
   "dependencies": {
     "polymer": "^v2.0.0",

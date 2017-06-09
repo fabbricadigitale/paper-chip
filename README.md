@@ -3,18 +3,28 @@
 
 Material design: [Chips](https://material.io/guidelines/components/chips.html#).
 
-> Polymer 2.x `<paper-chip>` may contain a icon or a photo, some line of text or a contact information with Material Design styling.
+> A chip web component made with Polymer 2 following Material Design guidelines
+
+This elements family may provide a icon or a photo, some line of text or a contact information with Material Design styling.
+
+### Elements
+
+* `<paper-chip>`
+* `<paper-chip-input>`
+* `<paper-chip-input-autocomplete>`
 
 ## Usage
 
-Basic paper-chip
+A basic paper-chip ...
+
 ```html
 <paper-chip single-line>
     <div slot="label" class="label">Single-line Chip</div>
 </paper-chip>
 ```
 
-It can show **single-line** or **multi-line** text. You can open a multi-line chip tapping on it.
+It can show **single-line** or **multi-line** text. You can **open a multi-line chip** tapping on it.
+
 ```html
 <paper-chip>
     <iron-icon slot="icon" class="icon" icon="avatars:avatar-1"></iron-icon>
@@ -23,7 +33,9 @@ It can show **single-line** or **multi-line** text. You can open a multi-line ch
 </paper-chip>
 ```
 
-Configure some basic behavior. It may be removable or not.
+Following snippet of code shows how to configure (via attributes) some basic behavior.
+
+It may be **removable** or not.
 
 ```html
 <paper-chip removable>
@@ -31,7 +43,9 @@ Configure some basic behavior. It may be removable or not.
 </paper-chip>
 ```
 
-Choose to set animation in openable chip.
+Do you want to **animate** the chip when it is opening?
+
+You can do it via attribute.    
 
 ```html
 <paper-chip removable animated>
@@ -41,31 +55,42 @@ Choose to set animation in openable chip.
 </paper-chip>
 ```
 
-Use `<paper-chip-input>` component to collect a set of `chip`
+Use `<paper-chip-input>` when you desire an input field where the strings digited by the user are collected as `paper-chip`s.
 
 ```html
     <paper-chip-input></paper-chip-input>
 ```
 
-Use `<paper-chip-input-autocomplete>` when you have a preset input values
+Do you need **autocomplete** ?
+
+Use `<paper-chip-input-autocomplete>` when you have a predefined and finite set of input values.
 
 ```html
     <paper-chip-input-autocomplete></paper-chip-input-autocomplete>
 ```
-You can load input values with `datasource` property.
+
+You can set the predefined values with `datasource` property.
+
+```html
+<paper-chip-input-autocomplete
+  datasource='{{"value":"apple","key":0},{"value":"apricot","key":1}}'>
+</paper-chip-input-autocomplete>
+```
 
 The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
 
 ```html
-<paper-chip-input-autocomplete display-property="value" value-property="key">
+<paper-chip-input-autocomplete display-property="val" value-property="key">
 </paper-chip-input-autocomplete>
 ```
+
 ```json
-{ "value": "apple", "key": 0 },
-{ "value": "apricot", "key": 1 }
+{ "val": "apple", "key": 0 },
+{ "val": "apricot", "key": 1 }
 ```
 
 ## Styling
+
 The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
@@ -76,36 +101,21 @@ Custom property | Description | Default
 `--paper-chip-icon-text-color` | The paper-chip icon color |
 
 ## Testing
+
 If you are using **polyserve** navigate to the `test/` directory of your element to run its tests. You can view results in browser console.
 
-### web-component-tester
+### WCT
 
-The tests are compatible with [web-component-tester](https://github.com/Polymer/web-component-tester).
+The tests are run via [web-component-tester](https://github.com/polymer/web-component-tester).
 
-Install it via:
+To run them locally execute:
 
-```sh
-npm install web-component-tester
-```
-
-The `wct` tool will run your tests in all the browsers you have installed. Just
-run it:
-
-```sh
-wct
-```
-
-By default, any tests under `test/` will be run. You can override this by
-specifying particular files (or globs of files) via `wct path/to/files`.
-
-Otherwise you can run the test suite via npm script
-
-```sh
+```bash
 npm test
 ```
 
 ## License
-MIT © fabbricadigitale
 
+MIT © fabbricadigitale
 
 

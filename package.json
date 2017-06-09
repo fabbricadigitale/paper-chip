@@ -1,12 +1,13 @@
 {
   "name": "paper-chip",
   "version": "0.1.0",
-  "description": "paper-chip",
+  "description": "A chip web component made with Polymer 2 following Material Design guidelines",
   "main": "paper-chip.html",
   "repository": {
     "type": "git",
     "url": "https://github.com/fabbricadigitale/paper-chip.git"
   },
+  "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-eslint": "^7.1.1",
@@ -26,26 +27,28 @@
     "shx": "^0.2.2",
     "web-component-tester": "v6.0.0"
   },
-  "directories": {
-    "src": "scripts",
-    "demo": "demo",
-    "component": "paper-chip",
-    "deps": "bower_components"
+  "config": {
+    "directories": {
+      "src": "scripts",
+      "demo": "demo",
+      "component": "paper-chip",
+      "deps": "bower_components"
+    }
   },
   "scripts": {
-    "reset": "shx rm -rf node_modules/ $npm_package_directories_deps *.log",
-    "clean": "shx rm -rf *.log $npm_package_directories_deps/$npm_package_directories_component",
-    "get:deps": "bower install --config.directory=$npm_package_directories_deps",
+    "reset": "shx rm -rf node_modules/ $npm_package_config_directories_deps *.log",
+    "clean": "shx rm -rf *.log $npm_package_config_directories_deps/$npm_package_config_directories_component",
+    "get:deps": "bower install --config.directory=$npm_package_config_directories_deps",
     "lint": "eslint scripts/**/*.js",
     "postinstall": "npm run get:deps",
     "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s",
     "from:master": "node -e 'process.exit(require(\"git-rev-sync\").branch(process.cwd()) !== \"master\")'",
     "changelog:edit": "$(git var GIT_EDITOR) CHANGELOG.md",
-    "version:bower": "VERSION=$npm_package_version node -e 'const b = require(\"./bower.json\"); b.version = process.env.VERSION; require(\"fs\").writeFileSync(\"./bower.json\", JSON.stringify(b, null, 2))'",
+    "version:bower": "VERSION=$npm_package_config_version node -e 'const b = require(\"./bower.json\"); b.version = process.env.VERSION; require(\"fs\").writeFileSync(\"./bower.json\", JSON.stringify(b, null, 2))'",
     "preversion": "npm run from:master",
     "version": "npm run changelog && npm run changelog:edit && git add CHANGELOG.md && npm run version:bower && git add bower.json",
     "postversion": "git push && git push --tags && git checkout develop && git merge master && git push && git checkout master",
-    "serve": "polyserve -c $npm_package_directories_deps",
+    "serve": "polyserve -c $npm_package_config_directories_deps",
     "test": "wct"
   },
   "babel": {
@@ -70,5 +73,13 @@
     "globals": {
         "Polymer": true
     }
-  }
+  },
+  "keywords": [
+    "polymer",
+    "web component",
+    "material design",
+    "chip",
+    "tag",
+    "es2015"
+  ]
 }
