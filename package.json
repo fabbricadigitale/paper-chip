@@ -30,7 +30,7 @@
     "reset": "shx rm -rf node_modules/ $npm_package_config_directories_deps *.log",
     "clean": "shx rm -rf *.log $npm_package_config_directories_deps/$npm_package_config_directories_component",
     "get:deps": "bower install --config.directory=$npm_package_config_directories_deps",
-    "lint": "eslint **/*.html",
+    "lint": "eslint *.html **/*.html",
     "postinstall": "npm run get:deps",
     "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s",
     "from:master": "node -e 'process.exit(require(\"git-rev-sync\").branch(process.cwd()) !== \"master\")'",
