@@ -1,0 +1,20 @@
+{
+  "env": {
+    "mocha": true
+  },
+  "rules": {
+    "no-var": "off",
+    "strict": "off"
+  },
+  "globals": {
+    "assert": true,
+    "WCT": true,
+    "sinon": true,
+    "expect": true,
+    "fixture": true,
+    "PaperChip": true,
+    "PaperChipInput": true,
+    "PaperChipInputAutocomplete": true,
+    "MockInteractions": true
+  }
+}
