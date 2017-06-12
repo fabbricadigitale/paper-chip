@@ -18,7 +18,6 @@
     <link rel="import" href="../../iron-input/iron-input.html">
     <link rel="import" href="../paper-chip.html">
     <link rel="import" href="../paper-chip-input.html">
-    <link rel="import" href="../paper-chip-input-autocomplete.html">
     <link rel="import" href="../paper-chip-icons.html">
 
     <style is="custom-style" include="demo-pages-shared-styles">
@@ -112,7 +111,7 @@
 
         <demo-snippet>
             <template>
-                <paper-chip-input-autocomplete id="countries-autocomplete" label="Countries" on-remove-chip="_removeChip" placeholder="Add countries"></paper-chip-input-autocomplete>
+                <paper-chip-input id="countries-autocomplete" label="Countries" on-remove-chip="_removeChip" placeholder="Add countries"></paper-chip-input>
             </template>
         </demo-snippet>
 
@@ -120,8 +119,17 @@
 
         <demo-snippet>
             <template>
-                <paper-chip-input-autocomplete id="fruits-autocomplete" label="Fruits" display-property="value" value-property="key" on-remove-chip="_removeChip"
-                    placeholder="Add fruits"></paper-chip-input-autocomplete>
+                <paper-chip-input id="fruits-autocomplete" label="Fruits" display-property="value" value-property="key" on-remove-chip="_removeChip"
+                    placeholder="Add fruits"></paper-chip-input>
+            </template>
+        </demo-snippet>
+
+        <h3>Example chip input with autocomplete and inline datasource</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip-input label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
+                display-property="value" value-property="key" on-remove-chip="_removeChip" placeholder="Add day"></paper-chip-input>
             </template>
         </demo-snippet>
 
