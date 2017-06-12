@@ -35,9 +35,8 @@
     "changelog": "conventional-changelog -p eslint -i CHANGELOG.md -s",
     "from:master": "node -e 'process.exit(require(\"git-rev-sync\").branch(process.cwd()) !== \"master\")'",
     "changelog:edit": "$(git var GIT_EDITOR) CHANGELOG.md",
-    "version:bower": "VERSION=$npm_package_config_version node -e 'const b = require(\"./bower.json\"); b.version = process.env.VERSION; require(\"fs\").writeFileSync(\"./bower.json\", JSON.stringify(b, null, 2))'",
     "preversion": "npm run from:master",
-    "version": "npm run changelog && npm run changelog:edit && git add CHANGELOG.md && npm run version:bower && git add bower.json",
+    "version": "npm run changelog && npm run changelog:edit && git add CHANGELOG.md",
     "postversion": "git push && git push --tags && git checkout develop && git merge master && git push && git checkout master",
     "serve": "polyserve -c $npm_package_config_directories_deps",
     "test": "wct"
