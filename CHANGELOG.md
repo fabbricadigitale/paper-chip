@@ -1,3 +1,17 @@
+<a name="0.9.2"></a>
+## [0.9.2](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.1...v0.9.2) (2017-06-12)
+
+
+### Build
+
+* Remove unnecessary bower file versioning ([5c4542c96a12e70248ecb433c3a4927ce65f78b1](https://github.com/fabbricadigitale/paper-chip/commit/5c4542c96a12e70248ecb433c3a4927ce65f78b1))
+
+### Upgrade
+
+* Bower deps with GitHub shorthand ([bdcb984ddc5d79bf66946ccc26c63604a07e390c](https://github.com/fabbricadigitale/paper-chip/commit/bdcb984ddc5d79bf66946ccc26c63604a07e390c))
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.0...v0.9.1) (2017-06-09)
 
