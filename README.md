@@ -80,7 +80,7 @@ It may be **removable** or not.
 
 Do you want to **animate** the chip when it is opening?
 
-You can do it via attribute.    
+You can do it via attribute.
 
 <!--
 ```
@@ -120,30 +120,35 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 
 Do you need **autocomplete** ?
 
-Use `<paper-chip-input-autocomplete>` when you have a predefined and finite set of input values.
+When you have a predefined and finite set of input values you can set the predefined values with `datasource` property.
 
-```html
-<paper-chip-input-autocomplete></paper-chip-input-autocomplete>
+<!--
 ```
-
-You can set the predefined values with `datasource` property.
-
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
 ```html
-<paper-chip-input-autocomplete
-  datasource='{{"value":"apple","key":0},{"value":"apricot","key":1}}'>
-</paper-chip-input-autocomplete>
+<paper-chip-input label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]' on-remove-chip="_removeChip" placeholder="Add day"></paper-chip-input>
 ```
 
 The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
 
 ```html
-<paper-chip-input-autocomplete display-property="val" value-property="key">
-</paper-chip-input-autocomplete>
+<paper-chip-input display-property="val" value-property="key">
+</paper-chip-input>
 ```
 
 ```json
-{ "val": "apple", "key": 0 },
-{ "val": "apricot", "key": 1 }
+[
+  { "val": "apple", "key": "0" },
+  { "val": "apricot", "key": "1" }
+]
 ```
 
 ## Styling
