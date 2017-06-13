@@ -142,7 +142,8 @@
 
     </template>
     <script>
-        class PaperChipInput extends Polymer.Element {
+        class PaperChipInput extends
+            Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element) {
             static get is() {
                 return "paper-chip-input"
             }
@@ -186,7 +187,31 @@
                         type: Boolean,
                         value: false,
                         computed: "_computeAutocomplete(datasource)"
+                    },
+                    enterKeys: {
+                        type: Array,
+                        value: () => ["enter"]
                     }
+                }
+            }
+
+            get keyBindings() {
+                return {
+                    "backspace": "_remove",
+                    "escape": "_hideTips"
+                }
+            }
+
+            _add() {
+                if( !this._autocomplete){
+                    this._pushChip()
+                }
+            }
+
+            _remove() {
+                const tagInput = this.shadowRoot.querySelector("#tagInput")
+                if (tagInput.value === "") {
+                    this._popChip()
                 }
             }
 
@@ -194,25 +219,26 @@
                 super.connectedCallback()
 
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
-
                 tagInput.addEventListener("keydown", (event) => {
-                    if (event.code === "Escape" && !this.hidden && this._autocomplete) {
-                        this._hideTips()
-                    }
-                    if (tagInput.value && event.code === "Enter" && !this._autocomplete) {
-                        this._pushChip()
-                    }
-                    if (tagInput.value === "" && event.code === "Backspace") {
-                        this._popChip()
+                    if (tagInput.value === "" && event.keyCode === 32) {
+                        event.preventDefault()
                     }
                 })
+
                 tagInput.addEventListener("keyup", (event) => {
                     if (this._autocomplete) {
-                        if (tagInput.value !== "" && event.code !== "Escape") {
+                        if (tagInput.value !== "") {
                             this._filter()
-                        } else {
-                            this._hideTips()
                         }
+                    }
+                })
+
+                // Imperatively add key to keyBindings element
+                this.enterKeys.map((value) => {
+                    const key = value.toLowerCase()
+                    // reserved keys
+                    if( key !== "backspace" && key !== "delete" && key !== "escape"){
+                        this.addOwnKeyBinding(key, "_add")
                     }
                 })
             }
@@ -259,7 +285,7 @@
                 if (tagInput.value) {
                     const value = tagInput.value.trim()
                     this._ensureValues()
-                    if (!this.values.includes(value)) {
+                    if (!this.values.includes(value) && value !== "") {
                         this.push("values", value)
                         this._ensurePlaceholder()
                     }
@@ -358,8 +384,10 @@
             }
 
             _hideTips() {
-                this.shadowRoot.querySelector("#tips") ? this.shadowRoot.querySelector("#tips").scrollTop = 0 : ""
-                this.hidden = true
+                if (this._autocomplete) {
+                    this.shadowRoot.querySelector("#tips") ? this.shadowRoot.querySelector("#tips").scrollTop = 0 : ""
+                    this.hidden = true
+                }
             }
 
             _computeAutocomplete(datasource) {
