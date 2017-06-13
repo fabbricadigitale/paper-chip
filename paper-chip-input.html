@@ -115,7 +115,7 @@
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
-                        <paper-chip index="[[index]]" value="[[_computeValue(item)]]" on-remove-chip="_removeChip" removable single-line>
+                        <paper-chip index="[[index]]" value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
                             <span slot="label" class="label">[[_computeLabel(item)]]</span>
                         </paper-chip>
                     </template>
@@ -144,18 +144,20 @@
     <script>
         class PaperChipInput extends
             Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element) {
+
             static get is() {
                 return "paper-chip-input"
             }
+
             static get properties() {
                 return {
                     displayProperty: {
                         type: String,
-                        value: () => { return "label" }
+                        value: "label"
                     },
                     valueProperty: {
                         type: String,
-                        value: () => { return "value" }
+                        value: "value"
                     },
                     hidden: {
                         type: Boolean,
@@ -163,7 +165,7 @@
                     },
                     label: {
                         type: String,
-                        value: () => "Tags"
+                        value: "Tags"
                     },
                     values: {
                         type: Array,
@@ -191,6 +193,10 @@
                     enterKeys: {
                         type: Array,
                         value: () => ["enter"]
+                    },
+                    _nop: {
+                        type: Function,
+                        value: () => () => null
                     }
                 }
             }
@@ -233,14 +239,12 @@
                     }
                 })
 
-                // Imperatively add key to keyBindings element
-                this.enterKeys.map((value) => {
-                    const key = value.toLowerCase()
-                    // reserved keys
-                    if( key !== "backspace" && key !== "delete" && key !== "escape"){
-                        this.addOwnKeyBinding(key, "_add")
-                    }
-                })
+                // Difference between the user enter keys and the reserved ones
+                const rsrv = new Set(["backspace", "delete", "escape"])
+                const diff = new Set(this.enterKeys.filter(val => !rsrv.has(val.toLowerCase())))
+
+                // Imperatively insert keys to the key bindings property
+                diff.forEach((key) => this.addOwnKeyBinding(key, "_add"))
             }
 
             _onValuesChanged(values) {
@@ -320,9 +324,9 @@
                 item[this.displayProperty] = event.target.labelText
                 item[this.valueProperty] = event.target.value
 
-                //if (!this.values.includes(value)) {
+                // if (!this.values.includes(value)) {
                 this.push("values", item)
-                //}
+                // }
                 tagInput.value = ""
                 this._hideTips()
 
@@ -339,6 +343,9 @@
                         this._prefilterSource()
                     }
                 } else {
+                    // Prevent the paper-chip detaches itself from dom-repeat
+                    evt.preventDefault()
+
                     const index = evt.currentTarget.index
                     this._ensureValues()
                     if (index in this.values) {

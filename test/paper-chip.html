@@ -72,10 +72,13 @@
 
                 let chip = fixture('removable')
 
-                window.addEventListener("remove-chip", () => {
-                    assert.isOk("ok", "paper-chip has been removed")
+                chip.addEventListener("remove", () => {
+                    assert.isOk("ok", "paper-chip remove event has been launched")
                     done()
                 }, false)
+                
+                // (todo) > test that disconnect callback of paper-chip has been called
+                // (todo) > test that paper-chip is not in DOM anymore
 
                 Polymer.Base.async(function () {
                     chip.$.removeBtn.click()
