@@ -118,6 +118,31 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 <paper-chip-input></paper-chip-input>
 ```
 
+Do you want to change the **keys** that automatically submit chips?
+
+No worries, we support it!
+
+Configure them with the `enter-keys` property adding the keys.
+
+We support the [Polymer.IronA11yKeysBehavior](https://github.com/PolymerElements/iron-a11y-keys-behavior) format.
+
+Following example should clarify the usage of this feature.
+
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input enter-keys='["enter", "space"]'></paper-chip-input>
+```
+
 Do you need **autocomplete** ?
 
 When you have a predefined and finite set of input values you can set the predefined values with `datasource` property.
