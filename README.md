@@ -189,7 +189,9 @@ Custom property | Description | Default
 
 ## Testing
 
-If you are using **polyserve** navigate to the `test/` directory of your element to run its tests. You can view results in browser console.
+If you are using **polyserve** navigate to the `test/` directory of your element to run its tests.
+
+You can view results in the browser console.
 
 ### WCT
 
@@ -200,6 +202,14 @@ To run them locally execute:
 ```bash
 npm test
 ```
+
+## Contributing
+
+Thanks for your interest in this project!
+
+We are really glad you are reading this. External contributions are very welcome by our team. We know that we need volunteer developers to help this project come (and mantain) to fruition.
+
+There are many ways to contribute to this project. Get started reading the [contributing guide](CONTRIBUTING.md).
 
 ## License
 
