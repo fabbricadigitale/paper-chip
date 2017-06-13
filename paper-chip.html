@@ -76,6 +76,7 @@ The default properties for datasource are `label` and `value`, but you can confi
 ```
 
 ## Styling
+
 The following custom properties and mixins are available for styling:
 
 Custom property | Description | Default
@@ -137,17 +138,15 @@ MIT © fabbricadigitale
                 @apply --paper-chip;
             }
 
-             :host([animated]) *,
-             :host([animated])::slotted(*) {
+            :host([animated]) *,
+            :host([animated])::slotted(*) {
                 transition: 200ms ease-in;
             }
-
 
             #main,
             #chip {
                 border-radius: 16px;
             }
-
 
             #main {
                 background-color: var(--paper-chip-background-color, var(--paper-grey-200));
@@ -156,7 +155,6 @@ MIT © fabbricadigitale
                 @apply --layout-vertical;
             }
 
-
             #chip {
                 box-sizing: border-box;
                 height: 32px;
@@ -164,11 +162,9 @@ MIT © fabbricadigitale
                 @apply --layout-center;
             }
 
-
             paper-material {
                 border-radius: 16px;
             }
-
 
             #icon {
                 @apply --layout-horizontal;
@@ -239,19 +235,19 @@ MIT © fabbricadigitale
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-             :host([opened]) ::slotted([slot="caption"]) {
+            :host([opened]) ::slotted([slot="caption"]) {
                 display: block;
             }
 
-             :host([opened]) {
+            :host([opened]) {
                 z-index: 1;
             }
 
-             ::slotted([slot="label"]) {
+            ::slotted([slot="label"]) {
                 @apply --paper-chip-label;
             }
 
-             ::slotted([slot="caption"]) {
+            ::slotted([slot="caption"]) {
                 @apply --paper-chip-caption;
             }
 
@@ -267,32 +263,31 @@ MIT © fabbricadigitale
                 @apply --paper-chip-removebtn;
             }
 
-
             #removeBtn iron-icon {
                 display: block;
                 @apply --paper-chip-removebtn-icon;
             }
 
-
             #removeBtn {
                 display: none;
             }
 
-             :host([removable]) #removeBtn {
+            :host([removable]) #removeBtn {
                 display: block;
             }
+            
             /* pressed state */
 
-             :host([pressed]) #main {
+            :host([pressed]) #main {
                 background-color: var(--paper-chip-pressed-background-color, var(--paper-grey-300));
             }
+
             /* opened state */
 
-             :host([opened]) #main,
-             :host([opened]) #chip {
+            :host([opened]) #main,
+            :host([opened]) #chip {
                 border-radius: 0;
             }
-
 
             #content {
                 width: 0;
@@ -301,7 +296,7 @@ MIT © fabbricadigitale
                 overflow: hidden;
             }
 
-             :host([opened]) #content {
+            :host([opened]) #content {
                 height: auto;
                 width: auto;
                 min-width: 100%;
@@ -309,60 +304,61 @@ MIT © fabbricadigitale
                 @apply --paper-chip-content;
             }
 
-             :host([opened]) #chip {
+            :host([opened]) #chip {
                 height: 72px;
             }
 
-             :host([opened]) #chip,
-             :host([opened]) ::slotted([slot="content"]) {
+            :host([opened]) #chip,
+            :host([opened]) ::slotted([slot="content"]) {
                 padding: 16px 12px;
                 background-color: var(--paper-chip-opened-background-color, var(--paper-grey-50));
             }
 
-             :host([opened])::slotted([slot="label"]) {
+            :host([opened])::slotted([slot="label"]) {
                 color: var(--paper-chip-primary-text-color, var(--primary-text-color));
                 font-size: 16px;
                 @apply --paper-chip-label-opened;
             }
 
-             :host([opened]) paper-material {
+            :host([opened]) paper-material {
                 border-radius: 0;
             }
 
-             :host([opened])::slotted([slot="icon"]) {
+            :host([opened])::slotted([slot="icon"]) {
                 font-size: 20px;
                 width: 40px;
                 height: 40px;
                 line-height: 40px;
             }
 
-             :host([opened]) #removeBtn {
+            :host([opened]) #removeBtn {
                 padding: 4px;
                 margin-left: 16px;
             }
+            
             /* open + active state */
 
-             :host([opened][active]) #chip,
-             :host([opened][active])::slotted {
+            :host([opened][active]) #chip,
+            :host([opened][active])::slotted {
                 background-color: var(--paper-chip-active-color, var(--accent-color));
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-             :host([opened][active]) #removeBtn {
+            :host([opened][active]) #removeBtn {
                 color: var(--paper-chip-active-color, var(--accent-color));
                 background-color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-             :host([opened][removable]) iron-icon {
+            :host([opened][removable]) iron-icon {
                 padding-top: 2px;
                 padding-left: 2px;
             }
 
-             :host([opened][active])::slotted([slot="label"]) {
+            :host([opened][active])::slotted([slot="label"]) {
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-             :host([opened][active])::slotted(h2) {
+            :host([opened][active])::slotted(h2) {
                 color: var(--paper-chip-active-secondary-text-color, var(--text-primary-color));
             }
         </style>
@@ -387,7 +383,7 @@ MIT © fabbricadigitale
 
                     </div>
 
-                    <div id="removeBtn" on-tap="_remove" aria-label="remove button">
+                    <div id="removeBtn" on-tap="_selfRemove" aria-label="remove button">
 
                         <iron-icon icon="paper-chip-icons:cancel" class="icon"></iron-icon>
 
@@ -415,10 +411,7 @@ MIT © fabbricadigitale
             static get is() {
                 return "paper-chip"
             }
-            /**
-             * (Note) => The properties are replicated to works with different version of Polymer
-             * When we use definitely the newer version we can cut config prop
-             */
+            
             static get properties() {
                 return {
 
@@ -433,8 +426,8 @@ MIT © fabbricadigitale
                     },
 
                     /**
-                     * Whether or not the chip is removable. If `true`, a remove button will
-                     * be shown.
+                     * Whether or not the chip is removable.
+                     * When `true`, a remove button will be shown.
                      *
                      * @attribute removable
                      * @type boolean
@@ -447,7 +440,8 @@ MIT © fabbricadigitale
                     },
 
                     /**
-                     * Whether or not the chip contains additional content. Single-line chips do not open.
+                     * Whether or not the chip contains additional content.
+                     * Single-line chips do not open.
                      */
                     singleLine: {
                         type: Boolean,
@@ -458,7 +452,7 @@ MIT © fabbricadigitale
 
                     /**
                      * Whether or not the chip uses an animated transition between opened and
-                     * closed states
+                     * closed states.
                      *
                      * @attribute animated
                      * @type boolean
@@ -488,7 +482,6 @@ MIT © fabbricadigitale
                     _elevation: {
                         type: Number,
                         computed: "_computeElevation(opened, focused, disabled, active, pressed)"
-
                     }
                 }
             }
@@ -501,8 +494,6 @@ MIT © fabbricadigitale
                 this._ensureAttribute("tabindex", 0)
                 this._setDefaultValue()
             }
-
-
 
             disconnectedCallback() {
                 super.disconnectedCallback()
@@ -532,10 +523,21 @@ MIT © fabbricadigitale
                 this.opened = false
             }
 
-            _remove(evt) {
-                evt.stopPropagation();
-                this.dispatchEvent(new CustomEvent("remove-chip", { bubbles: true }))
-                //this.parentNode.removeChild(this)
+            _selfRemove(evt) {
+                evt.stopPropagation()
+                this.remove()
+            }
+
+            remove() {
+                if (!this.removable) {
+                    return // ignore
+                }
+                const evt = new CustomEvent("remove", { cancelable: true })
+                this.dispatchEvent(evt)
+                // Remove from DOM when the event default action has not been prevented
+                if (!evt.defaultPrevented) {
+                    return this.parentNode.removeChild(this)
+                }
             }
 
             toggleOpened() {
@@ -590,14 +592,17 @@ MIT © fabbricadigitale
 
             get keyBindings() {
                 return {
-                    "delete": "_remove",
-                    "backspace": "_remove"
+                    "delete": "_selfRemove",
+                    "backspace": "_selfRemove"
                 }
             }
 
             _setDefaultValue() {
-                if (this.value !== undefined) return
-                this.value = Polymer.dom(this).querySelector("[slot='label']") ? Polymer.dom(this).querySelector("[slot='label']").textContent : undefined
+                if (this.value !== undefined) {
+                    return // exit
+                }
+                const val = Polymer.dom(this).querySelector("[slot='label']")
+                this.value = val ? val.textContent : undefined
             }
 
         }
