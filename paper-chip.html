@@ -516,7 +516,7 @@ MIT © fabbricadigitale
             }
 
             _onTap() {
-                this.toggleOpened()
+                this.opened = true
             }
 
             _onBlur() {
@@ -537,12 +537,6 @@ MIT © fabbricadigitale
                 // Remove from DOM when the event default action has not been prevented
                 if (!evt.defaultPrevented) {
                     return this.parentNode.removeChild(this)
-                }
-            }
-
-            toggleOpened() {
-                if (!this.singleLine) {
-                    this.opened = !this.opened
                 }
             }
 
