@@ -142,6 +142,16 @@
 
     </template>
     <script>
+/*-------
+        var chip = new PaperChipInput()
+
+        chip.filter = (data, value) => {
+            return data.filter((item) => {
+                return item[chip.displayProperty].toLowerCase().startsWith(value.toLowerCase())
+            })
+        }
+------
+*/
         class PaperChipInput extends
             Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element) {
 
@@ -194,9 +204,14 @@
                         type: Array,
                         value: () => ["enter"]
                     },
-                    _nop: {
+                    filter: {
                         type: Function,
-                        value: () => () => null
+                        value: function () {
+                            return (data, value) =>
+                                data.filter(
+                                    (item) => item[this.displayProperty].toLowerCase().startsWith(value.toLowerCase())
+                                )
+                        }
                     }
                 }
             }
@@ -204,12 +219,12 @@
             get keyBindings() {
                 return {
                     "backspace": "_remove",
-                    "escape": "_hideTips"
+                    "esc": "_hideTips"
                 }
             }
 
             _add() {
-                if( !this._autocomplete){
+                if (!this._autocomplete) {
                     this._pushChip()
                 }
             }
@@ -233,7 +248,7 @@
 
                 tagInput.addEventListener("keyup", (event) => {
                     if (this._autocomplete) {
-                        if (tagInput.value !== "") {
+                        if (tagInput.value !== "" && event.keyCode !== 27) {
                             this._filter()
                         }
                     }
@@ -309,7 +324,7 @@
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
                 if (tagInput.value) {
                     this._prefilterSource()
-                    this._source = this._startsWith(tagInput.value.toLowerCase())
+                    this._source =this.filter(this._source, tagInput.value)
                     if (!this._source.length) {
                         this._hideTips()
                     } else {
