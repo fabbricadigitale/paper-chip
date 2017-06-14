@@ -49,22 +49,32 @@
 
             test('add a new chip', (done) => {
                 const input = fixture('add')
-                const target = input.$.tagInput
-                target.value = "foo"
-                MockInteractions.keyDownOn(target, "Enter");
-                expect(input.values).to.deep.equal(["foo"])
-                done()
+                enterCharacter(input.$.tagInput, "A")
+                MockInteractions.pressEnter(input.$.tagInput)
+                setTimeout(() => {
+                    console.log(input.values)
+                    expect(input.values).to.deep.equal(["A"])
+                    done()
+                }, 1)
             })
 
             test("remove a chip pressing backspace", (done) => {
                 const input = fixture('backspace')
-                input.$.tagInput.value = "foo"
-                MockInteractions.keyDownOn(input.$.tagInput, "Enter");
-                expect(input.values).to.deep.equal(["foo"])
-                MockInteractions.keyDownOn(input.$.tagInput, "Backspace");
+                enterCharacter(input.$.tagInput, "A")
+                MockInteractions.pressEnter(input.$.tagInput)
+                expect(input.values).to.deep.equal(["A"])
+
+                MockInteractions.pressAndReleaseKeyOn(input.$.tagInput, undefined, [], 'backspace')
+
                 expect(input.values).to.deep.equal([])
+
                 done()
             })
+
+            function enterCharacter(input, char) {
+                input.value += char
+                MockInteractions.keyDownOn(input, char.charCodeAt(char.length - 1))
+            }
         })
 
         suite('paper-chip-input with autocomplete feature', () => {
@@ -174,17 +184,27 @@
             test("clicking on escape key the tips hiding works", (done) => {
                 enterCharacter(element.$.tagInput, "A")
                 expect(element.hidden).to.equal(false)
-                MockInteractions.keyUpOn(element.$.tagInput, "Escape")
-                /*expect(element.hidden).to.equal(true)*/
+                MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'escape')
+                expect(element.hidden).to.equal(true)
                 done()
             })
 
+            test("customize filter logic works", (done) => {
+                element.filter = (data, value) => {
+                    return data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
+                }
+                enterCharacter(element.$.tagInput, "V")
+                setTimeout(() => {
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    expect(items.length).to.equal(6)
+                    done()
+                }, 1)
+            })
+
             function enterCharacter(input, char) {
-                input.value += char;
+                input.value += char
                 MockInteractions.keyUpOn(input, char.charCodeAt(char.length - 1))
             }
-
-
         })
     </script>
 </body>

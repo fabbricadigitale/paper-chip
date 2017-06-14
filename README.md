@@ -176,6 +176,34 @@ The default properties for datasource are `label` and `value`, but you can confi
 ]
 ```
 
+Autocomplete uses a **startWith** filter as default logic.
+
+Do you need to implement a **custom filter logic**? You can do it!
+
+Set `filter` property with your custom *function*. The following lines of code will show you how to do it.
+
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input id="weekdays" label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]' on-remove-chip="_removeChip" placeholder="Add day"></paper-chip-input>
+<script>
+let weekdays = document.querySelector("#weekdays");
+weekdays.filter = (data, value) => {
+    return data.filter((item) => item[weekdays.displayProperty].toLowerCase().includes(value.toLowerCase()))
+}
+</script>
+```
+
+
 ## Styling
 
 The following custom properties and mixins are available for styling:
