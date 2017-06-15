@@ -38,15 +38,35 @@
         </template>
     </test-fixture>
 
-    <test-fixture id="disc">
+    <test-fixture id="dom">
         <template>
             <paper-chip removable></paper-chip>
         </template>
     </test-fixture>
 
-    <test-fixture id="dom">
+    <dom-module id="TestPaperChip">
+        <script>
+            HTMLImports.whenReady(function() {
+                class TestPaperChip extends PaperChip {
+                    static get is() { return 'test-paper-chip'; }
+                    constructor() {
+                        super()
+                        this._disconnectedCallbackSpy = 0
+                    }
+                    disconnectedCallback() {
+                        super.disconnectedCallback()
+                        this._disconnectedCallbackSpy++
+                    }
+                }
+                customElements.define(TestPaperChip.is, TestPaperChip);
+                window.TestPaperChip = TestPaperChip
+            })
+        </script>
+    </dom-module>
+
+    <test-fixture id="spy">
         <template>
-            <paper-chip removable></paper-chip>
+            <test-paper-chip removable></test-paper-chip>
         </template>
     </test-fixture>
 
@@ -97,15 +117,16 @@
             })
 
             // This test fails
-            /*test('disconnect callback of paper-chip has been called', (done) => {
+            test('disconnect callback of paper-chip has been called', (done) => {
+                const chip = fixture('spy')
 
-                let chip = fixture('disc')
-                const disconnectedCallback = sinon.spy(chip, 'disconnectedCallback');
-                chip.$.removeBtn.click()
+                chip.remove()
 
-                expect(disconnectedCallback).to.have.been.called;
-                done()
-            })*/
+                flush(function() {
+                    expect(chip._disconnectedCallbackSpy).to.equal(1)
+                    done()
+                })
+            })
 
             test('paper-chip is not in DOM anymore', (done) => {
 
