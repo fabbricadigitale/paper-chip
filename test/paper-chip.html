@@ -48,7 +48,7 @@
         <script>
             HTMLImports.whenReady(function() {
                 class TestPaperChip extends PaperChip {
-                    static get is() { return 'test-paper-chip'; }
+                    static get is() { return 'test-paper-chip' }
                     constructor() {
                         super()
                         this._disconnectedCallbackSpy = 0
@@ -58,7 +58,7 @@
                         this._disconnectedCallbackSpy++
                     }
                 }
-                customElements.define(TestPaperChip.is, TestPaperChip);
+                customElements.define(TestPaperChip.is, TestPaperChip)
                 window.TestPaperChip = TestPaperChip
             })
         </script>
