@@ -43,8 +43,11 @@
         suite('paper-chip-input', () => {
             test('instantiating the element works', (done) => {
                 var element = fixture('basic')
-                assert.instanceOf(element, PaperChipInput)
-                done()
+
+                flush(() => {
+                    assert.instanceOf(element, PaperChipInput)
+                    done()
+                })
             })
 
             test('add a new chip', (done) => {
