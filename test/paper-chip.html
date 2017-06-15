@@ -38,6 +38,18 @@
         </template>
     </test-fixture>
 
+    <test-fixture id="disc">
+        <template>
+            <paper-chip removable></paper-chip>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="dom">
+        <template>
+            <paper-chip removable></paper-chip>
+        </template>
+    </test-fixture>
+
 
     <script>
         suite('paper-chip', () => {
@@ -76,14 +88,37 @@
                     assert.isOk("ok", "paper-chip remove event has been launched")
                     done()
                 }, false)
-                
+
                 // (todo) > test that disconnect callback of paper-chip has been called
-                // (todo) > test that paper-chip is not in DOM anymore
 
                 Polymer.Base.async(function () {
                     chip.$.removeBtn.click()
                 }, 1)
             })
+
+            // This test fails
+            /*test('disconnect callback of paper-chip has been called', (done) => {
+
+                let chip = fixture('disc')
+                const disconnectedCallback = sinon.spy(chip, 'disconnectedCallback');
+                chip.$.removeBtn.click()
+
+                expect(disconnectedCallback).to.have.been.called;
+                done()
+            })*/
+
+            test('paper-chip is not in DOM anymore', (done) => {
+
+                let chip = fixture('dom')
+                const parent = chip.parentElement
+                chip.$.removeBtn.click()
+                const element = parent.querySelector("#dom")
+                expect(element).to.equal(null)
+
+                done()
+
+            })
+
         })
     </script>
 </body>

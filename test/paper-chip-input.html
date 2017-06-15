@@ -52,7 +52,6 @@
                 enterCharacter(input.$.tagInput, "A")
                 MockInteractions.pressEnter(input.$.tagInput)
                 setTimeout(() => {
-                    console.log(input.values)
                     expect(input.values).to.deep.equal(["A"])
                     done()
                 }, 1)
