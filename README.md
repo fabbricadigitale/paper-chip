@@ -196,7 +196,7 @@ Set `filter` property with your custom *function*. The following lines of code w
 ```html
 <paper-chip-input id="weekdays" label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]' on-remove-chip="_removeChip" placeholder="Add day"></paper-chip-input>
 <script>
-let weekdays = document.querySelector("#weekdays");
+let weekdays = document.querySelector("#weekdays")
 weekdays.filter = (data, value) => {
     return data.filter((item) => item[weekdays.displayProperty].toLowerCase().includes(value.toLowerCase()))
 }
