@@ -1,0 +1,20 @@
+language: node_js
+node_js: stable
+dist: trusty
+addons:
+  firefox: latest
+  sauce_connect: true
+  apt:
+    packages:
+    - google-chrome-stable
+before_install:
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
+script:
+- npm test
+- if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then npm run test -- -s 'default'; fi
+env:
+  global:
+  - secure: NwzWxmtqJYEacoqV+4UOnjBIVQxr8UQDiwj2w/JZqMWvdyxjuqO1FBVjDw8w4ikKKDn3d3UvNoNH4ZwJHnK3tyQbxr25Cdj6SJH0qyxU6YFrdD+bgIRltv3LG1NRoO5l1A/PovLaviuOWi8Lcndt/oXRg+3Sz3eKkShmb2BaLRVLwNnmn5HU6YFXa3OBzZs+5hCOhjLi0TapBWzQgynMd4LceedrH+9l3gkbRL/mqAbCa8iZL7PdLwp2WhlBhXv6vuQU+5FZQ6IZ7cWH3f6Zgz5cbqvFnV98C/DquMuf5/sh0/EMXMHQVbM4Jn5cpeABdu3v8MkjI4ROYXUo8MBPPzW4JJ4ZWZRCLs5z54cg5+/6qAULlNV/rjjadYkyRFqweKzRaL6JmtVgGxAWfB0sTioM7gy1BNtcXmUvNCfVpUDkeUBPUkMs7yfvHwEeVPp6Fjnxg6+DbNKeF/3BtiSAB3quQVfkYMPzT0LmJ/1GFRCnoAv7S8cOMsiHP9TzE1loDgIAZuq9a+ue0fRYQDu0p8yTykg/HP0kMFrwFYJknIkE6jKQ3kUU7aItswCrUUwWYrHTGTCHu9p5QxAU7yHy3kTWjRIiTwicMZQW4grhRUt8OjHImjoy6KsVxjh3IsflcPrRLyg2Kuh8dGDbDLOFzovBaOuca5KyVo+QmH/xN7E=
+  - secure: b3uCD6dltUecUh7SfwX+goErdy//GU9Yu+6WQM/eK4iPVhZ+FapvyKAx7WplteKz5Pl6P11wwbtEBFae2abJub1We2J+wKpgk6ewX9NLXbDuOThriyf08X7IWrqj+rVQmj4loilUz4UcwBJbdvUs0L22nQZIKgSMucVDaS4va2GJhvEGQWp9B23xg7ny3g2uXUzM4KRd1aTjyCXGs6IbGYvUbxd3gPt2oUsLJ9o0bSs+ULxa/SWVj2mQWtOswsR2UY4SOBkZYI+TQtCFLpZGbfiINb9BsY85uCfCP+3m8SXKciBIOP8zmrqX8nX/RKJ6a74v0rHA9rKq2WfaGZ89dKjNFRe1Y97sdwW5lfvAyCcwXSYdnH8/vCOHmQVW6q5gsmG/yIluGWgi/1za1oesz4MeCyT5lAhF5TMRELrYpgb3zBkIHq2ohUA8+i70IPHZfAZbJ4tcgE9w1MZfXAXKEyCsZdxL+MGvxfC4qqK8ixL/in2/KDeLis4bYfEsS3EEN79OcESREy11cckr0M6WrhWAqhAPBmReBga7j65/YG+k+Wca3YRudSAFqUhjmERuqj9BcvaWO11z8mRP9QS09WzvAwhDWOsOAWf5kjJMSyS1oUxsSkmIeTcpff1L4/s1MiB8e84PIpliZGk21uVfTfvoa8fsDlTZEbx8CSaLvbI=
