@@ -295,7 +295,7 @@
                 if (tagInput.value) {
                     const value = tagInput.value.trim()
                     this._ensureValues()
-                    if (!this.values.includes(value) && value !== "") {
+                    if (this.values.indexOf(value) < 0 && value !== "") {
                         this.push("values", value)
                         this._ensurePlaceholder()
                     }
@@ -330,9 +330,7 @@
                 item[this.displayProperty] = event.target.labelText
                 item[this.valueProperty] = event.target.value
 
-                // if (!this.values.includes(value)) {
                 this.push("values", item)
-                // }
                 tagInput.value = ""
                 this._hideTips()
 
