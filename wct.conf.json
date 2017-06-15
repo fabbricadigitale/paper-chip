@@ -9,10 +9,57 @@
     },
     "sauce": {
       "disabled": true,
-      "browsers": [{
+      "browsers": [
+        {
           "browserName": "microsoftedge",
           "platform": "Windows 10",
-          "version": ""
+          "version": "13"
+        },
+        {
+          "browserName": "microsoftedge",
+          "platform": "Windows 10",
+          "version": "14"
+        },
+        {
+          "browserName": "microsoftedge",
+          "platform": "Windows 10",
+          "version": "15"
+        },
+        {
+          "browserName": "internetexplorer",
+          "platform": "Windows 10",
+          "version": "11"
+        },
+        {
+          "browserName": "firefox",
+          "platform": "Windows 10",
+          "version": "latest"
+        },
+        {
+          "browserName": "chrome",
+          "platform": "Windows 10",
+          "version": "latest"
+        },
+
+        {
+          "browserName": "microsoftedge",
+          "platform": "Windows 8.1",
+          "version": "13"
+        },
+        {
+          "browserName": "microsoftedge",
+          "platform": "Windows 8.1",
+          "version": "14"
+        },
+        {
+          "browserName": "microsoftedge",
+          "platform": "Windows 8.1",
+          "version": "15"
+        },
+        {
+          "browserName": "internetexplorer",
+          "platform": "Windows 8.1",
+          "version": "11"
         },
         {
           "browserName": "firefox",
@@ -24,10 +71,58 @@
           "platform": "Windows 8.1",
           "version": "latest"
         },
+
         {
           "browserName": "safari",
           "platform": "OS X 10.11",
           "version": "9"
+        },
+        {
+          "browserName": "safari",
+          "platform": "OS X 10.11",
+          "version": "10"
+        },
+        {
+          "browserName": "chrome",
+          "platform": "OS X 10.11",
+          "version": "latest"
+        },
+        {
+          "browserName": "firefox",
+          "platform": "OS X 10.11",
+          "version": "latest"
+        },
+
+        {
+          "browserName": "safari",
+          "platform": "OS X 10.12",
+          "version": "10"
+        },
+        {
+          "browserName": "chrome",
+          "platform": "OS X 10.12",
+          "version": "latest"
+        },
+        {
+          "browserName": "firefox",
+          "platform": "OS X 10.12",
+          "version": "latest"
+        },
+
+        {
+          "browserName": "opera",
+          "platform": "linux",
+          "version": "12"
+        },
+        {
+          "browserName": "chrome",
+          "platform": "linux",
+          "version": "latest"
+        },
+        {
+          "browserName": "firefox",
+          "platform": "linux",
+          "version": "latest"
         }
       ]
     }
