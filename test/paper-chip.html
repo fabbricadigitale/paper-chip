@@ -46,7 +46,7 @@
 
     <dom-module id="TestPaperChip">
         <script>
-            HTMLImports.whenReady(function() {
+            HTMLImports.whenReady(function () {
                 class TestPaperChip extends PaperChip {
                     static get is() { return 'test-paper-chip' }
                     constructor() {
@@ -75,12 +75,13 @@
         suite('paper-chip', () => {
             test('instantiating the element works', () => {
                 const element = fixture('basic')
-                assert.instanceOf(element, PaperChip)
+                flush(() => {
+                    assert.instanceOf(element, PaperChip)
+                })
             })
 
             test('focus a paper-chip with tabindex', (done) => {
                 const chip = fixture('has-tabindex')
-
                 chip.focus()
                 Polymer.Base.async(() => {
                     assert.equal(chip.shadowRoot ? chip.shadowRoot.activeElement :
@@ -90,9 +91,7 @@
             })
 
             test('click on a paper-chip openable', (done) => {
-
                 const chip = fixture('openable')
-
                 chip.click()
                 Polymer.Base.async(function () {
                     assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
@@ -101,17 +100,12 @@
             })
 
             test('remove a paper-chip clicking on remove button', (done) => {
-
                 let chip = fixture('removable')
-
                 chip.addEventListener("remove", () => {
                     assert.isOk("ok", "paper-chip remove event has been launched")
                     done()
                 }, false)
-
-                // (todo) > test that disconnect callback of paper-chip has been called
-
-                Polymer.Base.async(function () {
+                Polymer.Base.async(() => {
                     chip.$.removeBtn.click()
                 }, 1)
             })
@@ -119,25 +113,22 @@
             // This test fails
             test('disconnect callback of paper-chip has been called', (done) => {
                 const chip = fixture('spy')
-
                 chip.remove()
-
-                flush(function() {
+                flush(() => {
                     expect(chip._disconnectedCallbackSpy).to.equal(1)
                     done()
                 })
             })
 
             test('paper-chip is not in DOM anymore', (done) => {
-
                 let chip = fixture('dom')
-                const parent = chip.parentElement
-                chip.$.removeBtn.click()
-                const element = parent.querySelector("#dom")
-                expect(element).to.equal(null)
-
-                done()
-
+                flush(() => {
+                    const parent = chip.parentElement
+                    chip.$.removeBtn.click()
+                    const element = parent.querySelector("#dom")
+                    expect(element).to.equal(null)
+                    done()
+                })
             })
 
         })
