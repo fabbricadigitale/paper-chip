@@ -42,7 +42,7 @@
     <script>
         suite('paper-chip-input', () => {
             test('instantiating the element works', (done) => {
-                var element = fixture('basic')
+                const element = fixture('basic')
 
                 flush(() => {
                     assert.instanceOf(element, PaperChipInput)
@@ -52,25 +52,29 @@
 
             test('add a new chip', (done) => {
                 const input = fixture('add')
-                enterCharacter(input.$.tagInput, "A")
-                MockInteractions.pressEnter(input.$.tagInput)
-                setTimeout(() => {
-                    expect(input.values).to.deep.equal(["A"])
-                    done()
-                }, 1)
+                flush(() => {
+                    enterCharacter(input.$.tagInput, "A")
+                    MockInteractions.pressEnter(input.$.tagInput)
+                    setTimeout(() => {
+                        expect(input.values).to.deep.equal(["A"])
+                        done()
+                    }, 1)
+                })
             })
 
             test("remove a chip pressing backspace", (done) => {
                 const input = fixture('backspace')
-                enterCharacter(input.$.tagInput, "A")
-                MockInteractions.pressEnter(input.$.tagInput)
-                expect(input.values).to.deep.equal(["A"])
+                flush(() => {
+                    enterCharacter(input.$.tagInput, "A")
+                    MockInteractions.pressEnter(input.$.tagInput)
+                    expect(input.values).to.deep.equal(["A"])
 
-                MockInteractions.pressAndReleaseKeyOn(input.$.tagInput, undefined, [], 'backspace')
+                    MockInteractions.pressAndReleaseKeyOn(input.$.tagInput, undefined, [], 'backspace')
 
-                expect(input.values).to.deep.equal([])
+                    expect(input.values).to.deep.equal([])
 
-                done()
+                    done()
+                })
             })
 
             function enterCharacter(input, char) {
@@ -150,57 +154,69 @@
             })
 
             test("loading the datasource works", (done) => {
-                expect(element.datasource).to.equal(states)
-                done()
+                flush(() => {
+                    expect(element.datasource).to.equal(states)
+                    done()
+                })
             })
 
             test("showing suggested items works", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-                setTimeout(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
-                    expect(items.length).to.equal(5)
-                    done()
-                }, 1)
+                flush(() => {
+                    enterCharacter(element.$.tagInput, "A")
+                    setTimeout(() => {
+                        const items = element.shadowRoot.querySelectorAll("paper-item")
+                        expect(items.length).to.equal(5)
+                        done()
+                    }, 1)
+                })
             })
 
             test("redefining suggested items on every added char works", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-                enterCharacter(element.$.tagInput, "l")
-                setTimeout(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
-                    expect(items.length).to.equal(2)
-                    done()
-                }, 1)
+                flush(() => {
+                    enterCharacter(element.$.tagInput, "A")
+                    enterCharacter(element.$.tagInput, "l")
+                    setTimeout(() => {
+                        const items = element.shadowRoot.querySelectorAll("paper-item")
+                        expect(items.length).to.equal(2)
+                        done()
+                    }, 1)
+                })
             })
 
             test("clicking on suggested item works", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-                setTimeout(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
-                    items[0].click()
-                    expect(element.values[0].label).to.equal('Alabama')
-                    done()
-                }, 1)
+                flush(() => {
+                    enterCharacter(element.$.tagInput, "A")
+                    setTimeout(() => {
+                        const items = element.shadowRoot.querySelectorAll("paper-item")
+                        items[0].click()
+                        expect(element.values[0].label).to.equal('Alabama')
+                        done()
+                    }, 1)
+                })
             })
 
             test("clicking on escape key the tips hiding works", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-                expect(element.hidden).to.equal(false)
-                MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'escape')
-                expect(element.hidden).to.equal(true)
-                done()
+                flush(() => {
+                    enterCharacter(element.$.tagInput, "A")
+                    expect(element.hidden).to.equal(false)
+                    MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'escape')
+                    expect(element.hidden).to.equal(true)
+                    done()
+                })
             })
 
             test("customize filter logic works", (done) => {
-                element.filter = (data, value) => {
-                    return data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
-                }
-                enterCharacter(element.$.tagInput, "V")
-                setTimeout(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
-                    expect(items.length).to.equal(6)
-                    done()
-                }, 1)
+                flush(() => {
+                    element.filter = (data, value) => {
+                        return data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
+                    }
+                    enterCharacter(element.$.tagInput, "V")
+                    setTimeout(() => {
+                        const items = element.shadowRoot.querySelectorAll("paper-item")
+                        expect(items.length).to.equal(6)
+                        done()
+                    }, 1)
+                })
             })
 
             function enterCharacter(input, char) {
