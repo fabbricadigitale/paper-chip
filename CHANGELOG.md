@@ -1,3 +1,44 @@
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.2...v0.10.0) (2017-06-16)
+
+
+### Docs
+
+* Browser support plus build status badges ([6a80728738e3441f3ca2137609d8155ef80dc234](https://github.com/fabbricadigitale/paper-chip/commit/6a80728738e3441f3ca2137609d8155ef80dc234))
+* Contributing guide ([a37a95a830269a63fbc5a74634d4a08b3e6f134c](https://github.com/fabbricadigitale/paper-chip/commit/a37a95a830269a63fbc5a74634d4a08b3e6f134c))
+* Live demo ([cca644eb87e828e8b6c6dfeea02fd8232d0675b3](https://github.com/fabbricadigitale/paper-chip/commit/cca644eb87e828e8b6c6dfeea02fd8232d0675b3))
+* README ([ea58f03a2834c8bbfb443a69cf2def12e8dfa5e4](https://github.com/fabbricadigitale/paper-chip/commit/ea58f03a2834c8bbfb443a69cf2def12e8dfa5e4))
+
+### Fix
+
+* Add flush in test element ([197cb077f0c64c45d8ccb7cfacd74040ae0602f8](https://github.com/fabbricadigitale/paper-chip/commit/197cb077f0c64c45d8ccb7cfacd74040ae0602f8))
+* Demo ([0dfa73ecd0fb9c55c95c801f0773d6e08df111d4](https://github.com/fabbricadigitale/paper-chip/commit/0dfa73ecd0fb9c55c95c801f0773d6e08df111d4))
+* Flush test fixture element ([043477176666f01db38083eb0dacf0d42b0cb006](https://github.com/fabbricadigitale/paper-chip/commit/043477176666f01db38083eb0dacf0d42b0cb006))
+* Remove the unnecessary reflectToAttribute  ([5b7bb9bb54ef46a129d6f2c8d020766200699098](https://github.com/fabbricadigitale/paper-chip/commit/5b7bb9bb54ef46a129d6f2c8d020766200699098))
+* Remove works on both elements now ([4114c86bb25e459ae457988f75213b2a59ad0e2e](https://github.com/fabbricadigitale/paper-chip/commit/4114c86bb25e459ae457988f75213b2a59ad0e2e))
+* Restore avatars in demo page ([9c62cd626319226e0ba90400e2d894b70fbc9140](https://github.com/fabbricadigitale/paper-chip/commit/9c62cd626319226e0ba90400e2d894b70fbc9140))
+* Toggling status for multiline chips ([b2ed7dd380e1af9a39dafc9278c86ccb92b0ee2b](https://github.com/fabbricadigitale/paper-chip/commit/b2ed7dd380e1af9a39dafc9278c86ccb92b0ee2b))
+* Translate Array.prototype.includes to Array.prototype.indexOf ([315b3fa0cfd0b3945109308b9232f8ef1f6650b0](https://github.com/fabbricadigitale/paper-chip/commit/315b3fa0cfd0b3945109308b9232f8ef1f6650b0))
+* Unsupport some platform/browser combinations ([fd90f969c6a7fe5dc05e5ed8d243acbfa3b2a5a7](https://github.com/fabbricadigitale/paper-chip/commit/fd90f969c6a7fe5dc05e5ed8d243acbfa3b2a5a7))
+
+### New
+
+* Autocomplete feature for paper-chip-input ([23429849105af2a6ccfa1a8f6f7f39415ca5c8f0](https://github.com/fabbricadigitale/paper-chip/commit/23429849105af2a6ccfa1a8f6f7f39415ca5c8f0))
+* CI setup ([9da8e095c4efe42ee751dcdea80fcc10c83c3644](https://github.com/fabbricadigitale/paper-chip/commit/9da8e095c4efe42ee751dcdea80fcc10c83c3644))
+* Enter keys to submit chip are now configurable ([4805dad0a43183c91381c19dcace24099c7aec7b](https://github.com/fabbricadigitale/paper-chip/commit/4805dad0a43183c91381c19dcace24099c7aec7b))
+* Filter logic is now customizable  ([cc76e195a84c10949f018c1969d7a2ae7fce75ad](https://github.com/fabbricadigitale/paper-chip/commit/cc76e195a84c10949f018c1969d7a2ae7fce75ad)), closes [#7](https://github.com/fabbricadigitale/paper-chip/issues/7)
+* SauceLabs setup ([ee7d0a6eb2ce892aab7f28cc14298cf4206e0035](https://github.com/fabbricadigitale/paper-chip/commit/ee7d0a6eb2ce892aab7f28cc14298cf4206e0035))
+
+### Update
+
+* Almost ready to release ([a8c576dd60a6fdffc372a5c303e0a395a63fd9eb](https://github.com/fabbricadigitale/paper-chip/commit/a8c576dd60a6fdffc372a5c303e0a395a63fd9eb))
+* DisconnectedCallback test  ([32c10498abf7f2df6e8213d45f3c08fdb3e834b7](https://github.com/fabbricadigitale/paper-chip/commit/32c10498abf7f2df6e8213d45f3c08fdb3e834b7))
+* Management of the status (opened or not) of multiline chips ([9e4e7c314fc88efc861c07db8397d3df8ce77a21](https://github.com/fabbricadigitale/paper-chip/commit/9e4e7c314fc88efc861c07db8397d3df8ce77a21))
+* Test autocomplete feature for paper-chip-input ([e8b1c90cb63bd081d24150ac9e4b818709f76c0b](https://github.com/fabbricadigitale/paper-chip/commit/e8b1c90cb63bd081d24150ac9e4b818709f76c0b))
+* Tests ([7096a90dd2236968646edd9c1c235a51a70b81d4](https://github.com/fabbricadigitale/paper-chip/commit/7096a90dd2236968646edd9c1c235a51a70b81d4))
+
+
+
 <a name="0.9.2"></a>
 ## [0.9.2](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.1...v0.9.2) (2017-06-12)
 
