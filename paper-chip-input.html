@@ -339,7 +339,7 @@
 
             _removeChip(evt) {
                 if (this._autocomplete) {
-                    evt.stopPropagation()
+                    evt.preventDefault()
                     this._hideTips()
                     const index = evt.currentTarget.index
                     if (index in this.values) {
