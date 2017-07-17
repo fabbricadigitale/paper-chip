@@ -77,7 +77,7 @@
                 })
             })
 
-            test("deletion of paper-chip elements within paper-chip-input works correctly", (done) => {
+            test("deleting paper-chip elements within paper-chip-input works correctly", (done) => {
                 const input = fixture('deletion')
 
                 enterCharacter(input.$.tagInput, "Ciccio")
@@ -130,7 +130,7 @@
             }
         })
 
-        suite('paper-chip-input with autocomplete feature', () => {
+        suite.only('paper-chip-input with autocomplete feature', () => {
             let element, states
 
             setup((done) => {
@@ -230,21 +230,43 @@
                 })
             })
 
-            test("clicking on suggested item works", (done) => {
+            test("clicking on suggested item adds it", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+
                 flush(() => {
-                    enterCharacter(element.$.tagInput, "A")
-                    setTimeout(() => {
-                        const items = element.shadowRoot.querySelectorAll("paper-item")
-                        items[0].click()
-                        expect(element.values[0].label).to.equal('Alabama')
-                        done()
-                    }, 1)
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    items.item(0).click()
+                    expect(element.values[0].label).to.equal('Alabama')
+                    done()
                 })
             })
 
-            test("clicking on escape key the tips hiding works", (done) => {
+            test("adding other suggested items works", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+
                 flush(() => {
-                    enterCharacter(element.$.tagInput, "A")
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+
+                    items.item(1).click()
+
+                    flush(() => {
+                        expect(element.values[0].label).to.equal('Alaska')
+                        expect(element.values[0].value).to.equal('AK')
+                        items.item(4).click()
+
+                        flush(() => {
+                            expect(element.values[1].label).to.equal('Arkansas')
+                            expect(element.values[1].value).to.equal('AR')
+                            done()
+                        })
+                    })
+                })
+            })
+
+            test("clicking the escape key before selection hides the tips dropdown", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+
+                flush(() => {
                     expect(element.hidden).to.equal(false)
                     MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'escape')
                     expect(element.hidden).to.equal(true)
@@ -253,16 +275,122 @@
             })
 
             test("customize filter logic works", (done) => {
+                element.filter = (data, value) =>
+                    data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
+
+                enterCharacter(element.$.tagInput, "V")
+
                 flush(() => {
-                    element.filter = (data, value) => {
-                        return data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
-                    }
-                    enterCharacter(element.$.tagInput, "V")
-                    setTimeout(() => {
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    expect(items.length).to.equal(6)
+
+                    done()
+                })
+            })
+
+            test("selecting suggestion hides the tips dropdown", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+
+                flush(() => {
+                    expect(element.hidden).to.be.false
+
+                    flush(() => {
                         const items = element.shadowRoot.querySelectorAll("paper-item")
-                        expect(items.length).to.equal(6)
+                        items.item(0).click()
+
+                        expect(element.values[0].label).to.equal('Alabama')
+                        expect(element.hidden).to.be.true
+
                         done()
-                    }, 1)
+                    })
+                })
+            })
+
+            test("entering a character without matches does not show the tips dropdown", (done) => {
+                enterCharacter(element.$.tagInput, "X")
+
+                flush(() => {
+                    expect(element.hidden).to.be.true
+
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    expect(items).to.have.lengthOf(0)
+
+                    done()
+                })
+            })
+
+            test("entering values not in the data source must not be allowed", (done) => {
+                enterCharacter(element.$.tagInput, "Ciccio")
+
+                MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'enter')
+
+                flush(() => {
+                    expect(element.values).to.have.lengthOf(0)
+
+                    done()
+                })
+            })
+
+            test("paper-chip elements within paper-chip-input (with autocomplete) works correctly ", (done) => {
+                enterCharacter(element.$.tagInput, "A")
+
+                flush(() => {
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    items.item(0).click()
+                    expect(element.values[0].label).to.equal('Alabama')
+
+                    enterCharacter(element.$.tagInput, "A")
+
+                    flush(() => {
+                        items.item(0).click()
+                        expect(element.values[1].label).to.equal('Alaska')
+
+                        enterCharacter(element.$.tagInput, "A")
+
+                        flush(() => {
+                            items.item(2).click()
+                            expect(element.values[2].label).to.equal('Arkansas')
+
+                            flush(() => {
+                                const [alabama, alaska, arkansas] = element.$.tags.querySelectorAll("paper-chip")
+
+                                alaska.$.removeBtn.click()
+
+                                flush(() => {
+                                    expect(element.values).to.deep.equal([
+                                        {
+                                            label: "Alabama",
+                                            value: "AL"
+                                        },
+                                        {
+                                            label: "Arkansas",
+                                            value: "AR"
+                                        }
+                                    ])
+
+                                    arkansas.$.removeBtn.click()
+
+                                    flush(() => {
+                                        expect(element.values).to.deep.equal([{
+                                            label: "Alabama",
+                                            value: "AL"
+                                        }])
+
+                                        const noMoreAlabama = alabama.remove()
+
+                                        flush(() => {
+                                            expect(element.values).to.deep.equal([])
+                                            expect(noMoreAlabama).to.be.undefined
+
+                                            done()
+                                        })
+
+                                    })
+
+                                })
+                            })
+                        })
+                    })
                 })
             })
 
