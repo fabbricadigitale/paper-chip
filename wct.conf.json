@@ -97,16 +97,14 @@
         {
           "browserName": "Safari",
           "platformName": "ios",
-          "platformVersion": "9",
-          "deviceName": "iPhone Simulator",
-          "appiumVersion": "1.6.5"
+          "platformVersion": "9.0",
+          "deviceName": "iPhone 6 Simulatorr"
         },
         {
           "browserName": "Safari",
           "platformName": "ios",
-          "platformVersion": "10",
-          "deviceName": "iPhone Simulator",
-          "appiumVersion": "1.6.5"
+          "platformVersion": "10.0",
+          "deviceName": "iPhone 6 Simulator"
         },
         {
           "browserName": "Chrome",
