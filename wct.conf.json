@@ -11,6 +11,11 @@
       "disabled": true,
       "browsers": [
         {
+          "browserName":  "internet explorer",
+          "platform":     "Windows 8.1",
+          "version":      "11"
+        },
+        {
           "browserName": "microsoftedge",
           "platform": "Windows 10",
           "version": "13"
@@ -34,6 +39,11 @@
           "browserName": "chrome",
           "platform": "Windows 10",
           "version": "latest"
+        },
+        {
+          "browserName": "chrome",
+          "platform": "Windows 10",
+          "version": "beta"
         },
 
         {
@@ -79,9 +89,43 @@
           "version": "latest"
         },
         {
+          "browserName": "chrome",
+          "platform": "linux",
+          "version": "dev"
+        },
+        {
           "browserName": "firefox",
           "platform": "linux",
           "version": "latest"
+        },
+
+        {
+          "browserName": "Safari",
+          "platformName": "ios",
+          "platformVersion": "9",
+          "deviceName": "iPhone Simulator",
+          "appiumVersion": "1.6.5"
+        },
+        {
+          "browserName": "Safari",
+          "platformName": "ios",
+          "platformVersion": "10",
+          "deviceName": "iPhone Simulator",
+          "appiumVersion": "1.6.5"
+        },
+        {
+          "browserName": "Chrome",
+          "platformName": "Android",
+          "platformVersion": "6.0",
+          "deviceName": "Android Emulator",
+          "appiumVersion": "1.6.5"
+        },
+        {
+          "browserName": "Browser",
+          "platformName": "Android",
+          "platformVersion": "4.4",
+          "deviceName": "Android Emulator",
+          "appiumVersion": "1.6.5"
         }
       ]
     }
