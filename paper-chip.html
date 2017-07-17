@@ -207,7 +207,7 @@ MIT © fabbricadigitale
                 @apply --layout-center-justified;
             }
 
-             ::slotted([slot="icon"]) {
+            #icon ::slotted([slot="icon"]) {
                 margin-right: -4px;
                 width: 32px;
                 height: 32px;
@@ -223,7 +223,7 @@ MIT © fabbricadigitale
                 @apply --layout-flex;
             }
 
-             ::slotted([class="icon"]) {
+            #icon ::slotted([class="icon"]) {
                 /* FIXME: only top-level selectors allowed */
                 width: 32px;
                 height: 32px;
@@ -245,7 +245,7 @@ MIT © fabbricadigitale
                 padding-right: 0px;
             }
 
-             ::slotted([slot="label"]) {
+            #label ::slotted([slot="label"]) {
                 @apply --layout-block;
 
                 margin: 0;
@@ -253,16 +253,16 @@ MIT © fabbricadigitale
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-             :host(*:not([opened])) ::slotted([slot="label"]) {
+            :host(*:not([opened])) #label ::slotted([slot="label"]) {
                 @apply --paper-font-common-nowrap;
                 max-width: 80px;
             }
 
-             :host(*:not([removable])) ::slotted([slot="label"]) {
+            :host(*:not([removable])) #label ::slotted([slot="label"]) {
                 padding-right: 20px;
             }
 
-             ::slotted([slot="caption"]) {
+            #label ::slotted([slot="caption"]) {
                 display: none;
                 white-space: nowrap;
                 margin: 0;
@@ -270,7 +270,7 @@ MIT © fabbricadigitale
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-            :host([opened]) ::slotted([slot="caption"]) {
+            :host([opened]) #label ::slotted([slot="caption"]) {
                 display: block;
             }
 
@@ -278,11 +278,11 @@ MIT © fabbricadigitale
                 z-index: 1;
             }
 
-            ::slotted([slot="label"]) {
+            #label ::slotted([slot="label"]) {
                 @apply --paper-chip-label;
             }
 
-            ::slotted([slot="caption"]) {
+            #label ::slotted([slot="caption"]) {
                 @apply --paper-chip-caption;
             }
 
@@ -344,12 +344,12 @@ MIT © fabbricadigitale
             }
 
             :host([opened]) #chip,
-            :host([opened]) ::slotted([slot="content"]) {
+            :host([opened]) #label ::slotted([slot="content"]) {
                 padding: 16px 12px;
                 background-color: var(--paper-chip-opened-background-color, var(--paper-grey-50));
             }
 
-            :host([opened])::slotted([slot="label"]) {
+            :host([opened]) #label ::slotted([slot="label"]) {
                 color: var(--paper-chip-primary-text-color, var(--primary-text-color));
                 font-size: 16px;
                 @apply --paper-chip-label-opened;
@@ -359,7 +359,7 @@ MIT © fabbricadigitale
                 border-radius: 0;
             }
 
-            :host([opened])::slotted([slot="icon"]) {
+            :host([opened]) #icon ::slotted([slot="icon"]) {
                 font-size: 20px;
                 width: 40px;
                 height: 40px;
@@ -374,7 +374,7 @@ MIT © fabbricadigitale
             /* open + active state */
 
             :host([opened][active]) #chip,
-            :host([opened][active])::slotted {
+            :host([opened][active]) * ::slotted {
                 background-color: var(--paper-chip-active-color, var(--accent-color));
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
@@ -389,11 +389,11 @@ MIT © fabbricadigitale
                 padding-left: 2px;
             }
 
-            :host([opened][active])::slotted([slot="label"]) {
+            :host([opened][active]) #label ::slotted([slot="label"]) {
                 color: var(--paper-chip-active-text-color, var(--text-primary-color));
             }
 
-            :host([opened][active])::slotted(h2) {
+            :host([opened][active]) * ::slotted(h2) {
                 color: var(--paper-chip-active-secondary-text-color, var(--text-primary-color));
             }
         </style>
