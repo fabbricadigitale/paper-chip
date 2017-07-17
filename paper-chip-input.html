@@ -115,7 +115,7 @@
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
-                        <paper-chip index="[[index]]" value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
+                        <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
                             <span slot="label" class="label">[[_computeLabel(item)]]</span>
                         </paper-chip>
                     </template>
@@ -338,20 +338,20 @@
             }
 
             _removeChip(evt) {
+                // Prevent the paper-chip detaches itself from dom-repeat
+                evt.preventDefault()
+
+                this._ensureValues()
+
+                const index = this.values.indexOf(evt.model.item)
+
                 if (this._autocomplete) {
-                    evt.preventDefault()
                     this._hideTips()
-                    const index = evt.currentTarget.index
                     if (index in this.values) {
                         this.splice("values", index, 1)
                         this._prefilterSource()
                     }
                 } else {
-                    // Prevent the paper-chip detaches itself from dom-repeat
-                    evt.preventDefault()
-
-                    const index = evt.currentTarget.index
-                    this._ensureValues()
                     if (index in this.values) {
                         this.splice("values", index, 1)
                         this._ensurePlaceholder()
