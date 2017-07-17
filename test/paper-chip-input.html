@@ -235,7 +235,7 @@
 
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
-                    items.item(0).click()
+                    items[0].click()
                     expect(element.values[0].label).to.equal('Alabama')
                     done()
                 })
@@ -247,12 +247,12 @@
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
 
-                    items.item(1).click()
+                    items[1].click()
 
                     flush(() => {
                         expect(element.values[0].label).to.equal('Alaska')
                         expect(element.values[0].value).to.equal('AK')
-                        items.item(4).click()
+                        items[4].click()
 
                         flush(() => {
                             expect(element.values[1].label).to.equal('Arkansas')
@@ -296,7 +296,7 @@
 
                     flush(() => {
                         const items = element.shadowRoot.querySelectorAll("paper-item")
-                        items.item(0).click()
+                        items[0].click()
 
                         expect(element.values[0].label).to.equal('Alabama')
                         expect(element.hidden).to.be.true
@@ -336,19 +336,19 @@
 
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
-                    items.item(0).click()
+                    items[0].click()
                     expect(element.values[0].label).to.equal('Alabama')
 
                     enterCharacter(element.$.tagInput, "A")
 
                     flush(() => {
-                        items.item(0).click()
+                        items[0].click()
                         expect(element.values[1].label).to.equal('Alaska')
 
                         enterCharacter(element.$.tagInput, "A")
 
                         flush(() => {
-                            items.item(2).click()
+                            items[2].click()
                             expect(element.values[2].label).to.equal('Arkansas')
 
                             flush(() => {
