@@ -27,7 +27,7 @@
         </template>
     </test-fixture>
 
-    <test-fixture id="backspace">
+    <test-fixture id="deletion">
         <template>
             <paper-chip-input></paper-chip-input>
         </template>
@@ -63,7 +63,7 @@
             })
 
             test("remove a chip pressing backspace", (done) => {
-                const input = fixture('backspace')
+                const input = fixture('deletion')
                 flush(() => {
                     enterCharacter(input.$.tagInput, "A")
                     MockInteractions.pressEnter(input.$.tagInput)
@@ -75,6 +75,53 @@
 
                     done()
                 })
+            })
+
+            test("deletion of paper-chip elements within paper-chip-input works correctly", (done) => {
+                const input = fixture('deletion')
+
+                enterCharacter(input.$.tagInput, "Ciccio")
+                MockInteractions.pressEnter(input.$.tagInput)
+
+                enterCharacter(input.$.tagInput, "Pluto")
+                MockInteractions.pressEnter(input.$.tagInput)
+
+                enterCharacter(input.$.tagInput, "Pippo")
+                MockInteractions.pressEnter(input.$.tagInput)
+
+                expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
+
+                flush(() => {
+                    const [ciccio, pluto, pippo] = input.$.tags.querySelectorAll("paper-chip")
+
+                    pluto.$.removeBtn.click()
+
+                    flush(() => {
+                        expect(input.values).to.deep.equal(["Ciccio", "Pippo"])
+
+                        pippo.$.removeBtn.click()
+
+                        flush(() => {
+
+                            expect(input.values).to.deep.equal(["Ciccio"])
+
+                            const noMoreCiccio = ciccio.remove()
+
+                            flush(() => {
+                                expect(input.values).to.deep.equal([])
+                                // Ensure that the self deletion of paper-chip is not executed
+                                // Since it's wrapped into a paper-chip-input which dom-repeat handles the deletion
+                                expect(noMoreCiccio).to.be.undefined
+
+                                done()
+                            })
+
+                        })
+
+                    })
+
+                })
+
             })
 
             function enterCharacter(input, char) {
