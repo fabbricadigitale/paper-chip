@@ -119,13 +119,6 @@
           "platformVersion": "6.0",
           "deviceName": "Android Emulator",
           "appiumVersion": "1.6.5"
-        },
-        {
-          "browserName": "Browser",
-          "platformName": "Android",
-          "platformVersion": "4.4",
-          "deviceName": "Android Emulator",
-          "appiumVersion": "1.6.5"
         }
       ]
     }
