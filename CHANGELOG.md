@@ -1,3 +1,30 @@
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.10.0...v0.10.1) (2017-07-17)
+
+
+### Docs
+
+* Clarifying how the detection of position (for element in removal) works ([a0ed8912fae6168e82ae189d00d041b2dd4091d0](https://github.com/fabbricadigitale/paper-chip/commit/a0ed8912fae6168e82ae189d00d041b2dd4091d0))
+* Demo now works also for polyfilled browsers  ([f56a6fe2ebb33b00bcecb971ae7c0984a1d2fd88](https://github.com/fabbricadigitale/paper-chip/commit/f56a6fe2ebb33b00bcecb971ae7c0984a1d2fd88)), closes [#28](https://github.com/fabbricadigitale/paper-chip/issues/28)
+
+### Fix
+
+* Correct detection of position of the element which is in removal ([bac39529618263ddad77d78194dd1aef86f989b2](https://github.com/fabbricadigitale/paper-chip/commit/bac39529618263ddad77d78194dd1aef86f989b2))
+* Ensure the remove API silently fails when element is not longer in the DOM ([66c1527f7bf3c86674c3b2bd7fc8879236061d2d](https://github.com/fabbricadigitale/paper-chip/commit/66c1527f7bf3c86674c3b2bd7fc8879236061d2d))
+* Execute SauceLabs only on internal PRs ([538e8b0f5b541bd7ea4b4547fb46478675fa2516](https://github.com/fabbricadigitale/paper-chip/commit/538e8b0f5b541bd7ea4b4547fb46478675fa2516))
+* Overcome NodeList partial support on some browsers ... ([3ce70d4559724a1385a518fee9973ba2fb82924e](https://github.com/fabbricadigitale/paper-chip/commit/3ce70d4559724a1385a518fee9973ba2fb82924e))
+* Prevent self deletion of paper-chip when it is managed by a wrapper  ([601b23f7352c68d559be0d94d92a4fd0ce4bb08f](https://github.com/fabbricadigitale/paper-chip/commit/601b23f7352c68d559be0d94d92a4fd0ce4bb08f)), closes [#23](https://github.com/fabbricadigitale/paper-chip/issues/23)
+* Remove duplicate attribute ([98dfe41fe1d9b1021a1483e8d94f80b85e3a5579](https://github.com/fabbricadigitale/paper-chip/commit/98dfe41fe1d9b1021a1483e8d94f80b85e3a5579))
+* Slotted styles does not work on FF and Safari  ([1d353ecfa3860285a934e6a688095aad2c67e658](https://github.com/fabbricadigitale/paper-chip/commit/1d353ecfa3860285a934e6a688095aad2c67e658)), closes [#25](https://github.com/fabbricadigitale/paper-chip/issues/25)
+
+### Update
+
+* Other test for the autocomplete case ([5932e02a68a98108e853e7a9c76b264c1378648e](https://github.com/fabbricadigitale/paper-chip/commit/5932e02a68a98108e853e7a9c76b264c1378648e))
+* Test the correct order is retained when more elements are removed from a container ([f788bcbf3e55321e9c9a785675a58cb34fa87c76](https://github.com/fabbricadigitale/paper-chip/commit/f788bcbf3e55321e9c9a785675a58cb34fa87c76))
+* Test the self removing API of paper-chip standalone element ([4b8d066f47dae9ba0c9a7064951e3cfb2069abf4](https://github.com/fabbricadigitale/paper-chip/commit/4b8d066f47dae9ba0c9a7064951e3cfb2069abf4))
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.9.2...v0.10.0) (2017-06-16)
 
