@@ -100,7 +100,7 @@
             })
 
             test('remove a paper-chip clicking on remove button', (done) => {
-                let chip = fixture('removable')
+                const chip = fixture('removable')
                 chip.addEventListener("remove", () => {
                     assert.isOk("ok", "paper-chip remove event has been launched")
                     done()
@@ -110,23 +110,36 @@
                 }, 1)
             })
 
-            // This test fails
+            test('removing a paper-chip via API returns itself', (done) => {
+                const chip = fixture('removable')
+                const parent = chip.parentElement
+                const removed = chip.remove()
+
+                flush(() => {
+                    expect(parent.querySelector('paper-chip[removable]')).to.be.null
+                    expect(chip).to.deep.equal(removed)
+                    done()
+                })
+            })
+
             test('disconnect callback of paper-chip has been called', (done) => {
                 const chip = fixture('spy')
-                chip.remove()
+                const removed = chip.remove()
+
                 flush(() => {
                     expect(chip._disconnectedCallbackSpy).to.equal(1)
+                    expect(chip).to.deep.equal(removed)
                     done()
                 })
             })
 
             test('paper-chip is not in DOM anymore', (done) => {
-                let chip = fixture('dom')
+                const chip = fixture('dom')
                 flush(() => {
                     const parent = chip.parentElement
                     chip.$.removeBtn.click()
                     const element = parent.querySelector("#dom")
-                    expect(element).to.equal(null)
+                    expect(element).to.be.null
                     done()
                 })
             })
