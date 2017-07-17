@@ -561,7 +561,7 @@ MIT © fabbricadigitale
             }
 
             remove() {
-                if (!this.removable) {
+                if (!this.removable || !this.parentNode) {
                     return // ignore
                 }
                 const evt = new CustomEvent("remove", { cancelable: true })
