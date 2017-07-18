@@ -84,11 +84,6 @@
           "version": "latest"
         },
         {
-          "browserName": "chrome",
-          "platform": "linux",
-          "version": "dev"
-        },
-        {
           "browserName": "firefox",
           "platform": "linux",
           "version": "latest"
