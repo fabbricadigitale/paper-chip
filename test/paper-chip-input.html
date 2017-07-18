@@ -124,6 +124,19 @@
 
             })
 
+            test("changing values property should trigger observer", done => {
+                let element = fixture('basic');
+                let object = {'label': 'UMG', 'value': '$22bn'};
+                stub('paper-chip-input', {
+                    _onValuesChanged: (values, numValues) => {
+                        assert.deepEqual(values[0], object);
+                        assert.equal(numValues, 1);
+                        done();
+                    }
+                });
+                element.push("values", object);
+            });
+
             function enterCharacter(input, char) {
                 input.value += char
                 MockInteractions.keyDownOn(input, char.charCodeAt(char.length - 1))
