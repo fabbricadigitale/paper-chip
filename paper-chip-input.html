@@ -171,8 +171,7 @@
                     values: {
                         type: Array,
                         notify: true,
-                        value: () => [],
-                        observer: "_onValuesChanged"
+                        value: () => []
                     },
                     placeholder: {
                         type: String,
@@ -205,6 +204,12 @@
                         }
                     }
                 }
+            }
+
+            static get observers() {
+                return [
+                    "_onValuesChanged(values, values.length)",
+                ];
             }
 
             get keyBindings() {
