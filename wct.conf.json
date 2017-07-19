@@ -35,6 +35,11 @@
           "platform": "Windows 10",
           "version": "latest"
         },
+        {
+          "browserName": "chrome",
+          "platform": "Windows 10",
+          "version": "beta"
+        },
 
         {
           "browserName": "safari",
@@ -82,6 +87,26 @@
           "browserName": "firefox",
           "platform": "linux",
           "version": "latest"
+        },
+
+        {
+          "browserName": "Safari",
+          "platformName": "ios",
+          "platformVersion": "9.0",
+          "deviceName": "iPhone 6 Simulator"
+        },
+        {
+          "browserName": "Safari",
+          "platformName": "ios",
+          "platformVersion": "10.0",
+          "deviceName": "iPhone 6 Simulator"
+        },
+        {
+          "browserName": "Chrome",
+          "platformName": "Android",
+          "platformVersion": "6.0",
+          "deviceName": "Android Emulator",
+          "appiumVersion": "1.6.5"
         }
       ]
     }
