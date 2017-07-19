@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://github.com/fabbricadigitale/paper-chip.git"
   },
+  "bug": {
+    "url": "https://github.com/fabbricadigitale/paper-chip/issues"
+  },
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.8.0",
@@ -16,6 +19,7 @@
     "git-rev-sync": "^1.8.0",
     "polyserve": "^0.15.0",
     "shx": "^0.2.2",
+    "validate-commit": "^3.2.1",
     "web-component-tester": "^6.0.0"
   },
   "config": {
@@ -48,5 +52,10 @@
     "chip",
     "tag",
     "es2015"
-  ]
+  ],
+  "git": {
+    "scripts": {
+      "commit-msg": "./node_modules/.bin/validate-commit-msg --preset eslint $1"
+    }
+  }
 }
