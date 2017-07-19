@@ -130,7 +130,6 @@
                 stub('paper-chip-input', {
                     _onValuesChanged: (values, numValues) => {
                         assert.deepEqual(values[0], object);
-                        assert.equal(numValues, 1);
                         done();
                     }
                 });
