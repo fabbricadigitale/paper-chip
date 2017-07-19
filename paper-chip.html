@@ -253,12 +253,12 @@ MIT © fabbricadigitale
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
-            :host(*:not([opened])) #label ::slotted([slot="label"]) {
+            :host(:not([opened])) #label ::slotted([slot="label"]) {
                 @apply --paper-font-common-nowrap;
                 max-width: 80px;
             }
 
-            :host(*:not([removable])) #label ::slotted([slot="label"]) {
+            :host(:not([removable])) #label ::slotted([slot="label"]) {
                 padding-right: 20px;
             }
 
