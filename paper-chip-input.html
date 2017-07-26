@@ -108,9 +108,10 @@
             }
         </style>
 
+        <paper-input label="[[label]]" value="[[_fakeValue]]">
+        </paper-input>
 
-        <paper-input-container always-float-label id="tags">
-            <label slot="label">[[label]]</label>
+        <paper-input-container id="tags">
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
@@ -184,6 +185,16 @@
                         type: Array,
                         value: () => []
                     },
+                    _hasValues: {
+                        type: Boolean
+                    },
+                    _fakeValue: {
+                        type: String,
+                        value: ""
+                    },
+                    _hasContent: {
+                        type: Boolean
+                    },
                     _autocomplete: {
                         type: Boolean,
                         value: false,
@@ -208,6 +219,7 @@
             static get observers() {
                 return [
                     "_onValuesChanged(values, values.splices)",
+                    "_onContentOrValuesChanges(_hasContent)"
                 ];
             }
 
@@ -216,6 +228,11 @@
                     "backspace": "_remove",
                     "esc": "_hideTips"
                 }
+            }
+
+            _onContentOrValuesChanges(hasValuesOrContent) {
+                this._fakeValue = hasValuesOrContent ? " " : ""
+                return this._fakeValue
             }
 
             _add() {
@@ -242,6 +259,8 @@
                 })
 
                 tagInput.addEventListener("keyup", (event) => {
+                    this._hasContent = (this._hasValues || tagInput.value || tagInput.value === 0) ? true : false
+
                     if (this._autocomplete) {
                         if (tagInput.value !== "" && event.keyCode !== 27) {
                             this._filter()
@@ -259,6 +278,7 @@
 
             _onValuesChanged(values) {
                 if (!values) {
+                    this._hasValues = false
                     return
                 }
                 this._ensurePlaceholder()
@@ -266,6 +286,7 @@
                 if (values.length !== uniqueValues.length) {
                     this.values = uniqueValues
                 }
+                this._hasValues = this.values.length > 0
             }
 
             _ensureValues() {
