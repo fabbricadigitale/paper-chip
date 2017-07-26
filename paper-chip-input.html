@@ -103,12 +103,19 @@
                 margin: 0 4px 4px 0;
             }
 
+            #fakeLabel {
+                position: absolute;
+                top: 16px;
+                right: 0;
+                left: 0;
+            }
+
             [hidden] {
                 display: none;
             }
         </style>
 
-        <paper-input label="[[label]]" value="[[_fakeValue]]">
+        <paper-input id="fakeLabel" label="[[label]]" value="[[_fakeValue]]">
         </paper-input>
 
         <paper-input-container id="tags">
