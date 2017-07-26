@@ -173,8 +173,7 @@ MIT © fabbricadigitale
                 @apply --paper-chip;
             }
 
-            :host([animated]) *,
-            :host([animated])::slotted(*) {
+            :host([animated]) * {
                 transition: 200ms ease-in;
             }
 
@@ -230,18 +229,17 @@ MIT © fabbricadigitale
                 vertical-align: bottom;
             }
 
-
             #label {
                 padding: 0 4px 0 12px;
                 @apply --layout-flex-auto;
                 @apply --layout-self-center;
             }
 
-             :host([single-line]) #label {
+            :host([single-line]) #label {
                 padding-right: 12px;
             }
 
-             :host([single-line][removable]) #label {
+            :host([single-line][removable]) #label {
                 padding-right: 0px;
             }
 
