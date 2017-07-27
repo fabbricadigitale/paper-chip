@@ -1,3 +1,34 @@
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.10.1...v0.11.0) (2017-07-27)
+
+
+### Fix
+
+* Add test to show that observer is not invoked  ([75952370700f598baecc9ec122cb8fd7772f9491](https://github.com/fabbricadigitale/paper-chip/commit/75952370700f598baecc9ec122cb8fd7772f9491))
+* Chip sizing  ([e1d65b0151eba992599698f6c43538bd1f85e839](https://github.com/fabbricadigitale/paper-chip/commit/e1d65b0151eba992599698f6c43538bd1f85e839)), closes [#31](https://github.com/fabbricadigitale/paper-chip/issues/31)
+* Highlighting of label now works ([3f3c32bf9c5a3fcf845bf1ff6fbba6b9401ac367](https://github.com/fabbricadigitale/paper-chip/commit/3f3c32bf9c5a3fcf845bf1ff6fbba6b9401ac367))
+* Observe array.splices instead of array.length  ([5fffabfa02ff2f7e0b331a30e804074a7e2e017c](https://github.com/fabbricadigitale/paper-chip/commit/5fffabfa02ff2f7e0b331a30e804074a7e2e017c)), closes [#32](https://github.com/fabbricadigitale/paper-chip/issues/32)
+* Run all the paper-chip-input unit tests  ([c36aaa38aa59b0869d697b3ccb8cbd4d34741c93](https://github.com/fabbricadigitale/paper-chip/commit/c36aaa38aa59b0869d697b3ccb8cbd4d34741c93))
+* Slightly change observer to let it be invoked  ([8fd3d7490873e9a718de4ce362487ef40fa1fc1c](https://github.com/fabbricadigitale/paper-chip/commit/8fd3d7490873e9a718de4ce362487ef40fa1fc1c)), closes [#32](https://github.com/fabbricadigitale/paper-chip/issues/32)
+* Underline displaying is now configurable  ([db7e9758aeaa92b29dc7f42ca0a4990fe9fe0787](https://github.com/fabbricadigitale/paper-chip/commit/db7e9758aeaa92b29dc7f42ca0a4990fe9fe0787)), closes [#30](https://github.com/fabbricadigitale/paper-chip/issues/30)
+
+### New
+
+* Commit convention enforcement  ([0dc2944fe699cb607692b9188a98745ab8dc8a94](https://github.com/fabbricadigitale/paper-chip/commit/0dc2944fe699cb607692b9188a98745ab8dc8a94)), closes [#15](https://github.com/fabbricadigitale/paper-chip/issues/15)
+* Floating label  ([f8ef6abea568e8e43aa2837fe9a761c09d2c477e](https://github.com/fabbricadigitale/paper-chip/commit/f8ef6abea568e8e43aa2837fe9a761c09d2c477e)), closes [#34](https://github.com/fabbricadigitale/paper-chip/issues/34)
+
+### Udpate
+
+* Floating label positioning refinements and attributes  ([f569d23b239d8c67cb7d7d334bac4269db7ac36d](https://github.com/fabbricadigitale/paper-chip/commit/f569d23b239d8c67cb7d7d334bac4269db7ac36d))
+
+### Update
+
+* Floating label positioning ([41c564f0b0e156bfc1dcb2719cc7ddab152ea8e6](https://github.com/fabbricadigitale/paper-chip/commit/41c564f0b0e156bfc1dcb2719cc7ddab152ea8e6))
+* Remove unneeded CSS selector for animations ([cce343e9c3104c462c4a36947428f9bcf4e91fba](https://github.com/fabbricadigitale/paper-chip/commit/cce343e9c3104c462c4a36947428f9bcf4e91fba))
+* Support also mobile browsers ([8bdef8a3883d1e1ad133e3c4d00e3e51abe200d0](https://github.com/fabbricadigitale/paper-chip/commit/8bdef8a3883d1e1ad133e3c4d00e3e51abe200d0))
+
+
+
 <a name="0.10.1"></a>
 ## [0.10.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.10.0...v0.10.1) (2017-07-17)
 
