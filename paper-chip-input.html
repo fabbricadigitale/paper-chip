@@ -1,13 +1,14 @@
 <link rel="import" href="../polymer/polymer-element.html">
-<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="./paper-chip.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
 <link rel="import" href="../paper-styles/default-theme.html">
-<link rel="import" href="./paper-chip.html">
 
 <dom-module id="paper-chip-input">
     <template>
@@ -16,6 +17,7 @@
                 display: inline-block;
                 position: relative;
                 text-align: left;
+                outline: none;
 
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 -webkit-tap-highlight-color: transparent;
@@ -27,14 +29,13 @@
                     max-width: 100%;
                     box-sizing: border-box;
                     cursor: pointer;
-                }
-                ;
+                };
 
                 @apply --paper-dropdown-menu;
                 width: 100%;
             }
 
-            :host([noline]){
+            :host([noline]) {
                 --paper-input-container-underline: {
                     display: none;
                 };
@@ -44,6 +45,9 @@
                 --paper-input-container-underline-disabled: {
                     display: none;
                 };
+            }
+            :host([no-label-float]) #label {
+                top: 24px;
             }
 
             div[container] {
@@ -103,9 +107,9 @@
                 margin: 0 4px 4px 0;
             }
 
-            #fakeLabel {
+            #fakeInputContainer {
                 position: absolute;
-                top: 16px;
+                top: 0px;
                 right: 0;
                 left: 0;
             }
@@ -113,10 +117,30 @@
             [hidden] {
                 display: none;
             }
+
+
+
+            :host #fakeInputContainer {
+                --paper-input-container-underline: {
+                    display: none;
+                };
+                --paper-input-container-underline-focus: {
+                    display: none;
+                };
+                --paper-input-container-underline-disabled: {
+                    display: none;
+                };
+            }
         </style>
 
-        <paper-input id="fakeLabel" label="[[label]]" value="[[_fakeValue]]">
-        </paper-input>
+        <paper-input-container id="fakeInputContainer" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]">
+            <div container slot="prefix">
+            </div>
+            <label id="label" hidden$="[[!label]]" slot="label" for="fakeInput">[[label]]</label>
+            <iron-input slot="input" bind-value="{{_fakeValue}}">
+                <input disabled id="fakeInput" type="text" value="{{value::input}}">
+            </iron-input>
+        </paper-input-container>
 
         <paper-input-container id="tags">
             <div container slot="prefix">
@@ -149,9 +173,9 @@
 
     </template>
     <script>
-
         class PaperChipInput extends
-            Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior, Polymer.Element) {
+            Polymer.mixinBehaviors(Polymer.IronA11yKeysBehavior,
+                Polymer.mixinBehaviors(Polymer.PaperInputBehavior, Polymer.Element)) {
 
             static get is() {
                 return "paper-chip-input"
@@ -159,6 +183,14 @@
 
             static get properties() {
                 return {
+                    noLabelFloat: {
+                        type: Boolean,
+                        value: false
+                    },
+                    alwaysFloatLabel: {
+                        type: Boolean,
+                        value: false
+                    },
                     displayProperty: {
                         type: String,
                         value: "label"
@@ -259,6 +291,11 @@
                 super.connectedCallback()
 
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
+
+                tagInput.addEventListener("input", (event) => {
+                    this._hasContent = (this._hasValues || tagInput.value || tagInput.value === 0) ? true : false
+                })
+
                 tagInput.addEventListener("keydown", (event) => {
                     if (tagInput.value === "" && event.keyCode === 32) {
                         event.preventDefault()
@@ -266,7 +303,7 @@
                 })
 
                 tagInput.addEventListener("keyup", (event) => {
-                    this._hasContent = (this._hasValues || tagInput.value || tagInput.value === 0) ? true : false
+                    this._hasContent = (this._hasValues || tagInput.value) ? true : false
 
                     if (this._autocomplete) {
                         if (tagInput.value !== "" && event.keyCode !== 27) {
@@ -347,7 +384,7 @@
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
                 if (tagInput.value) {
                     this._prefilterSource()
-                    this._source =this.filter(this._source, tagInput.value)
+                    this._source = this.filter(this._source, tagInput.value)
                     if (!this._source.length) {
                         this._hideTips()
                     } else {
