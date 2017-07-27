@@ -118,8 +118,6 @@
                 display: none;
             }
 
-
-
             :host #fakeInputContainer {
                 --paper-input-container-underline: {
                     display: none;
@@ -134,15 +132,14 @@
         </style>
 
         <paper-input-container id="fakeInputContainer" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]">
-            <div container slot="prefix">
-            </div>
+            <div container slot="prefix"></div><!-- We use prefix to preserve correct height -->
             <label id="label" hidden$="[[!label]]" slot="label" for="fakeInput">[[label]]</label>
-            <iron-input slot="input" bind-value="{{_fakeValue}}">
+            <iron-input slot="input" bind-value="[[_fakeValue]]">
                 <input disabled id="fakeInput" type="text" value="{{value::input}}">
             </iron-input>
         </paper-input-container>
 
-        <paper-input-container id="tags">
+        <paper-input-container id="tags" focused="{{_focused}}">
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
@@ -258,7 +255,7 @@
             static get observers() {
                 return [
                     "_onValuesChanged(values, values.splices)",
-                    "_onContentOrValuesChanges(_hasContent)"
+                    "_onContentOrValuesChanges(_hasContent, _focused)"
                 ];
             }
 
@@ -269,8 +266,9 @@
                 }
             }
 
-            _onContentOrValuesChanges(hasValuesOrContent) {
+            _onContentOrValuesChanges(hasValuesOrContent, _isFocused) {
                 this._fakeValue = hasValuesOrContent ? " " : ""
+                this.$.fakeInputContainer._setFocused(_isFocused)
                 return this._fakeValue
             }
 
