@@ -118,7 +118,9 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 <paper-chip-input></paper-chip-input>
 ```
 
-Configure `paper-chip-input` presentation using attribute. If you do not want the input underline use `noline` attribute.
+Configure `paper-chip-input` presentation using attribute.
+
+If you do not want the input underline use `noline` attribute.
 
 <!--
 ```
@@ -135,7 +137,40 @@ Configure `paper-chip-input` presentation using attribute. If you do not want th
 <paper-chip-input noline></paper-chip-input>
 ```
 
+ Use `always-float-label` attribute to always float the label
 
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input always-float-label></paper-chip-input>
+```
+
+
+Use `no-label-float` attribute to disable floating label
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input no-label-float></paper-chip-input>
+```
 
 Do you want to change the **keys** that automatically submit chips?
 
