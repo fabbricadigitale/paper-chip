@@ -47,15 +47,20 @@
                 };
             }
             :host([no-label-float]) #label {
-                top: 24px;
+                 top: 22px;
             }
 
             div[container] {
                 min-height: 32px;
-                padding: 4px 0;
+            }
+
+            #fakeInputContainer div[container] {
+                min-height: 48px;
+                padding: 0;
             }
 
             input {
+                height: 30px;
                 position: relative;
                 outline: none;
                 box-shadow: none;
@@ -70,6 +75,13 @@
                 -webkit-appearance: none;
                 text-align: inherit;
                 vertical-align: -webkit-baseline-middle;
+
+                /* Firefox sets a min-width on the input, which can cause layout issues */
+                min-width: 0;
+                padding: 0;
+
+                @apply --paper-font-subhead;
+                @apply --paper-input-container-input;
             }
 
             paper-input-container {
@@ -112,6 +124,7 @@
                 top: 0px;
                 right: 0;
                 left: 0;
+                bottom: 0px;
             }
 
             [hidden] {
@@ -128,6 +141,10 @@
                 --paper-input-container-underline-disabled: {
                     display: none;
                 };
+            }
+
+            #tagInput {
+                margin-top: 6px;
             }
         </style>
 
