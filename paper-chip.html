@@ -120,6 +120,7 @@ Custom property | Description | Default
 `--paper-chip-background-color` | The paper-chip background-color |
 `--paper-chip-icon-background-color` | The paper-chip avatar background-color |
 `--paper-chip-icon-text-color` | The paper-chip icon color |
+`--paper-chip-closed-label-max-width` | The paper-chip label max-width when is closed | 80px
 
 ## Testing
 If you are using **polyserve** navigate to the `test/` directory of your element to run its tests. You can view results in browser console.
@@ -253,7 +254,7 @@ MIT © fabbricadigitale
 
             :host(:not([opened])) #label ::slotted([slot="label"]) {
                 @apply --paper-font-common-nowrap;
-                max-width: 80px;
+                max-width: var(--paper-chip-closed-label-max-width, 80px);
             }
 
             :host(:not([removable])) #label ::slotted([slot="label"]) {

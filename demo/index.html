@@ -24,6 +24,10 @@
         demo-snippet {
             width: 100%;
         }
+
+        #longer {
+            --paper-chip-closed-label-max-width: 200px;
+        }
     </style>
 
 </head>
@@ -35,6 +39,16 @@
             <template>
                 <paper-chip removable single-line>
                     <div slot="label">Single-line Chip</div>
+                </paper-chip>
+            </template>
+        </demo-snippet>
+
+
+        <h3>Chip with custom max-width</h3>
+        <demo-snippet>
+            <template>
+                <paper-chip id="longer" removable single-line>
+                    <div slot="label">Magna jaceo ha illae si co locus. Placidae quo deveniri obtinent tot regendae explicui alterius nec vos. Assidere pleraque ac si at invenero ut assignem speranda. Sumptum tum uno saeculi communi patitur</div>
                 </paper-chip>
             </template>
         </demo-snippet>
