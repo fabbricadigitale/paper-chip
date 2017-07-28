@@ -1,3 +1,19 @@
+<a name="0.11.1"></a>
+## [0.11.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.0...v0.11.1) (2017-07-28)
+
+
+### Fix
+
+* Label floats also when chips are programmatically inserted or deleted  ([769525291db6552b109b31791e55fb1d4caa1d2c](https://github.com/fabbricadigitale/paper-chip/commit/769525291db6552b109b31791e55fb1d4caa1d2c)), closes [#40](https://github.com/fabbricadigitale/paper-chip/issues/40)
+* Label position centered  ([0382adc3952c1e0fe6dbe0e4d6693f2d3577d49f](https://github.com/fabbricadigitale/paper-chip/commit/0382adc3952c1e0fe6dbe0e4d6693f2d3577d49f)), closes [#36](https://github.com/fabbricadigitale/paper-chip/issues/36)
+
+### Update
+
+* CSS variable to set custom max-width  ([9b065598732153dfdf7a16a631974135a272fb39](https://github.com/fabbricadigitale/paper-chip/commit/9b065598732153dfdf7a16a631974135a272fb39)), closes [#39](https://github.com/fabbricadigitale/paper-chip/issues/39)
+* Using zeros without unit ([f743cc9528bf787d1588fca8db26b62150cafc76](https://github.com/fabbricadigitale/paper-chip/commit/f743cc9528bf787d1588fca8db26b62150cafc76))
+
+
+
 <a name="0.11.0"></a>
 # [0.11.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.10.1...v0.11.0) (2017-07-27)
 
