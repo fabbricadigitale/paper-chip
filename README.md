@@ -268,6 +268,7 @@ Custom property | Description | Default
 `--paper-chip-background-color` | The paper-chip background-color | `--paper-grey-200`
 `--paper-chip-icon-background-color` | The paper-chip avatar background-color | `--paper-grey-500`
 `--paper-chip-icon-text-color` | The paper-chip icon color | `--text-primary-color`
+`--paper-chip-closed-label-max-width` | The paper-chip label max-width when is closed | 80px
 
 ## Testing
 
