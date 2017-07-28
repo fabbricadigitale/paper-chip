@@ -283,6 +283,10 @@
                 }
             }
 
+            _computeHasContent(hasValues) {
+                this._hasContent = this._hasValues
+            }
+
             _onContentOrValuesChanges(hasValuesOrContent, _isFocused) {
                 this._fakeValue = hasValuesOrContent ? " " : ""
                 this.$.fakeInputContainer._setFocused(_isFocused)
@@ -337,7 +341,7 @@
 
             _onValuesChanged(values) {
                 if (!values) {
-                    this._hasValues = false
+                    this._hasValues = this._hasContent = false
                     return
                 }
                 this._ensurePlaceholder()
@@ -345,7 +349,7 @@
                 if (values.length !== uniqueValues.length) {
                     this.values = uniqueValues
                 }
-                this._hasValues = this.values.length > 0
+                this._hasValues = this._hasContent = this.values.length > 0
             }
 
             _ensureValues() {
