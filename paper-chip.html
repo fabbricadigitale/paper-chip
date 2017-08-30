@@ -550,7 +550,17 @@ MIT © fabbricadigitale
                 this.opened = !this.opened
             }
 
-            _onBlur() {
+            _onBlur(event) {
+                let relatedTarget = event.relatedTarget || null
+                if (relatedTarget !== null) {
+                    let parent = relatedTarget.parentElement
+                    while ((parent || null) !== null) {
+                        if (parent === this) {
+                            return
+                        }
+                        parent = parent.parentElement
+                    }
+                }
                 this.opened = false
             }
 
