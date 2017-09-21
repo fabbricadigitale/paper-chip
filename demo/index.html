@@ -13,8 +13,10 @@
     <link rel="import" href="../../paper-styles/demo-pages.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../../paper-icon-button/paper-icon-button.html">
     <link rel="import" href="../../paper-input/paper-input.html">
     <link rel="import" href="../../paper-input/paper-input-container.html">
+    <link rel="import" href="../../iron-icons/iron-icons.html">
     <link rel="import" href="../../iron-input/iron-input.html">
     <link rel="import" href="../paper-chip.html">
     <link rel="import" href="../paper-chip-input.html">
@@ -89,6 +91,21 @@
                         742 Evergreen Terrace<br> Springfield, USA 12345<br>
                         <br> 555-123-4567
                     </address>
+                </paper-chip>
+            </template>
+        </demo-snippet>
+
+        <h3>With button</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip removable animated>
+                    <iron-icon slot="icon" icon="paper-chip-avatars:avatar"></iron-icon>
+                    <div slot="label">Jane Foo</div>
+                    <div slot="caption">jfoo@doh.com</div>
+                    <div slot="content">
+                        <paper-icon-button id="btn" icon="favorite" on-tap="demotapping"></paper-icon-button>
+                    </div>
                 </paper-chip>
             </template>
         </demo-snippet>
@@ -196,6 +213,11 @@
     </div>
 
     <script>
+        function demotapping(event) {
+            event.stopImmediatePropagation()
+            alert("OW")
+        }
+
         let countries = [
             {
                 "label": "Afghanistan",
@@ -1178,6 +1200,12 @@
             let fruit = [{ "value": "apple", "key": 0 }, { "value": "apricot", "key": 1 }, { "value": "avocado", "key": 2 }, { "value": "banana", "key": 3 }, { "value": "bell pepper", "key": 4 }, { "value": "bilberry", "key": 5 }, { "value": "blackberry", "key": 6 }, { "value": "blackcurrant", "key": 7 }, { "value": "blood orange", "key": 8 }, { "value": "blueberry", "key": 9 }, { "value": "boysenberry", "key": 10 }, { "value": "breadfruit", "key": 11 }, { "value": "canary melon", "key": 12 }, { "value": "cantaloupe", "key": 13 }, { "value": "cherimoya", "key": 14 }, { "value": "cherry", "key": 15 }, { "value": "chili pepper", "key": 16 }, { "value": "clementine", "key": 17 }, { "value": "cloudberry", "key": 18 }, { "value": "coconut", "key": 19 }, { "value": "cranberry", "key": 20 }, { "value": "cucumber", "key": 21 }, { "value": "currant", "key": 22 }, { "value": "damson", "key": 23 }, { "value": "date", "key": 24 }, { "value": "dragonfruit", "key": 25 }, { "value": "durian", "key": 26 }, { "value": "eggplant", "key": 27 }, { "value": "elderberry", "key": 28 }, { "value": "feijoa", "key": 29 }, { "value": "fig", "key": 30 }, { "value": "goji berry", "key": 31 }, { "value": "gooseberry", "key": 32 }, { "value": "grape", "key": 33 }, { "value": "grapefruit", "key": 34 }, { "value": "guava", "key": 35 }, { "value": "honeydew", "key": 36 }, { "value": "huckleberry", "key": 37 }, { "value": "jackfruit", "key": 38 }, { "value": "jambul", "key": 39 }, { "value": "jujube", "key": 40 }, { "value": "kiwi fruit", "key": 41 }, { "value": "kumquat", "key": 42 }, { "value": "lemon", "key": 43 }, { "value": "lime", "key": 44 }, { "value": "loquat", "key": 45 }, { "value": "lychee", "key": 46 }, { "value": "mandarine", "key": 47 }, { "value": "mango", "key": 48 }, { "value": "mulberry", "key": 49 }, { "value": "nectarine", "key": 50 }, { "value": "nut", "key": 51 }, { "value": "olive", "key": 52 }, { "value": "orange", "key": 53 }, { "value": "pamelo", "key": 54 }, { "value": "papaya", "key": 55 }, { "value": "passionfruit", "key": 56 }, { "value": "peach", "key": 57 }, { "value": "pear", "key": 58 }, { "value": "persimmon", "key": 59 }, { "value": "physalis", "key": 60 }, { "value": "pineapple", "key": 61 }, { "value": "plum", "key": 62 }, { "value": "pomegranate", "key": 63 }, { "value": "pomelo", "key": 64 }, { "value": "purple mangosteen", "key": 65 }, { "value": "quince", "key": 66 }, { "value": "raisin", "key": 67 }, { "value": "rambutan", "key": 68 }, { "value": "raspberry", "key": 69 }, { "value": "redcurrant", "key": 70 }, { "value": "rock melon", "key": 71 }, { "value": "salal berry", "key": 72 }, { "value": "satsuma", "key": 73 }, { "value": "star fruit", "key": 74 }, { "value": "strawberry", "key": 75 }, { "value": "tamarillo", "key": 76 }, { "value": "tangerine", "key": 77 }, { "value": "tomato", "key": 78 }, { "value": "ugli fruit", "key": 79 }, { "value": "watermelon", "key": 80 }]
             element = document.querySelector('#fruits-autocomplete')
             element.datasource = fruit
+
+            document.querySelector('#btn').addEventListener('tap', function (e) {
+                event.stopImmediatePropagation()
+                window.something = "ow"
+                alert("OW")
+            })
         })
     </script>
 

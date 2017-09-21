@@ -44,6 +44,16 @@
         </template>
     </test-fixture>
 
+    <test-fixture id="button">
+        <template>
+            <paper-chip removable>
+                <div slot="content">
+                    <paper-icon-button id="btn" icon="favorite"></paper-icon-button>
+                </div>
+            </paper-chip>
+        </template>
+    </test-fixture>
+
     <dom-module id="TestPaperChip">
         <script>
             HTMLImports.whenReady(function () {
@@ -142,6 +152,22 @@
                     expect(element).to.be.null
                     done()
                 })
+            })
+
+            test("paper-chip doesn't hide on-tap event of distribuited child", (done) => {
+                const chip = fixture('button')
+
+                const btn = chip.querySelector("#btn")
+                btn.addEventListener('tap', () => {
+                    done()
+                })
+
+                chip.click()
+
+                Polymer.Base.async(function () {
+                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
+                    btn.click()
+                }, 1)
             })
 
         })
