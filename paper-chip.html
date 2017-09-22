@@ -548,10 +548,12 @@ MIT © fabbricadigitale
                 return noElevation
             }
 
-            _onTap(event) {
+            _onTap() {
                 // Toggle opened status only when this element is focused
-                if (document.activeElement === this) {
-                    this.opened = !this.opened
+                if (this.opened && document.activeElement === this) {
+                    this.opened = false
+                } else {
+                    this.opened = true
                 }
             }
 
