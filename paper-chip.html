@@ -523,7 +523,7 @@ MIT © fabbricadigitale
                 this._boundOnBlur = (e) => this._onBlur(e)
 
                 this.addEventListener("tap", this._boundOnTap)
-                this.addEventListener("blur", this._boundOnBlur)
+                this.addEventListener("blur", this._boundOnBlur, true)
                 this._ensureAttribute("tabindex", 0)
                 this._setDefaultValue()
             }
@@ -532,7 +532,7 @@ MIT © fabbricadigitale
                 super.disconnectedCallback()
 
                 this.removeEventListener("tap", this._boundOnTap)
-                this.removeEventListener("blur", this._boundOnBlur)
+                this.removeEventListener("blur", this._boundOnBlur, true)
             }
 
             _computeElevation(opened, focused, pressed) {
