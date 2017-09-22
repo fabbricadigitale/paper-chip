@@ -519,8 +519,11 @@ MIT © fabbricadigitale
             connectedCallback() {
                 super.connectedCallback()
 
-                this.addEventListener("tap", this._onTap)
-                this.addEventListener("blur", this._onBlur)
+                this._boundOnTap = (e) => this._onTap(e)
+                this._boundOnBlur = (e) => this._onBlur(e)
+
+                this.addEventListener("tap", this._boundOnTap)
+                this.addEventListener("blur", this._boundOnBlur)
                 this._ensureAttribute("tabindex", 0)
                 this._setDefaultValue()
             }
@@ -528,8 +531,8 @@ MIT © fabbricadigitale
             disconnectedCallback() {
                 super.disconnectedCallback()
 
-                this.removeEventListener("tap", this._onTap)
-                this.removeEventListener("blur", this._onBlur)
+                this.removeEventListener("tap", this._boundOnTap)
+                this.removeEventListener("blur", this._boundOnBlur)
             }
 
             _computeElevation(opened, focused, pressed) {

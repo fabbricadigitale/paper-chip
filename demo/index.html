@@ -104,7 +104,7 @@
                     <div slot="label">Jane Foo</div>
                     <div slot="caption">jfoo@doh.com</div>
                     <div slot="content">
-                        <paper-icon-button id="btn" icon="favorite" on-tap="demotapping"></paper-icon-button>
+                        <paper-icon-button id="btn" icon="favorite"></paper-icon-button>
                     </div>
                 </paper-chip>
             </template>
@@ -213,11 +213,6 @@
     </div>
 
     <script>
-        function demotapping(event) {
-            event.stopImmediatePropagation()
-            alert("OW")
-        }
-
         let countries = [
             {
                 "label": "Afghanistan",
@@ -1202,9 +1197,7 @@
             element.datasource = fruit
 
             document.querySelector('#btn').addEventListener('tap', function (e) {
-                event.stopImmediatePropagation()
-                window.something = "ow"
-                alert("OW")
+                console.log('ciaooo', e)
             })
         })
     </script>
