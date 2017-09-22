@@ -1,3 +1,29 @@
+<a name="0.11.2"></a>
+## [0.11.2](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.1...v0.11.2) (2017-09-22)
+
+
+### Docs
+
+* Readme ([e569af51213ea500ead65977bc7f5bb3379b05e5](https://github.com/fabbricadigitale/paper-chip/commit/e569af51213ea500ead65977bc7f5bb3379b05e5))
+
+### Fix
+
+* Bind handler with arrow function to ensure correct this ([5c124bdc39faa64e7f642850bfbda9d0753b5b73](https://github.com/fabbricadigitale/paper-chip/commit/5c124bdc39faa64e7f642850bfbda9d0753b5b73))
+* Close only when paper-chip element is focused ([588516e03b964de285a03753264c8d91e71f0250](https://github.com/fabbricadigitale/paper-chip/commit/588516e03b964de285a03753264c8d91e71f0250))
+* Close paper-chip when descendants lost focus ([f68f1b3f43408e39e5cfe88c3f78cdcff3f44992](https://github.com/fabbricadigitale/paper-chip/commit/f68f1b3f43408e39e5cfe88c3f78cdcff3f44992))
+* Input elements in content slot have working blur functionality  ([f2dde3bbad14d856af1fd8b117235106c82e1932](https://github.com/fabbricadigitale/paper-chip/commit/f2dde3bbad14d856af1fd8b117235106c82e1932)), closes [#42](https://github.com/fabbricadigitale/paper-chip/issues/42)
+* Toggle open only when paper-chip element is focused ([4730b374c1dfeb3298b808096962bced9be3a008](https://github.com/fabbricadigitale/paper-chip/commit/4730b374c1dfeb3298b808096962bced9be3a008))
+
+### Update
+
+* Add demo and test in PR branch ([e64bced917bd3da6eaddf1534c977e8f672c4b6f](https://github.com/fabbricadigitale/paper-chip/commit/e64bced917bd3da6eaddf1534c977e8f672c4b6f))
+
+### Upgrade
+
+* Move paper icon button dependency to the development deps ([5c335ffe4ccbd2f82c5e52e547254dc4500c055c](https://github.com/fabbricadigitale/paper-chip/commit/5c335ffe4ccbd2f82c5e52e547254dc4500c055c))
+
+
+
 <a name="0.11.1"></a>
 ## [0.11.1](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.0...v0.11.1) (2017-07-28)
 
