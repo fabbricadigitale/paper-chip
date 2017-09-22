@@ -158,6 +158,7 @@
 
         <paper-input-container id="tags" focused="{{_focused}}">
             <div container slot="prefix">
+
                 <dom-repeat items="[[values]]" as="item">
                     <template>
                         <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
@@ -165,6 +166,7 @@
                         </paper-chip>
                     </template>
                 </dom-repeat>
+
                 <input id="tagInput" placeholder="[[placeholder]]" type="text">
             </div>
         </paper-input-container>
@@ -283,6 +285,19 @@
                 }
             }
 
+            _grabChips() {
+                const children = this.getEffectiveChildren()
+                if (children.length > 0) {
+                    for (const index in children) {
+                        const el = children[index]
+                        if (el instanceof PaperChip && el.value !== undefined) {
+                            this._pushChipByValue(el.value)
+                            el.parentElement.removeChild(el)
+                        }
+                    }
+                }
+            }
+
             _computeHasContent(hasValues) {
                 this._hasContent = this._hasValues
             }
@@ -337,6 +352,9 @@
 
                 // Imperatively insert keys to the key bindings property
                 diff.forEach((key) => this.addOwnKeyBinding(key, "_add"))
+
+
+                new Polymer.FlattenedNodesObserver(this, this._grabChips)
             }
 
             _onValuesChanged(values) {
@@ -381,13 +399,17 @@
             _pushChip() {
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
                 if (tagInput.value) {
-                    const value = tagInput.value.trim()
-                    this._ensureValues()
-                    if (this.values.indexOf(value) < 0 && value !== "") {
-                        this.push("values", value)
-                        this._ensurePlaceholder()
-                    }
+                    this._pushChipByValue(tagInput.value)
                     tagInput.value = ""
+                }
+            }
+
+            _pushChipByValue(value) {
+                value = value.trim()
+                this._ensureValues()
+                if (this.values.indexOf(value) < 0 && value !== "") {
+                    this.push("values", value)
+                    this._ensurePlaceholder()
                 }
             }
 
