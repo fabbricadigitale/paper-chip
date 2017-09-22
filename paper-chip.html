@@ -548,23 +548,18 @@ MIT © fabbricadigitale
                 return noElevation
             }
 
-            _onTap() {
-                // Toggle opened status
-                this.opened = !this.opened
+            _onTap(event) {
+                // Toggle opened status only when this element is focused
+                if (document.activeElement === this) {
+                    this.opened = !this.opened
+                }
             }
 
             _onBlur(event) {
-                let relatedTarget = event.relatedTarget || null
-                if (relatedTarget !== null) {
-                    let parent = relatedTarget.parentElement
-                    while ((parent || null) !== null) {
-                        if (parent === this) {
-                            return
-                        }
-                        parent = parent.parentElement
-                    }
+                let relatedTarget = event.relatedTarget
+                if (!relatedTarget || !this.isLightDescendant(relatedTarget)) {
+                    this.opened = false
                 }
-                this.opened = false
             }
 
             _selfRemove(evt) {
