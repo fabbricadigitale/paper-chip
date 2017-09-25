@@ -15,9 +15,27 @@ This elements family may provide a icon or a photo, some line of text or a conta
 * `<paper-chip>`
 * `<paper-chip-input>`
 
-## Usage
+### Paper-chip features
 
-A basic paper-chip ...
+* Single or multi line
+* Behaviour configuration via attribute
+  * removable
+  * openable
+  * animated
+
+### Paper-chip-input features
+
+* UX configurable via attribute
+  * floating label
+  * input underline
+* Support for Polymer.IronA11yKeysBehavior format
+  * Submit keys customization
+* Autocomplete
+* Filter logic customizations
+
+## Paper-chip usage
+
+### Basic paper-chip
 
 <!--
 ```
@@ -35,6 +53,8 @@ A basic paper-chip ...
     <div slot="label" class="label">Single-line Chip</div>
 </paper-chip>
 ```
+
+### Single or multi-line
 
 It can show **single-line** or **multi-line** text. You can **open a multi-line chip** tapping on it.
 
@@ -57,6 +77,8 @@ It can show **single-line** or **multi-line** text. You can **open a multi-line 
 </paper-chip>
 ```
 
+### Removable
+
 Following snippet of code shows how to configure (via attributes) some basic behavior.
 
 It may be **removable** or not.
@@ -78,7 +100,9 @@ It may be **removable** or not.
 </paper-chip>
 ```
 
-Do you want to **animate** the chip when it is opening?
+### Basic animated transition
+
+Do you want to **animated** the chip when it is opening?
 
 You can do it via attribute.
 
@@ -100,6 +124,8 @@ You can do it via attribute.
     <div slot="caption" class="caption">jfoo@doh.com</div>
 </paper-chip>
 ```
+
+## Paper-chip-input usage
 
 Use `<paper-chip-input>` when you desire an input field where the strings digited by the user are collected as `paper-chip`s.
 
@@ -172,6 +198,8 @@ Use `no-label-float` attribute to disable floating label
 <paper-chip-input no-label-float></paper-chip-input>
 ```
 
+### Configure your favorite submit keys
+
 Do you want to change the **keys** that automatically submit chips?
 
 No worries, we support it!
@@ -197,6 +225,8 @@ Following example should clarify the usage of this feature.
 <paper-chip-input enter-keys='["enter", "space"]'></paper-chip-input>
 ```
 
+### Input autocomplete
+
 Do you need **autocomplete** ?
 
 When you have a predefined and finite set of input values you can set the predefined values with `datasource` property.
@@ -216,6 +246,8 @@ When you have a predefined and finite set of input values you can set the predef
 <paper-chip-input label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]'  placeholder="Add day"></paper-chip-input>
 ```
 
+### Configure your custom datasource properties
+
 The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
 
 ```html
@@ -229,6 +261,8 @@ The default properties for datasource are `label` and `value`, but you can confi
   { "val": "apricot", "key": "1" }
 ]
 ```
+
+### Use a custom filter logic
 
 Autocomplete uses a **startWith** filter as default logic.
 
