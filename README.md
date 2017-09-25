@@ -15,23 +15,22 @@ This elements family may provide a icon or a photo, some line of text or a conta
 * `<paper-chip>`
 * `<paper-chip-input>`
 
-### Paper-chip features
+### Table of contents
 
-* Single or multi line
-* Behaviour configuration via attribute
-  * removable
-  * openable
-  * animated
-
-### Paper-chip-input features
-
-* UX configurable via attribute
-  * floating label
-  * input underline
-* Support for Polymer.IronA11yKeysBehavior format
-  * Submit keys customization
-* Autocomplete
-* Filter logic customizations
+* [\<paper-chip\>](#paper-chip-usage)
+  * [Single or multi line](#basic-paper-chip)
+  * [Behaviour configuration via attribute](#behaviour-configuration)
+    * [removable](#removable)
+    * [animatable](#basic-animated-transition)
+* [\<paper-chip-input\>](#Paper-chip-input-usage)
+  * [Presentation configurable](#presentation-configurable)
+    * [input underline](#noline)
+    * [floating label](#floating-label)
+    * [no label float](#no-label-float)
+  * [Support for Polymer.IronA11yKeysBehavior format: submit keys customization](#configure-your-favorite-submit-keys)
+  * [Input autocomplete](#input-autocomplete)
+  * [Configure custom datasource properties](#configure-custom-datasource-properties)
+  * [Filter logic customization](#custom-filter-logic)
 
 ## Paper-chip usage
 
@@ -77,7 +76,9 @@ It can show **single-line** or **multi-line** text. You can **open a multi-line 
 </paper-chip>
 ```
 
-### Removable
+### Behaviour configuration
+
+#### Removable
 
 Following snippet of code shows how to configure (via attributes) some basic behavior.
 
@@ -100,7 +101,7 @@ It may be **removable** or not.
 </paper-chip>
 ```
 
-### Basic animated transition
+#### Animated transition
 
 Do you want to **animated** the chip when it is opening?
 
@@ -144,7 +145,11 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 <paper-chip-input></paper-chip-input>
 ```
 
+### Presentation configurable
+
 Configure `paper-chip-input` presentation using attribute.
+
+#### noline
 
 If you do not want the input underline use `noline` attribute.
 
@@ -162,6 +167,7 @@ If you do not want the input underline use `noline` attribute.
 ```html
 <paper-chip-input noline></paper-chip-input>
 ```
+#### always-float-label
 
  Use `always-float-label` attribute to always float the label
 
@@ -180,6 +186,7 @@ If you do not want the input underline use `noline` attribute.
 <paper-chip-input always-float-label></paper-chip-input>
 ```
 
+#### no-label-float
 
 Use `no-label-float` attribute to disable floating label
 
@@ -246,7 +253,7 @@ When you have a predefined and finite set of input values you can set the predef
 <paper-chip-input label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]'  placeholder="Add day"></paper-chip-input>
 ```
 
-### Configure your custom datasource properties
+### Configure custom datasource properties
 
 The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
 
@@ -262,7 +269,7 @@ The default properties for datasource are `label` and `value`, but you can confi
 ]
 ```
 
-### Use a custom filter logic
+### Custom filter logic
 
 Autocomplete uses a **startWith** filter as default logic.
 
