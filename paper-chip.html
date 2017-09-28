@@ -552,8 +552,6 @@ MIT © fabbricadigitale
 
                 this._ensureAttribute("tabindex", 0)
 
-                // this._setDefaultValue()
-
                 // Detect whether we have a label somehow (at boot and also at runtime)
                 this._onSlotChange()
                 this.$.fallbackLabelSlot.addEventListener("slotchange", this._boundOnSlotChange)
@@ -669,15 +667,6 @@ MIT © fabbricadigitale
                 }
             }
 
-            /*
-            _valueChanged(value) {
-                /*
-                if (value === undefined || value == "") {
-                    this._setDefaultValue()
-                }
-            }
-            */
-
             _forceReflow() {
                 return this.offsetHeight
             }
@@ -692,16 +681,6 @@ MIT © fabbricadigitale
                     "backspace": "_selfRemove"
                 }
             }
-
-            /*
-            _setDefaultValue() {
-                if (this.value !== undefined) {
-                    return // exit
-                }
-                const val = Polymer.dom(this).querySelector("[slot='label']")
-                this.value = val ? val.textContent : undefined
-            }
-            */
 
         }
 
