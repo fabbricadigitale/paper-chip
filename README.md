@@ -51,9 +51,7 @@ A minimal chip.
 ```
 -->
 ```html
-<paper-chip single-line>
-    <div slot="label" class="label">Single-line Chip</div>
-</paper-chip>
+<paper-chip single-line>Minimal chip</paper-chip>
 ```
 
 ### Single or multi-line
