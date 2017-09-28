@@ -157,8 +157,8 @@
         </paper-input-container>
 
         <paper-input-container id="tags" focused="{{_focused}}">
+            <slot name="prefix" slot="prefix"></slot>
             <div container slot="prefix">
-
                 <dom-repeat items="[[values]]" as="item">
                     <template>
                         <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
@@ -169,6 +169,7 @@
 
                 <input id="tagInput" placeholder="[[placeholder]]" type="text">
             </div>
+            <slot name="suffix" slot="suffix"></slot>
         </paper-input-container>
 
         <dom-if if="[[_autocomplete]]">
