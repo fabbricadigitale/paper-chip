@@ -244,6 +244,7 @@ MIT © fabbricadigitale
                 padding-right: 0px;
             }
 
+            #label .labelFallback,
             #label ::slotted([slot="label"]) {
                 @apply --layout-block;
 
@@ -252,11 +253,13 @@ MIT © fabbricadigitale
                 color: var(--paper-chip-secondary-text-color, var(--secondary-text-color));
             }
 
+            :host(:not([opened])) #label .labelFallback,
             :host(:not([opened])) #label ::slotted([slot="label"]) {
                 @apply --paper-font-common-nowrap;
                 max-width: var(--paper-chip-closed-label-max-width, 80px);
             }
 
+            :host(:not([removable])) #label .labelFallback,
             :host(:not([removable])) #label ::slotted([slot="label"]) {
                 padding-right: 20px;
             }
@@ -277,6 +280,7 @@ MIT © fabbricadigitale
                 z-index: 1;
             }
 
+            #label .labelFallback,
             #label ::slotted([slot="label"]) {
                 @apply --paper-chip-label;
             }
@@ -348,6 +352,7 @@ MIT © fabbricadigitale
                 background-color: var(--paper-chip-opened-background-color, var(--paper-grey-50));
             }
 
+            :host([opened]) #label .labelFallback,
             :host([opened]) #label ::slotted([slot="label"]) {
                 color: var(--paper-chip-primary-text-color, var(--primary-text-color));
                 font-size: 16px;
@@ -411,7 +416,16 @@ MIT © fabbricadigitale
 
                     <div id="label">
 
-                        <slot name="label"></slot>
+                        <slot name="label">
+
+                            <!-- fallback -->
+                            <div class="labelFallback">
+
+                                <slot></slot>
+
+                            </div>
+
+                        </slot>
 
                         <slot name="caption"></slot>
 
