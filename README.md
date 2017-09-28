@@ -18,23 +18,26 @@ This elements family may provide a icon or a photo, some line of text or a conta
 ### Table of contents
 
 * [\<paper-chip\>](#paper-chip-usage)
-  * [Single or multi line](#basic-paper-chip)
-  * [Behaviour configuration via attribute](#behaviour-configuration)
-    * [removable](#removable)
-    * [animatable](#basic-animated-transition)
-* [\<paper-chip-input\>](#Paper-chip-input-usage)
-  * [Presentation configurable](#presentation-configurable)
-    * [input underline](#noline)
-    * [floating label](#floating-label)
-    * [no label float](#no-label-float)
-  * [Support for Polymer.IronA11yKeysBehavior format: submit keys customization](#configure-your-favorite-submit-keys)
-  * [Input autocomplete](#input-autocomplete)
-  * [Configure custom datasource properties](#configure-custom-datasource-properties)
-  * [Filter logic customization](#custom-filter-logic)
+  * [Minimal](#minimal)
+  * [Single or multi line chips](#single-or-multi-line)
+  * [Removable chips](#removable)
+  * [Animatable chips](#animated-transition)
+* [\<paper-chip-input\>](#paper-chip-input-usage)
+  * [How to configure the presentation](#how-to-configure-its-presentation)
+    * [Disable the input underline](#disable-the-input-underline)
+    * [How to fix the input label at the top](#how-to-fix-the-input-label-at-the-top)
+    * [Non floating label](#non-floating-label)
+  * [How to customize the submit keys](#configure-your-favorite-submit-keys)
+  * [Autocomplete](#autocomplete)
+    * [Configure custom datasource properties](#configure-custom-datasource-properties)
+    * [Customize the filtering logic of the autocomplete](#custom-filter-logic)
+  * [Declarative insertion of chips](#how-to-insert-chips)
 
-## Paper-chip usage
+## \<paper-chip\> usage
 
-### Basic paper-chip
+### Minimal
+
+A minimal chip.
 
 <!--
 ```
@@ -55,7 +58,9 @@ This elements family may provide a icon or a photo, some line of text or a conta
 
 ### Single or multi-line
 
-It can show **single-line** or **multi-line** text. You can **open a multi-line chip** tapping on it.
+It can show **single-line** or **multi-line** text.
+
+You can **open a multi-line chip** tapping on it, showing some additional info.
 
 <!--
 ```
@@ -76,9 +81,7 @@ It can show **single-line** or **multi-line** text. You can **open a multi-line 
 </paper-chip>
 ```
 
-### Behaviour configuration
-
-#### Removable
+### Removable
 
 Following snippet of code shows how to configure (via attributes) some basic behavior.
 
@@ -101,7 +104,7 @@ It may be **removable** or not.
 </paper-chip>
 ```
 
-#### Animated transition
+### Animated transition
 
 Do you want to **animated** the chip when it is opening?
 
@@ -126,7 +129,7 @@ You can do it via attribute.
 </paper-chip>
 ```
 
-## Paper-chip-input usage
+## \<paper-chip-input\> usage
 
 Use `<paper-chip-input>` when you desire an input field where the strings digited by the user are collected as `paper-chip`s.
 
@@ -145,11 +148,11 @@ Use `<paper-chip-input>` when you desire an input field where the strings digite
 <paper-chip-input></paper-chip-input>
 ```
 
-### Presentation configurable
+### How to configure its presentation
 
 Configure `paper-chip-input` presentation using attribute.
 
-#### noline
+#### Disable the input underline
 
 If you do not want the input underline use `noline` attribute.
 
@@ -167,9 +170,9 @@ If you do not want the input underline use `noline` attribute.
 ```html
 <paper-chip-input noline></paper-chip-input>
 ```
-#### always-float-label
+#### How to fix the input label at the top
 
- Use `always-float-label` attribute to always float the label
+Use `always-float-label` attribute to fix the the label at the top.
 
  <!--
 ```
@@ -186,9 +189,9 @@ If you do not want the input underline use `noline` attribute.
 <paper-chip-input always-float-label></paper-chip-input>
 ```
 
-#### no-label-float
+#### Non floating label
 
-Use `no-label-float` attribute to disable floating label
+Use `no-label-float` attribute to disable floating label. So the input label will be inside the input.
 
  <!--
 ```
@@ -232,7 +235,7 @@ Following example should clarify the usage of this feature.
 <paper-chip-input enter-keys='["enter", "space"]'></paper-chip-input>
 ```
 
-### Input autocomplete
+### Autocomplete
 
 Do you need **autocomplete** ?
 
@@ -253,7 +256,7 @@ When you have a predefined and finite set of input values you can set the predef
 <paper-chip-input label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]'  placeholder="Add day"></paper-chip-input>
 ```
 
-### Configure custom datasource properties
+#### Configure custom datasource properties
 
 The default properties for datasource are `label` and `value`, but you can configure it from outside by the properties `display-property` and `value-property`.
 
@@ -269,7 +272,7 @@ The default properties for datasource are `label` and `value`, but you can confi
 ]
 ```
 
-### Custom filter logic
+#### Custom filter logic
 
 Autocomplete uses a **startWith** filter as default logic.
 
@@ -298,6 +301,27 @@ weekdays.filter = (data, value) => {
 </script>
 ```
 
+### How to insert chips
+
+You can insert `<paper-chip>` elements inside the `<paper-chip-input>` declaratively - ie., putting the within the Light DOM.
+
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input>
+  <paper-chip value="light">Light</paper-chip>
+  <paper-chip value="dom">DOm</paper-chip>
+</paper-chip-input>
+```
 
 ## Styling
 
