@@ -416,12 +416,12 @@ MIT © fabbricadigitale
 
                     <div id="label">
 
-                        <slot name="label">
+                        <slot id="labelSlot" name="label">
 
                             <!-- fallback -->
                             <div class="labelFallback">
 
-                                <slot></slot>
+                                <slot id="fallbackLabelSlot"></slot>
 
                             </div>
 
@@ -464,8 +464,7 @@ MIT © fabbricadigitale
                 return {
 
                     value: {
-                        type: String,
-                        observer: "_valueChanged"
+                        type: String
                     },
 
                     index: {
@@ -526,20 +525,39 @@ MIT © fabbricadigitale
                     _elevation: {
                         type: Number,
                         computed: "_computeElevation(opened, focused, disabled, active, pressed)"
+                    },
+
+                    hasLabel: {
+                        type: Boolean,
+                        readOnly: true
                     }
                 }
+            }
+
+            static get observers() {
+                return [
+                    "_handleVisibleLabel(hasLabel, value)"
+                ]
             }
 
             connectedCallback() {
                 super.connectedCallback()
 
-                this._boundOnTap = (e) => this._onTap(e)
-                this._boundOnBlur = (e) => this._onBlur(e)
+                this._boundOnTap = (evt) => this._onTap(evt)
+                this._boundOnBlur = (evt) => this._onBlur(evt)
+                this._boundOnSlotChange = (evt) => this._onSlotChange(evt)
 
                 this.addEventListener("tap", this._boundOnTap)
                 this.addEventListener("blur", this._boundOnBlur, true)
+
                 this._ensureAttribute("tabindex", 0)
-                this._setDefaultValue()
+
+                // this._setDefaultValue()
+
+                // Detect whether we have a label somehow (at boot and also at runtime)
+                this._onSlotChange()
+                this.$.fallbackLabelSlot.addEventListener("slotchange", this._boundOnSlotChange)
+                this.$.labelSlot.addEventListener("slotchange", this._boundOnSlotChange)
             }
 
             disconnectedCallback() {
@@ -547,6 +565,32 @@ MIT © fabbricadigitale
 
                 this.removeEventListener("tap", this._boundOnTap)
                 this.removeEventListener("blur", this._boundOnBlur, true)
+            }
+
+            _onSlotChange(event) {
+                if (event) {
+                    if (event.target == event.currentTarget) {
+                        switch (event.target) {
+                            case this.$.labelSlot:
+                                this._setHasLabel(this.$.labelSlot.assignedNodes().length > 0)
+                                break
+
+                            case this.$.fallbackLabelSlot:
+                                this._setHasLabel(this.$.fallbackLabelSlot.assignedNodes().length > 0)
+                                break
+                        }
+                    }
+
+                    return
+                }
+
+                this._setHasLabel(this.$.labelSlot.assignedNodes().length > 0 || this.$.fallbackLabelSlot.assignedNodes().length > 0)
+            }
+
+            _handleVisibleLabel(hasLabel, value) {
+                if (!hasLabel && !!value) {
+                    this.textContent = value
+                }
             }
 
             _computeElevation(opened, focused, pressed) {
@@ -625,11 +669,14 @@ MIT © fabbricadigitale
                 }
             }
 
+            /*
             _valueChanged(value) {
+                /*
                 if (value === undefined || value == "") {
                     this._setDefaultValue()
                 }
             }
+            */
 
             _forceReflow() {
                 return this.offsetHeight
@@ -646,6 +693,7 @@ MIT © fabbricadigitale
                 }
             }
 
+            /*
             _setDefaultValue() {
                 if (this.value !== undefined) {
                     return // exit
@@ -653,6 +701,7 @@ MIT © fabbricadigitale
                 const val = Polymer.dom(this).querySelector("[slot='label']")
                 this.value = val ? val.textContent : undefined
             }
+            */
 
         }
 
