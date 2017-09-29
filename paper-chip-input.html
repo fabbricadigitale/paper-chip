@@ -377,10 +377,13 @@
                 input.addEventListener("keyup", (event) => {
                     this._hasContent = (this._hasValues || input.value) ? true : false
 
-                    if (this._autocomplete) {
+                    if (this._autocomplete && this._hasContent) {
                         if (input.value !== "" && event.keyCode !== 27) {
                             this._filter()
                         }
+                    }
+                    if(!this._hasContent) {
+                        this._hideTips()
                     }
                 })
 
