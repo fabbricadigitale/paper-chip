@@ -106,7 +106,7 @@
                     expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
 
                     flush(() => {
-                        const [ciccio, pluto, pippo] = input.$.tags.querySelectorAll("paper-chip")
+                        const [ciccio, pluto, pippo] = input.$.container.querySelectorAll("paper-chip")
 
                         pluto.$.removeBtn.click()
 
@@ -360,7 +360,7 @@
                             expect(element.values[2].label).to.equal('Arkansas')
 
                             flush(() => {
-                                const [alabama, alaska, arkansas] = element.$.tags.querySelectorAll("paper-chip")
+                                const [alabama, alaska, arkansas] = element.$.container.querySelectorAll("paper-chip")
 
                                 alaska.$.removeBtn.click()
 
