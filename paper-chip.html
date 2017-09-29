@@ -586,7 +586,7 @@ MIT © fabbricadigitale
             }
 
             _handleVisibleLabel(hasLabel, value) {
-                if (!hasLabel && !!value) {
+                if (!hasLabel && !!value && !this.textContent) {
                     this.textContent = value
                 }
             }
