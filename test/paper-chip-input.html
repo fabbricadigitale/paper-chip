@@ -40,6 +40,20 @@
     </test-fixture>
 
     <script>
+
+        function fireNativeInputEvent(input) {
+            var ev = new Event('input', { bubbles: true, cancelable: true, composed: true });
+            input.dispatchEvent(ev);
+        }
+
+        function enterCharacter(chipInput, char) {
+            const nativeInput = chipInput.inputElement.inputElement
+            nativeInput.value += char
+            MockInteractions.keyDownOn(nativeInput, char.charCodeAt(char.length - 1))
+            fireNativeInputEvent(nativeInput)
+            MockInteractions.keyUpOn(nativeInput, char.charCodeAt(char.length - 1))
+        }
+
         suite('paper-chip-input', () => {
             test('instantiating the element works', (done) => {
                 const element = fixture('basic')
@@ -53,23 +67,23 @@
             test('add a new chip', (done) => {
                 const input = fixture('add')
                 flush(() => {
-                    enterCharacter(input.$.tagInput, "A")
-                    MockInteractions.pressEnter(input.$.tagInput)
-                    setTimeout(() => {
+                    enterCharacter(input, "A")
+                    MockInteractions.pressEnter(input.$.nativeInput)
+                    flush(() => {
                         expect(input.values).to.deep.equal(["A"])
                         done()
-                    }, 1)
+                    })
                 })
             })
 
             test("remove a chip pressing backspace", (done) => {
                 const input = fixture('deletion')
                 flush(() => {
-                    enterCharacter(input.$.tagInput, "A")
-                    MockInteractions.pressEnter(input.$.tagInput)
+                    enterCharacter(input, "A")
+                    MockInteractions.pressEnter(input.$.nativeInput)
                     expect(input.values).to.deep.equal(["A"])
 
-                    MockInteractions.pressAndReleaseKeyOn(input.$.tagInput, undefined, [], 'backspace')
+                    MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
 
                     expect(input.values).to.deep.equal([])
 
@@ -79,47 +93,48 @@
 
             test("deleting paper-chip elements within paper-chip-input works correctly", (done) => {
                 const input = fixture('deletion')
-
-                enterCharacter(input.$.tagInput, "Ciccio")
-                MockInteractions.pressEnter(input.$.tagInput)
-
-                enterCharacter(input.$.tagInput, "Pluto")
-                MockInteractions.pressEnter(input.$.tagInput)
-
-                enterCharacter(input.$.tagInput, "Pippo")
-                MockInteractions.pressEnter(input.$.tagInput)
-
-                expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
-
                 flush(() => {
-                    const [ciccio, pluto, pippo] = input.$.tags.querySelectorAll("paper-chip")
+                    enterCharacter(input, "Ciccio")
+                    MockInteractions.pressEnter(input.$.nativeInput)
 
-                    pluto.$.removeBtn.click()
+                    enterCharacter(input, "Pluto")
+                    MockInteractions.pressEnter(input.$.nativeInput)
+
+                    enterCharacter(input, "Pippo")
+                    MockInteractions.pressEnter(input.$.nativeInput)
+
+                    expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
 
                     flush(() => {
-                        expect(input.values).to.deep.equal(["Ciccio", "Pippo"])
+                        const [ciccio, pluto, pippo] = input.$.tags.querySelectorAll("paper-chip")
 
-                        pippo.$.removeBtn.click()
+                        pluto.$.removeBtn.click()
 
                         flush(() => {
+                            expect(input.values).to.deep.equal(["Ciccio", "Pippo"])
 
-                            expect(input.values).to.deep.equal(["Ciccio"])
-
-                            const noMoreCiccio = ciccio.remove()
+                            pippo.$.removeBtn.click()
 
                             flush(() => {
-                                expect(input.values).to.deep.equal([])
-                                // Ensure that the self deletion of paper-chip is not executed
-                                // Since it's wrapped into a paper-chip-input which dom-repeat handles the deletion
-                                expect(noMoreCiccio).to.be.undefined
 
-                                done()
+                                expect(input.values).to.deep.equal(["Ciccio"])
+
+                                const noMoreCiccio = ciccio.remove()
+
+                                flush(() => {
+                                    expect(input.values).to.deep.equal([])
+                                    // Ensure that the self deletion of paper-chip is not executed
+                                    // Since it's wrapped into a paper-chip-input which dom-repeat handles the deletion
+                                    expect(noMoreCiccio).to.be.undefined
+
+                                    done()
+                                })
+
                             })
 
                         })
 
                     })
-
                 })
 
             })
@@ -136,10 +151,6 @@
                 element.push("values", object);
             });
 
-            function enterCharacter(input, char) {
-                input.value += char
-                MockInteractions.keyDownOn(input, char.charCodeAt(char.length - 1))
-            }
         })
 
         suite('paper-chip-input with autocomplete feature', () => {
@@ -209,42 +220,35 @@
                     { 'label': 'Wyoming', 'value': 'WY' }
                 ]
                 element.datasource = states
-                done()
+                flush(done)
             })
 
             test("loading the datasource works", (done) => {
+                expect(element.datasource).to.equal(states)
+                done()
+            })
+
+            test("showing suggested items works", (done) => {
+                enterCharacter(element, "A")
                 flush(() => {
-                    expect(element.datasource).to.equal(states)
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    expect(items.length).to.equal(5)
                     done()
                 })
             })
 
-            test("showing suggested items works", (done) => {
-                flush(() => {
-                    enterCharacter(element.$.tagInput, "A")
-                    setTimeout(() => {
-                        const items = element.shadowRoot.querySelectorAll("paper-item")
-                        expect(items.length).to.equal(5)
-                        done()
-                    }, 1)
-                })
-            })
-
             test("redefining suggested items on every added char works", (done) => {
+                enterCharacter(element, "A")
+                enterCharacter(element, "l")
                 flush(() => {
-                    enterCharacter(element.$.tagInput, "A")
-                    enterCharacter(element.$.tagInput, "l")
-                    setTimeout(() => {
-                        const items = element.shadowRoot.querySelectorAll("paper-item")
-                        expect(items.length).to.equal(2)
-                        done()
-                    }, 1)
+                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    expect(items.length).to.equal(2)
+                    done()
                 })
             })
 
             test("clicking on suggested item adds it", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-
+                enterCharacter(element, "A")
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
                     items[0].click()
@@ -254,8 +258,7 @@
             })
 
             test("adding other suggested items works", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-
+                enterCharacter(element, "A")
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
 
@@ -276,11 +279,10 @@
             })
 
             test("clicking the escape key before selection hides the tips dropdown", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-
+                enterCharacter(element, "A")
                 flush(() => {
                     expect(element.hidden).to.equal(false)
-                    MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'escape')
+                    MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'escape')
                     expect(element.hidden).to.equal(true)
                     done()
                 })
@@ -290,8 +292,7 @@
                 element.filter = (data, value) =>
                     data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
 
-                enterCharacter(element.$.tagInput, "V")
-
+                enterCharacter(element, "V")
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
                     expect(items.length).to.equal(6)
@@ -301,8 +302,7 @@
             })
 
             test("selecting suggestion hides the tips dropdown", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-
+                enterCharacter(element, "A")
                 flush(() => {
                     expect(element.hidden).to.be.false
 
@@ -319,8 +319,7 @@
             })
 
             test("entering a character without matches does not show the tips dropdown", (done) => {
-                enterCharacter(element.$.tagInput, "X")
-
+                enterCharacter(element, "X")
                 flush(() => {
                     expect(element.hidden).to.be.true
 
@@ -332,10 +331,8 @@
             })
 
             test("entering values not in the data source must not be allowed", (done) => {
-                enterCharacter(element.$.tagInput, "Ciccio")
-
-                MockInteractions.pressAndReleaseKeyOn(element.$.tagInput, undefined, [], 'enter')
-
+                enterCharacter(element, "Ciccio")
+                MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'enter')
                 flush(() => {
                     expect(element.values).to.have.lengthOf(0)
 
@@ -344,20 +341,19 @@
             })
 
             test("paper-chip elements within paper-chip-input (with autocomplete) works correctly ", (done) => {
-                enterCharacter(element.$.tagInput, "A")
-
+                enterCharacter(element, "A")
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
                     items[0].click()
                     expect(element.values[0].label).to.equal('Alabama')
 
-                    enterCharacter(element.$.tagInput, "A")
+                    enterCharacter(element, "A")
 
                     flush(() => {
                         items[0].click()
                         expect(element.values[1].label).to.equal('Alaska')
 
-                        enterCharacter(element.$.tagInput, "A")
+                        enterCharacter(element, "A")
 
                         flush(() => {
                             items[2].click()
@@ -405,11 +401,6 @@
                     })
                 })
             })
-
-            function enterCharacter(input, char) {
-                input.value += char
-                MockInteractions.keyUpOn(input, char.charCodeAt(char.length - 1))
-            }
         })
     </script>
 </body>
