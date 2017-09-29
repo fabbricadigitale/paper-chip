@@ -557,6 +557,14 @@
                 return !!datasource.length
             }
 
+            /**
+             * Returns a reference to the focusable element. Overridden from PaperInputBehavior
+             * to correctly focus the native input.
+             */
+            get _focusableElement() {
+                return this.inputElement.inputElement
+            }
+
         }
 
         customElements.define(PaperChipInput.is, PaperChipInput)
