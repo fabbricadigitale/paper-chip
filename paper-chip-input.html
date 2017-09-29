@@ -346,6 +346,8 @@
             }
 
             _add() {
+                if (!this.validate())
+                    return
                 if (!this._autocomplete) {
                     this._pushChip()
                 }
