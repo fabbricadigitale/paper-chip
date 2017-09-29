@@ -4,6 +4,7 @@
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
@@ -14,10 +15,7 @@
     <template>
         <style>
              :host {
-                display: inline-block;
-                position: relative;
-                text-align: left;
-                outline: none;
+                display: block;
 
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 -webkit-tap-highlight-color: transparent;
@@ -35,6 +33,14 @@
                 width: 100%;
             }
 
+            :host([focused]) {
+                outline: none;
+            }
+
+            :host([hidden]) {
+                display: none !important;
+            }
+
             :host([noline]) {
                 --paper-input-container-underline: {
                     display: none;
@@ -46,6 +52,7 @@
                     display: none;
                 };
             }
+
             :host([no-label-float]) #label {
                  top: 22px;
             }
@@ -54,34 +61,58 @@
                 min-height: 32px;
             }
 
-            #fakeInputContainer div[container] {
-                min-height: 48px;
-                padding: 0;
-            }
-
             input {
-                height: 30px;
-                position: relative;
+                position: relative; /* to make a stacking context */
                 outline: none;
                 box-shadow: none;
-                border: none;
-                resize: horizontal;
-                background: inherit;
-                font-size: inherit;
-                font-family: inherit;
-                line-height: inherit;
+                padding: 0;
+                width: 100%;
                 max-width: 100%;
+                background: transparent;
+                border: none;
                 color: var(--paper-input-container-input-color, var(--primary-text-color));
                 -webkit-appearance: none;
                 text-align: inherit;
-                vertical-align: -webkit-baseline-middle;
+                vertical-align: bottom;
 
                 /* Firefox sets a min-width on the input, which can cause layout issues */
                 min-width: 0;
-                padding: 0;
 
                 @apply --paper-font-subhead;
                 @apply --paper-input-container-input;
+            }
+
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button {
+                @apply --paper-input-container-input-webkit-spinner;
+            }
+
+            input::-webkit-clear-button {
+                @apply --paper-input-container-input-webkit-clear;
+            }
+
+            input::-webkit-input-placeholder {
+                color: var(--paper-input-container-color, var(--secondary-text-color));
+            }
+
+            input:-moz-placeholder {
+                color: var(--paper-input-container-color, var(--secondary-text-color));
+            }
+
+            input::-moz-placeholder {
+                color: var(--paper-input-container-color, var(--secondary-text-color));
+            }
+
+            input::-ms-clear {
+                @apply --paper-input-container-ms-clear;
+            }
+
+            input:-ms-input-placeholder {
+                color: var(--paper-input-container-color, var(--secondary-text-color));
+            }
+
+            label {
+                pointer-events: none;
             }
 
             paper-input-container {
@@ -119,44 +150,20 @@
                 margin: 0 4px 4px 0;
             }
 
-            #fakeInputContainer {
-                position: absolute;
-                top: 0;
-                right: 0;
-                left: 0;
-                bottom: 0;
-            }
-
             [hidden] {
                 display: none;
             }
 
-            :host #fakeInputContainer {
-                --paper-input-container-underline: {
-                    display: none;
-                };
-                --paper-input-container-underline-focus: {
-                    display: none;
-                };
-                --paper-input-container-underline-disabled: {
-                    display: none;
-                };
-            }
-
-            #tagInput {
-                margin-top: 6px;
-            }
         </style>
 
-        <paper-input-container id="fakeInputContainer" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]">
-            <div container slot="prefix"></div><!-- We use prefix to preserve correct height -->
-            <label id="label" hidden$="[[!label]]" slot="label" for="fakeInput">[[label]]</label>
-            <iron-input slot="input" bind-value="[[_fakeValue]]">
-                <input disabled id="fakeInput" type="text" value="{{value::input}}">
-            </iron-input>
-        </paper-input-container>
 
-        <paper-input-container id="tags" focused="{{_focused}}">
+        <paper-input-container id="tags"
+            no-label-float="[[noLabelFloat]]"
+            always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder,values.length)]]"
+            auto-validate$="[[autoValidate]]"
+            disabled$="[[disabled]]"
+            invalid="[[invalid]]">
+
             <slot name="prefix" slot="prefix"></slot>
             <div container slot="prefix">
                 <dom-repeat items="[[values]]" as="item">
@@ -166,10 +173,53 @@
                         </paper-chip>
                     </template>
                 </dom-repeat>
-
-                <input id="tagInput" placeholder="[[placeholder]]" type="text">
             </div>
+
+            <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
+
+            <iron-input bind-value="{{value}}" id="input" slot="input"
+                maxlength$="[[maxlength]]"
+                allowed-pattern="[[allowedPattern]]"
+                invalid="{{invalid}}"
+                validator="[[validator]]">
+                <input id="nativeInput"
+                    aria-labelledby$="[[_ariaLabelledBy]]"
+                    aria-describedby$="[[_ariaDescribedBy]]"
+                    disabled$="[[disabled]]"
+                    title$="[[title]]"
+                    type$="[[type]]"
+                    pattern$="[[pattern]]"
+                    required$="[[required]]"
+                    autocomplete$="[[autocomplete]]"
+                    autofocus$="[[autofocus]]"
+                    inputmode$="[[inputmode]]"
+                    minlength$="[[minlength]]"
+                    maxlength$="[[maxlength]]"
+                    min$="[[min]]"
+                    max$="[[max]]"
+                    step$="[[step]]"
+                    name$="[[name]]"
+                    placeholder$="[[placeholder]]"
+                    readonly$="[[readonly]]"
+                    list$="[[list]]"
+                    size$="[[size]]"
+                    autocapitalize$="[[autocapitalize]]"
+                    autocorrect$="[[autocorrect]]"
+                    on-change="_onChange"
+                    tabindex$="[[tabIndex]]"
+                    autosave$="[[autosave]]"
+                    results$="[[results]]"
+                    accept$="[[accept]]"
+                    multiple$="[[multiple]]">
+            </iron-input>
+
+
             <slot name="suffix" slot="suffix"></slot>
+
+            <template is="dom-if" if="[[errorMessage]]">
+                <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
+            </template>
+
         </paper-input-container>
 
         <dom-if if="[[_autocomplete]]">
@@ -200,14 +250,6 @@
 
             static get properties() {
                 return {
-                    noLabelFloat: {
-                        type: Boolean,
-                        value: false
-                    },
-                    alwaysFloatLabel: {
-                        type: Boolean,
-                        value: false
-                    },
                     displayProperty: {
                         type: String,
                         value: "label"
@@ -229,10 +271,6 @@
                         notify: true,
                         value: () => []
                     },
-                    placeholder: {
-                        type: String,
-                        value: undefined
-                    },
                     datasource: {
                         type: Array,
                         value: () => []
@@ -243,10 +281,6 @@
                     },
                     _hasValues: {
                         type: Boolean
-                    },
-                    _fakeValue: {
-                        type: String,
-                        value: ""
                     },
                     _hasContent: {
                         type: Boolean
@@ -274,8 +308,7 @@
 
             static get observers() {
                 return [
-                    "_onValuesChanged(values, values.splices)",
-                    "_onContentOrValuesChanges(_hasContent, _focused)"
+                    "_onValuesChanged(values, values.splices)"
                 ];
             }
 
@@ -299,14 +332,12 @@
                 }
             }
 
-            _computeHasContent(hasValues) {
-                this._hasContent = this._hasValues
+            _computeAlwaysFloatLabel(alwaysFloatLabel, placeholder, len) {
+                return placeholder || alwaysFloatLabel || len > 0
             }
 
-            _onContentOrValuesChanges(hasValuesOrContent, _isFocused) {
-                this._fakeValue = hasValuesOrContent ? " " : ""
-                this.$.fakeInputContainer._setFocused(_isFocused)
-                return this._fakeValue
+            _computeHasContent(hasValues) {
+                this._hasContent = this._hasValues
             }
 
             _add() {
@@ -316,8 +347,7 @@
             }
 
             _remove() {
-                const tagInput = this.shadowRoot.querySelector("#tagInput")
-                if (tagInput.value === "") {
+                if (this.inputElement.value === "") {
                     this._popChip()
                 }
             }
@@ -325,23 +355,23 @@
             connectedCallback() {
                 super.connectedCallback()
 
-                const tagInput = this.shadowRoot.querySelector("#tagInput")
+                const input = this.inputElement
 
-                tagInput.addEventListener("input", (event) => {
-                    this._hasContent = (this._hasValues || tagInput.value || tagInput.value === 0) ? true : false
+                input.addEventListener("input", (event) => {
+                    this._hasContent = (this._hasValues || input.value || input.value === 0) ? true : false
                 })
 
-                tagInput.addEventListener("keydown", (event) => {
-                    if (tagInput.value === "" && event.keyCode === 32) {
+                input.addEventListener("keydown", (event) => {
+                    if (input.value === "" && event.keyCode === 32) {
                         event.preventDefault()
                     }
                 })
 
-                tagInput.addEventListener("keyup", (event) => {
-                    this._hasContent = (this._hasValues || tagInput.value) ? true : false
+                input.addEventListener("keyup", (event) => {
+                    this._hasContent = (this._hasValues || input.value) ? true : false
 
                     if (this._autocomplete) {
-                        if (tagInput.value !== "" && event.keyCode !== 27) {
+                        if (input.value !== "" && event.keyCode !== 27) {
                             this._filter()
                         }
                     }
@@ -398,10 +428,10 @@
             }
 
             _pushChip() {
-                const tagInput = this.shadowRoot.querySelector("#tagInput")
-                if (tagInput.value) {
-                    this._pushChipByValue(tagInput.value)
-                    tagInput.value = ""
+                const input = this.inputElement
+                if (input.value) {
+                    this._pushChipByValue(input.value)
+                    input.bindValue = ""
                 }
             }
 
@@ -415,18 +445,18 @@
             }
 
             _removePlaceholder() {
-                this.$.tagInput.removeAttribute("placeholder")
+                this.inputElement.removeAttribute("placeholder")
             }
 
             _addPlaceholder() {
-                if (this.placeholder) this.$.tagInput.setAttribute("placeholder", this.placeholder)
+                if (this.placeholder) this.inputElement.setAttribute("placeholder", this.placeholder)
             }
 
             _filter() {
-                const tagInput = this.shadowRoot.querySelector("#tagInput")
-                if (tagInput.value) {
+                const input = this.inputElement
+                if (input.value) {
                     this._prefilterSource()
-                    this._source = this.filter(this._source, tagInput.value)
+                    this._source = this.filter(this._source, input.value)
                     if (!this._source.length) {
                         this._hideTips()
                     } else {
@@ -436,16 +466,16 @@
             }
 
             _select(event) {
-                const tagInput = this.shadowRoot.querySelector("#tagInput")
+                const input = this.inputElement
                 const item = {}
                 item[this.displayProperty] = event.target.labelText
                 item[this.valueProperty] = event.target.value
 
                 this.push("values", item)
-                tagInput.value = ""
+                input.bindValue = ""
                 this._hideTips()
 
-                this.$.tagInput.focus()
+                this.$.input.focus()
             }
 
             _removeChip(evt) {
