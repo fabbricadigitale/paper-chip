@@ -178,7 +178,7 @@
 
             <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
-            <iron-input bind-value="{{value}}" id="input" slot="input"
+            <iron-input bind-value="{{stagedValue}}" id="input" slot="input"
                 maxlength$="[[maxlength]]"
                 allowed-pattern="[[allowedPattern]]"
                 invalid="{{invalid}}"
@@ -255,6 +255,10 @@
 
             static get properties() {
                 return {
+                    stagedValue: {
+                        type: String,
+                        notify: true
+                    },
                     displayProperty: {
                         type: String,
                         value: "label"
