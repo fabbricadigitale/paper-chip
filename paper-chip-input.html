@@ -341,6 +341,17 @@
                 }
             }
 
+            _onIronInputReady() {
+                if (this.inputElement &&
+                    this._typesThatHaveText.indexOf(this.inputElement.inputElement.type) !== -1) {
+                    this.alwaysFloatLabel = true
+                }
+                // Only validate when attached if the input already has a value.
+                if (!!this.inputElement.bindValue) {
+                    this.$.container._handleValueAndAutoValidate(this.inputElement);
+                }
+            }
+
             _computeAlwaysFloatLabel(alwaysFloatLabel, placeholder, len) {
                 return placeholder || alwaysFloatLabel || len > 0
             }
@@ -366,7 +377,11 @@
             connectedCallback() {
                 super.connectedCallback()
 
+                this._boundOnIronInputReady = this._onIronInputReady.bind(this)
+
                 const input = this.inputElement
+
+                input.addEventListener("iron-input-ready", this._boundOnIronInputReady)
 
                 input.addEventListener("input", (event) => {
                     this._hasContent = (this._hasValues || input.value || input.value === 0) ? true : false
@@ -400,6 +415,14 @@
 
 
                 new Polymer.FlattenedNodesObserver(this, this._grabChips)
+            }
+
+            disconnectedCallback() {
+                super.disconnectedCallback()
+
+                const input = this.inputElement
+
+                input.removeEventListener("iron-input-ready", this._boundOnIronInputReady)
             }
 
             _onValuesChanged(values) {
