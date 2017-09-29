@@ -5,6 +5,7 @@
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="../paper-input/paper-input-char-counter.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
@@ -218,6 +219,10 @@
 
             <template is="dom-if" if="[[errorMessage]]">
                 <paper-input-error aria-live="assertive" slot="add-on">[[errorMessage]]</paper-input-error>
+            </template>
+
+            <template is="dom-if" if="[[charCounter]]">
+                <paper-input-char-counter slot="add-on"></paper-input-char-counter>
             </template>
 
         </paper-input-container>
