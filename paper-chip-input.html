@@ -352,6 +352,12 @@
                 }
             }
 
+            _onFocusout() {
+                if(this._autocomplete && !this.hidden) {
+                    this._hideTips()
+                }
+            }
+
             _computeAlwaysFloatLabel(alwaysFloatLabel, placeholder, len) {
                 return placeholder || alwaysFloatLabel || len > 0
             }
@@ -378,6 +384,8 @@
                 super.connectedCallback()
 
                 this._boundOnIronInputReady = this._onIronInputReady.bind(this)
+
+                this._boundOnFocusout = this._onFocusout.bind(this)
 
                 const input = this.inputElement
 
@@ -406,6 +414,8 @@
                     }
                 })
 
+                this.addEventListener("focusout", this._boundOnFocusout)
+
                 // Difference between the user enter keys and the reserved ones
                 const rsrv = new Set(["backspace", "delete", "escape"])
                 const diff = new Set(this.enterKeys.filter(val => !rsrv.has(val.toLowerCase())))
@@ -423,6 +433,8 @@
                 const input = this.inputElement
 
                 input.removeEventListener("iron-input-ready", this._boundOnIronInputReady)
+
+                this.removeEventListener("focusout", this._boundOnFocusout)
             }
 
             _onValuesChanged(values) {
