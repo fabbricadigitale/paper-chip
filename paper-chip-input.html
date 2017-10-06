@@ -447,6 +447,8 @@
                         this._ensurePlaceholder()
                     }
                 }
+                this.dispatchEvent(new CustomEvent("chip-removed", 
+                            { detail: { index: index, value: evt.model.item[this.valueProperty] }}))
             }
 
             _filterSource(selectedItem) {
