@@ -387,6 +387,7 @@
                     if (this.values.indexOf(value) < 0 && value !== "") {
                         this.push("values", value)
                         this._ensurePlaceholder()
+                        this.dispatchEvent(new CustomEvent("chip-added"))
                     }
                     tagInput.value = ""
                 }
