@@ -425,6 +425,7 @@
                 this._hideTips()
 
                 this.$.tagInput.focus()
+                this.dispatchEvent(new CustomEvent("chip-added"))
             }
 
             _removeChip(evt) {
