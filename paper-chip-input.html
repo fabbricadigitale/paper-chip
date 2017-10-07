@@ -167,6 +167,7 @@
                 </dom-repeat>
                 <input id="tagInput" placeholder="[[placeholder]]" type="text">
             </div>
+            <slot name="suffix" slot="suffix"></slot>
         </paper-input-container>
 
         <dom-if if="[[_autocomplete]]">
@@ -386,6 +387,7 @@
                     if (this.values.indexOf(value) < 0 && value !== "") {
                         this.push("values", value)
                         this._ensurePlaceholder()
+                        this.dispatchEvent(new CustomEvent("chip-added"))
                     }
                     tagInput.value = ""
                 }
@@ -423,6 +425,7 @@
                 this._hideTips()
 
                 this.$.tagInput.focus()
+                this.dispatchEvent(new CustomEvent("chip-added"))
             }
 
             _removeChip(evt) {
@@ -446,6 +449,8 @@
                         this._ensurePlaceholder()
                     }
                 }
+                this.dispatchEvent(new CustomEvent("chip-removed", 
+                            { detail: { index: index, value: evt.model.item[this.valueProperty] }}))
             }
 
             _filterSource(selectedItem) {
