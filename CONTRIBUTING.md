@@ -40,7 +40,7 @@ Do not forget to:
 5. write multi-line messages for bigger changes - eg.,
 
     ```
-    $ git commit -m "A brief summary of the commit
+    $ git commit -m "Update: A brief summary of the commit
     > 
     > A paragraph describing what changed and its impact."
     ```
