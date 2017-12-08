@@ -1,10 +1,13 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="./paper-chip.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-ripple/paper-ripple.html">
@@ -161,6 +164,9 @@
                 <dom-repeat items="[[values]]" as="item">
                     <template>
                         <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
+                            <template is="dom-if" if="[[_hasIcon(item)]]">
+                                <iron-icon icon="[[_computeIcon(item)]]" src="[[_computeIconSrc(item)]]" slot="icon"></iron-icon>
+                            </template>
                             <span slot="label" class="label">[[_computeLabel(item)]]</span>
                         </paper-chip>
                     </template>
@@ -175,9 +181,13 @@
                     <paper-listbox tabindex="0" id="list">
                         <dom-repeat items="[[_source]]">
                             <template>
-                                <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
+                                <paper-icon-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" icon="[[_computeIcon(item)]]" icon-src="[[_computeIconSrc(item)]]" on-tap="_select">
+                                    <template is="dom-if" if="[[_hasIcon(item)]]">
+                                        <iron-icon icon="[[_computeIcon(item)]]" src="[[_computeIconSrc(item)]]" slot="item-icon"></iron-icon>
+                                    </template>
+                                    [[_computeLabel(item)]]
                                     <paper-ripple></paper-ripple>
-                                </paper-item>
+                                </paper-icon-item>
                             </template>
                         </dom-repeat>
                     </paper-listbox>
@@ -212,6 +222,14 @@
                     valueProperty: {
                         type: String,
                         value: "value"
+                    },
+                    iconProperty: {
+                        type: String,
+                        value: "icon"
+                    },
+                    iconSrcProperty: {
+                        type: String,
+                        value: "iconSrc"
                     },
                     hidden: {
                         type: Boolean,
@@ -415,8 +433,10 @@
             _select(event) {
                 const tagInput = this.shadowRoot.querySelector("#tagInput")
                 const item = {}
-                item[this.displayProperty] = event.target.labelText
-                item[this.valueProperty] = event.target.value
+                item[this.displayProperty] = event.target.labelText;
+                item[this.valueProperty] = event.target.value;
+                item[this.iconProperty] = event.target.icon;
+                item[this.iconSrcProperty] = event.target.iconSrc;
 
                 this.push("values", item)
                 tagInput.value = ""
@@ -481,6 +501,18 @@
 
             _computeLabel(item) {
                 return this._autocomplete ? item[this.displayProperty] : item
+            }
+
+            _computeIcon(item) {
+                return this._autocomplete ? item[this.iconProperty] : item
+            }
+
+            _computeIconSrc(item) {
+                return this._autocomplete ? item[this.iconSrcProperty] : item
+            }
+
+            _hasIcon(item) {
+                return this._computeIcon(item) || this._computeIconSrc(item);
             }
 
             _hideTips() {
