@@ -136,6 +136,14 @@
             </template>
         </demo-snippet>
 
+        <h3>Example of chip input field firing chip-added and chip-removed event</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip-input id="custom-event"></paper-chip-input>
+            </template>
+        </demo-snippet>
+
         <h3>Example chip input field with custom prefix and suffix </h3>
 
         <demo-snippet>
@@ -1227,9 +1235,17 @@
             element.datasource = fruit
 
             document.querySelector('#btn').addEventListener('tap', function (e) {
-                console.log('ciaooo', e)
+                console.log('tap event ', e)
+            })
+            document.querySelector('#custom-event').addEventListener('chip-added', function (e) {
+                console.log(e);
+            })
+            document.querySelector('#custom-event').addEventListener('chip-removed', function (e) {
+                console.log(e);
             })
         })
+
+
     </script>
 
 </body>
