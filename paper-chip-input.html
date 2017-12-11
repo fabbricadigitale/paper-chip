@@ -15,7 +15,7 @@
 <dom-module id="paper-chip-input">
     <template>
         <style>
-             :host {
+            :host {
                 display: block;
 
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -55,7 +55,7 @@
             }
 
             :host([no-label-float]) #label {
-                 top: 22px;
+                top: 22px;
             }
 
             div[container] {
@@ -63,7 +63,8 @@
             }
 
             input {
-                position: relative; /* to make a stacking context */
+                position: relative;
+                /* to make a stacking context */
                 outline: none;
                 box-shadow: none;
                 padding: 0;
@@ -154,16 +155,11 @@
             [hidden] {
                 display: none;
             }
-
         </style>
 
 
-        <paper-input-container id="container"
-            no-label-float="[[noLabelFloat]]"
-            always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder,values.length)]]"
-            auto-validate$="[[autoValidate]]"
-            disabled$="[[disabled]]"
-            invalid="[[invalid]]">
+        <paper-input-container id="container" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder,values.length)]]"
+            auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
             <slot name="prefix" slot="prefix"></slot>
             <div container slot="prefix">
@@ -178,40 +174,14 @@
 
             <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
-            <iron-input bind-value="{{stagedValue}}" id="input" slot="input"
-                maxlength$="[[maxlength]]"
-                allowed-pattern="[[allowedPattern]]"
-                invalid="{{invalid}}"
-                validator="[[validator]]">
-                <input id="nativeInput"
-                    aria-labelledby$="[[_ariaLabelledBy]]"
-                    aria-describedby$="[[_ariaDescribedBy]]"
-                    disabled$="[[disabled]]"
-                    title$="[[title]]"
-                    type$="[[type]]"
-                    pattern$="[[pattern]]"
-                    required$="[[required]]"
-                    autocomplete$="[[autocomplete]]"
-                    autofocus$="[[autofocus]]"
-                    inputmode$="[[inputmode]]"
-                    minlength$="[[minlength]]"
-                    maxlength$="[[maxlength]]"
-                    min$="[[min]]"
-                    max$="[[max]]"
-                    step$="[[step]]"
-                    name$="[[name]]"
-                    placeholder$="[[placeholder]]"
-                    readonly$="[[readonly]]"
-                    list$="[[list]]"
-                    size$="[[size]]"
-                    autocapitalize$="[[autocapitalize]]"
-                    autocorrect$="[[autocorrect]]"
-                    on-change="_onChange"
-                    tabindex$="[[tabIndex]]"
-                    autosave$="[[autosave]]"
-                    results$="[[results]]"
-                    accept$="[[accept]]"
-                    multiple$="[[multiple]]">
+            <iron-input bind-value="{{stagedValue}}" id="input" slot="input" maxlength$="[[maxlength]]" allowed-pattern="[[allowedPattern]]"
+                invalid="{{invalid}}" validator="[[validator]]">
+                <input id="nativeInput" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" disabled$="[[disabled]]"
+                    title$="[[title]]" type$="[[type]]" pattern$="[[pattern]]" required$="[[required]]" autocomplete$="[[autocomplete]]"
+                    autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" maxlength$="[[maxlength]]"
+                    min$="[[min]]" max$="[[max]]" step$="[[step]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]"
+                    list$="[[list]]" size$="[[size]]" autocapitalize$="[[autocapitalize]]" autocorrect$="[[autocorrect]]" on-change="_onChange"
+                    tabindex$="[[tabIndex]]" autosave$="[[autosave]]" results$="[[results]]" accept$="[[accept]]" multiple$="[[multiple]]">
             </iron-input>
 
 
@@ -353,7 +323,7 @@
             }
 
             _onFocusout() {
-                if(this._autocomplete && !this.hidden) {
+                if (this._autocomplete && !this.hidden) {
                     this._hideTips()
                 }
             }
@@ -374,9 +344,21 @@
                 }
             }
 
-            _remove() {
-                if (this.inputElement.value === "") {
-                    this._popChip()
+            _remove(evt) {
+                var element = document.activeElement
+                var workingElement = element.shadowRoot != null ? element.shadowRoot.activeElement : element
+
+                if (this.$.nativeInput === workingElement) {
+                    if (this.inputElement.value === "" && this.values.length > 0) {
+                        var index = this.values.length
+                        var item = this.values[index - 1]
+                        var value = item[this.valueProperty] != null ? item[this.valueProperty] : item
+                        console.log("index ", index-1)
+                        console.log("value ", value)
+                        this._popChip()
+                        this.dispatchEvent(new CustomEvent("chip-removed",
+                            { detail: { index: index-1, value: value } }))
+                    }
                 }
             }
 
@@ -409,7 +391,7 @@
                             this._filter()
                         }
                     }
-                    if(!this._hasContent) {
+                    if (!this._hasContent) {
                         this._hideTips()
                     }
                 })
@@ -490,6 +472,7 @@
                 if (this.values.indexOf(value) < 0 && value !== "") {
                     this.push("values", value)
                     this._ensurePlaceholder()
+                    this.dispatchEvent(new CustomEvent("chip-added"))
                 }
             }
 
@@ -525,6 +508,7 @@
                 this._hideTips()
 
                 this.$.input.focus()
+                this.dispatchEvent(new CustomEvent("chip-added"))
             }
 
             _removeChip(evt) {
@@ -535,6 +519,7 @@
 
                 // Possible since no chips with the same content are admitted
                 const index = this.values.indexOf(evt.model.item)
+                const value = evt.model.item[this.valueProperty]
 
                 if (this._autocomplete) {
                     this._hideTips()
@@ -548,6 +533,8 @@
                         this._ensurePlaceholder()
                     }
                 }
+                this.dispatchEvent(new CustomEvent("chip-removed",
+                    { detail: { index: index, value: value } }))
             }
 
             _filterSource(selectedItem) {
