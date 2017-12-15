@@ -349,13 +349,11 @@
                 //
                 // this check avoids to run _remove when press backspace key when a chip is focused.
                 // In that case the event _removeChip has to take place
-                if (this.$.nativeInput === evt.detail.keyboardEvent.path[0]) {
+                if (this.$.nativeInput === evt.detail.keyboardEvent.composedPath()[0]) {
                     if (this.inputElement.value === "" && this.values.length > 0) {
                         var index = this.values.length
                         var item = this.values[index - 1]
                         var value = item[this.valueProperty] != null ? item[this.valueProperty] : item
-                        console.log("index ", index-1)
-                        console.log("value ", value)
                         this._popChip()
                         this.dispatchEvent(new CustomEvent("chip-removed",
                             { detail: { index: index-1, value: value } }))
