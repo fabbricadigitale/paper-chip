@@ -441,9 +441,11 @@
             })
 
             test("fire chip-removed event when remove a chip", (done) => {
-
                 flush(() => {
-                    input.$.ce.focus()
+                    enterCharacter(input, "awesome-text")
+                    MockInteractions.pressEnter(input.$.nativeInput)
+
+                    input.$.nativeInput.focus()
                     MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
                 })
                 Polymer.Base.async(function () {
