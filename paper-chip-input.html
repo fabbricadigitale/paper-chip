@@ -345,10 +345,11 @@
             }
 
             _remove(evt) {
-                var element = document.activeElement
-                var workingElement = element.shadowRoot != null ? element.shadowRoot.activeElement : element
-
-                if (this.$.nativeInput === workingElement) {
+                // path is the array of nodes through which event will pass...
+                //
+                // this check avoids to run _remove when press backspace key when a chip is focused.
+                // In that case the event _removeChip has to take place
+                if (this.$.nativeInput === evt.detail.keyboardEvent.path[0]) {
                     if (this.inputElement.value === "" && this.values.length > 0) {
                         var index = this.values.length
                         var item = this.values[index - 1]
