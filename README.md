@@ -206,6 +206,165 @@ Use `no-label-float` attribute to disable floating label. So the input label wil
 <paper-chip-input no-label-float></paper-chip-input>
 ```
 
+### Input field feature
+
+Inputs can have different types, and be disabled.
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input label="text input" staged-value="pre-filled"></paper-chip-input>
+```
+
+Inputs can have character counters.
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input label="simple character counter" char-counter></paper-chip-input>
+```
+
+Or you can limit chip text's max length.
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input label="input with at most 10 characters" char-counter maxlength="10"></paper-chip-input>
+```
+
+Inputs can validate automatically or on demand, and can have custom error messages.
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-chip-input>
+```
+
+You can configure your favorite allowed pattern.
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-chip-input>
+```
+
+You can run validation manually
+
+ <!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-chip-input>
+
+<button onclick="validate()">Validate!</button>
+<script>
+function validate() {
+    document.getElementById('inputForValidation').validate();
+}
+</script>
+```
+
+`paper-chip-input` can have custom prefix and suffix.
+
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input no-label-float label="">
+    <iron-icon icon="mail" slot="prefix"></iron-icon>
+    <paper-icon-button slot="suffix" icon="clear"></paper-icon-button>
+</paper-chip-input>
+```
+
+### Chip-added and chip-removed event
+
+`paper-chip-input` fires custom events chip-added/chip-removed event when a chip is added or removed to `paper-chip-input`.
+
+<!--
+```
+<custom-element-demo>
+  <template>
+    <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="paper-chip-input.html">
+    <next-code-block></next-code-block>
+  </template>
+</custom-element-demo>
+```
+-->
+```html
+<paper-chip-input id="custom-event"></paper-chip-input>
+<span id="log"></span>
+<script>
+document.querySelector('#custom-event').addEventListener('chip-added', function (e) {
+    document.querySelector("#log").textContent="Chip added!"
+})
+document.querySelector('#custom-event').addEventListener('chip-removed', function (e) {
+    document.querySelector("#log").textContent="Chip removed!"
+})
+</script>
+```
+
 ### Configure your favorite submit keys
 
 Do you want to change the **keys** that automatically submit chips?

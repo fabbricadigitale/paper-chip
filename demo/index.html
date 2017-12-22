@@ -136,12 +136,34 @@
             </template>
         </demo-snippet>
 
-        <h3>Example of chip input field firing chip-added and chip-removed event</h3>
-
+        <h3>Inputs can have different types, and be disabled</h3>
         <demo-snippet>
-            <template>
-                <paper-chip-input id="custom-event"></paper-chip-input>
-            </template>
+        <template>
+            <paper-chip-input label="text input"></paper-chip-input>
+            <paper-chip-input label="text input" staged-value="pre-filled"></paper-chip-input>
+            <paper-chip-input label="password input" type="password"></paper-chip-input>
+            <paper-chip-input label="disabled input" disabled staged-value="batman"></paper-chip-input>
+        </template>
+        </demo-snippet>
+
+        <h3>Inputs can have character counters</h3>
+        <demo-snippet>
+        <template>
+            <paper-chip-input label="simple character counter" char-counter></paper-chip-input>
+            <paper-chip-input label="input with at most 10 characters" char-counter maxlength="10"></paper-chip-input>
+        </template>
+        </demo-snippet>
+
+        <h3>Inputs can validate automatically or on demand, and can have custom error messages</h3>
+        <demo-snippet>
+        <template>
+            <paper-chip-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!"></paper-chip-input>
+            <paper-chip-input label="this input requires letters only" auto-validate pattern="[a-zA-Z]*" error-message="letters only!" value="pre-filled 123"></paper-chip-input>
+            <paper-chip-input label="this input will only let you type letters" auto-validate allowed-pattern="[a-zA-Z]"></paper-chip-input>
+            <paper-chip-input id="inputForValidation" required label="this input is manually validated" pattern="[a-zA-Z]*" error-message="letters only!"></paper-chip-input>
+
+            <button onclick="validate()">Validate!</button>
+        </template>
         </demo-snippet>
 
         <h3>Example chip input field with custom prefix and suffix </h3>
@@ -178,6 +200,16 @@
                 <paper-chip-input no-label-float></paper-chip-input>
             </template>
         </demo-snippet>
+
+        <h3>Example of chip input field firing chip-added and chip-removed event</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip-input id="custom-event"></paper-chip-input>
+                <span id="log"></span>
+            </template>
+        </demo-snippet>
+
 
         <h3>Configure your favorite enter keys</h3>
 
@@ -251,6 +283,12 @@
     </div>
 
     <script>
+        function validate() {
+            document.getElementById('inputForValidation').validate();
+        }
+        function clearInput() {
+            document.getElementById('inputWithButton').value = '';
+        }
         let countries = [
             {
                 "label": "Afghanistan",
@@ -1238,10 +1276,10 @@
                 console.log('tap event ', e)
             })
             document.querySelector('#custom-event').addEventListener('chip-added', function (e) {
-                console.log(e);
+                document.querySelector("#log").textContent="Chip added!"
             })
             document.querySelector('#custom-event').addEventListener('chip-removed', function (e) {
-                console.log(e);
+                document.querySelector("#log").textContent="Chip removed!"
             })
         })
 
