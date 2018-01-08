@@ -252,6 +252,15 @@
             </template>
         </demo-snippet>
 
+        <h3>Example chip input with autocomplete, inline datasource, pre-filled</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip-input values='[{"key": "7", "value": "sunday"},{"key": "2", "value": "tuesday"}]' label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
+                    display-property="value" value-property="key" placeholder="Add day"></paper-chip-input>
+            </template>
+        </demo-snippet>
+
         <h3>Example chip input with autocomplete and custom search logic</h3>
 
         <demo-snippet>
