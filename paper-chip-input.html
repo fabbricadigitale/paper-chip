@@ -196,8 +196,7 @@
 
         </paper-input-container>
 
-        <dom-if if="[[_autocomplete]]">
-            <template>
+        <template is="dom-if" if="[[_autocomplete]]">
                 <paper-material id="tips" elevation="1" hidden$=[[hidden]]>
                     <paper-listbox tabindex="0" id="list">
                         <dom-repeat items="[[_source]]">
@@ -209,8 +208,7 @@
                         </dom-repeat>
                     </paper-listbox>
                 </paper-material>
-            </template>
-        </dom-if>
+        </template>
 
     </template>
     <script>
