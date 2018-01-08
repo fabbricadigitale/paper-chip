@@ -81,6 +81,8 @@
 
                 @apply --paper-font-subhead;
                 @apply --paper-input-container-input;
+
+                line-height: 32px;
             }
 
             input::-webkit-outer-spin-button,
@@ -161,7 +163,10 @@
             auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
             <slot name="prefix" slot="prefix"></slot>
-            <div container slot="prefix">
+
+            <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
+
+            <div container slot="input">
                 <dom-repeat items="[[values]]" as="item">
                     <template>
                         <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
@@ -169,20 +174,16 @@
                         </paper-chip>
                     </template>
                 </dom-repeat>
+                <iron-input bind-value="{{stagedValue}}" id="input" maxlength$="[[maxlength]]" allowed-pattern="[[allowedPattern]]"
+                    invalid="{{invalid}}" validator="[[validator]]">
+                    <input id="nativeInput" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" disabled$="[[disabled]]"
+                        title$="[[title]]" type$="[[type]]" pattern$="[[pattern]]" required$="[[required]]" autocomplete$="[[autocomplete]]"
+                        autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" maxlength$="[[maxlength]]"
+                        min$="[[min]]" max$="[[max]]" step$="[[step]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]"
+                        list$="[[list]]" size$="[[size]]" autocapitalize$="[[autocapitalize]]" autocorrect$="[[autocorrect]]" on-change="_onChange"
+                        tabindex$="[[tabIndex]]" autosave$="[[autosave]]" results$="[[results]]" accept$="[[accept]]" multiple$="[[multiple]]">
+                </iron-input>
             </div>
-
-            <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
-
-            <iron-input bind-value="{{stagedValue}}" id="input" slot="input" maxlength$="[[maxlength]]" allowed-pattern="[[allowedPattern]]"
-                invalid="{{invalid}}" validator="[[validator]]">
-                <input id="nativeInput" aria-labelledby$="[[_ariaLabelledBy]]" aria-describedby$="[[_ariaDescribedBy]]" disabled$="[[disabled]]"
-                    title$="[[title]]" type$="[[type]]" pattern$="[[pattern]]" required$="[[required]]" autocomplete$="[[autocomplete]]"
-                    autofocus$="[[autofocus]]" inputmode$="[[inputmode]]" minlength$="[[minlength]]" maxlength$="[[maxlength]]"
-                    min$="[[min]]" max$="[[max]]" step$="[[step]]" name$="[[name]]" placeholder$="[[placeholder]]" readonly$="[[readonly]]"
-                    list$="[[list]]" size$="[[size]]" autocapitalize$="[[autocapitalize]]" autocorrect$="[[autocorrect]]" on-change="_onChange"
-                    tabindex$="[[tabIndex]]" autosave$="[[autosave]]" results$="[[results]]" accept$="[[accept]]" multiple$="[[multiple]]">
-            </iron-input>
-
 
             <slot name="suffix" slot="suffix"></slot>
 
