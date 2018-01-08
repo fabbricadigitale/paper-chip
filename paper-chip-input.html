@@ -170,7 +170,7 @@
 
             <slot name="prefix" slot="prefix"></slot>
 
-            <label hidden$="[[!label]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
+            <label hidden$="[[_computeLabelVisibility(noLabelFloat,label,values.length)]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
             <div container slot="input">
                 <dom-repeat items="[[values]]" as="item">
@@ -330,6 +330,10 @@
                 if (this._autocomplete && !this.hidden) {
                     this._hideTips()
                 }
+            }
+
+            _computeLabelVisibility(noLabelFloat, label, len) {
+                return !label || (noLabelFloat && len > 0)
             }
 
             _computeAlwaysFloatLabel(alwaysFloatLabel, placeholder, len) {
