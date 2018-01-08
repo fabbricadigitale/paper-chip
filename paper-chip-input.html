@@ -58,6 +58,16 @@
                 top: 22px;
             }
 
+            div[container] {
+                @apply --layout;
+                @apply --layout-wrap;
+            }
+
+            iron-input {
+                @apply --layout-flex-auto;
+                max-width: 100%;
+            }
+
             input {
                 position: relative; /* to make a stacking context */
                 outline: none;
