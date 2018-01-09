@@ -587,6 +587,7 @@ MIT © fabbricadigitale
 
             _handleVisibleLabel(hasLabel, value) {
                 if (!hasLabel && !!value && !this.textContent) {
+                    // Restarts (fallback) distribution
                     this.textContent = value
                 }
             }
@@ -680,6 +681,20 @@ MIT © fabbricadigitale
                     "delete": "_selfRemove",
                     "backspace": "_selfRemove"
                 }
+            }
+
+            get label() {
+                var nodes = this.$.labelSlot.assignedNodes()
+                if (nodes.length <= 0) {
+                    nodes = this.$.fallbackLabelSlot.assignedNodes()
+                }
+
+                var label = ""
+                for (var i = 0; i < nodes.length; i++) {
+                    label += nodes[i].textContent
+                }
+
+                return label.trim()
             }
 
         }
