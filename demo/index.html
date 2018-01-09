@@ -36,6 +36,7 @@
 
 <body unresolved>
     <div>
+
         <h3>Minimal example</h3>
         <demo-snippet>
             <template>
@@ -219,7 +220,7 @@
             </template>
         </demo-snippet>
 
-        <h3>Example chip input field using paper-input-container(with placeholder)</h3>
+        <h3>Example chip input field using paper-input-container (with placeholder)</h3>
 
         <demo-snippet>
             <template>
@@ -227,11 +228,23 @@
             </template>
         </demo-snippet>
 
+        <h3>Example chip input with datasource, pre-filled</h3>
+
+        <demo-snippet>
+            <template>
+                <paper-chip-input id="countries-values"
+                values='["IT"]'
+                datasource='[{"label":"+39", "value":"IT"},{"label":"+34", "value":"ES"}]'
+                label="Countries" placeholder="Add countries">
+                </paper-chip-input>
+            </template>
+        </demo-snippet>
+
         <h3>Example chip input with autocomplete</h3>
 
         <demo-snippet>
             <template>
-                <paper-chip-input id="countries-autocomplete" label="Countries" placeholder="Add countries"></paper-chip-input>
+                <paper-chip-input id="countries-autocomplete" label="Countries" placeholder="Add countries" autocomplete></paper-chip-input>
             </template>
         </demo-snippet>
 
@@ -239,7 +252,7 @@
 
         <demo-snippet>
             <template>
-                <paper-chip-input id="fruits-autocomplete" label="Fruits" display-property="value" value-property="key" placeholder="Add fruits"></paper-chip-input>
+                <paper-chip-input id="fruits-autocomplete" label="Fruits" display-property="value" value-property="key" placeholder="Add fruits" autocomplete></paper-chip-input>
             </template>
         </demo-snippet>
 
@@ -248,7 +261,7 @@
         <demo-snippet>
             <template>
                 <paper-chip-input label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
-                    display-property="value" value-property="key" placeholder="Add day"></paper-chip-input>
+                    display-property="value" value-property="key" placeholder="Add day" autocomplete></paper-chip-input>
             </template>
         </demo-snippet>
 
@@ -256,8 +269,8 @@
 
         <demo-snippet>
             <template>
-                <paper-chip-input values='[{"key": "7", "value": "sunday"},{"key": "2", "value": "tuesday"}]' label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
-                    display-property="value" value-property="key" placeholder="Add day"></paper-chip-input>
+                <paper-chip-input values='["1", "7"]' label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
+                    display-property="value" value-property="key" placeholder="Add day" autocomplete></paper-chip-input>
             </template>
         </demo-snippet>
 
@@ -266,7 +279,7 @@
         <demo-snippet>
             <template>
                 <paper-chip-input id="weekdays" label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
-                    display-property="value" value-property="key" placeholder="Add day"></paper-chip-input>
+                    display-property="value" value-property="key" placeholder="Add day" autocomplete></paper-chip-input>
                 <script>
                     let weekdays = document.querySelector("#weekdays")
                     weekdays.filter = (data, value) => {
@@ -282,8 +295,13 @@
             <template>
 
                 <paper-chip-input>
-                    <paper-chip value="ciao"></paper-chip>
-                    <paper-chip value="helo"></paper-chip>
+
+                    <paper-chip value="ciao">ciaone</paper-chip>
+                    <paper-chip value="nolbl"></paper-chip>
+                    <paper-chip value="helo">hello</paper-chip>
+                    <paper-chip value="slot"><span slot="label">slotlabel</span></paper-chip>
+                    <paper-chip value="withcapt">withcaptlbl<span slot="caption">caption</span></paper-chip>
+
                 </paper-chip-input>
 
             </template>
