@@ -80,6 +80,24 @@
         </template>
     </test-fixture>
 
+    <test-fixture id="case1">
+        <template>
+            <paper-chip>onlyLabel</paper-chip>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="case2">
+        <template>
+            <paper-chip value="onlyValue"></paper-chip>
+        </template>
+    </test-fixture>
+
+    <test-fixture id="case3">
+        <template>
+            <paper-chip value="xyz-value">xyz-label</paper-chip>
+        </template>
+    </test-fixture>
+
 
     <script>
         suite('paper-chip', () => {
@@ -168,6 +186,39 @@
                     assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
                     btn.click()
                 }, 1)
+            })
+
+            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 1
+            test("paper-chip with label and no value", (done) => {
+                const chip = fixture('case1')
+
+                flush(() => {
+                    expect(chip.value).to.be.undefined
+                    expect(chip.label).to.equal("onlyLabel")
+                    done()
+                })
+            })
+
+            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 2
+            test("paper-chip with value and no label", (done) => {
+                const chip = fixture('case2')
+
+                flush(() => {
+                    expect(chip.value).to.equal("onlyValue")
+                    expect(chip.label).to.equal("onlyValue")
+                    done()
+                })
+            })
+
+            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 3
+            test("paper-chip with value and label", (done) => {
+                const chip = fixture('case3')
+
+                flush(() => {
+                    expect(chip.value).to.equal("xyz-value")
+                    expect(chip.label).to.equal("xyz-label")
+                    done()
+                })
             })
 
         })
