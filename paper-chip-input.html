@@ -204,7 +204,7 @@
 
         </paper-input-container>
 
-        <template is="dom-if" if="[[_autocomplete]]">
+        <template is="dom-if" if="[[autocomplete]]">
                 <paper-material id="tips" elevation="1" hidden$=[[hidden]]>
                     <paper-listbox tabindex="0" id="list">
                         <dom-repeat items="[[_source]]">
@@ -269,10 +269,8 @@
                     _hasContent: {
                         type: Boolean
                     },
-                    _autocomplete: {
-                        type: Boolean,
-                        value: false,
-                        computed: "_computeAutocomplete(datasource)"
+                    autocomplete: {
+                        type: Boolean
                     },
                     enterKeys: {
                         type: Array,
@@ -334,7 +332,7 @@
             }
 
             _onFocusout() {
-                if (this._autocomplete && !this.hidden) {
+                if (this.autocomplete && !this.hidden) {
                     this._hideTips()
                 }
             }
@@ -354,7 +352,7 @@
             _add() {
                 if (!this.validate())
                     return
-                if (!this._autocomplete) {
+                if (!this.autocomplete) {
                     this._pushChip()
                 }
             }
@@ -398,7 +396,7 @@
                 input.addEventListener("keyup", (event) => {
                     this._hasContent = (this._hasValues || input.value) ? true : false
 
-                    if (this._autocomplete && this._hasContent) {
+                    if (this.autocomplete && this._hasContent) {
                         if (input.value !== "" && event.keyCode !== 27) {
                             this._filter()
                         }
@@ -459,7 +457,7 @@
             }
 
             _popChip() {
-                if (this._autocomplete) {
+                if (this.autocomplete) {
                     this._hideTips()
                     this.pop("values")
                     this._prefilterSource()
@@ -529,7 +527,7 @@
                 const index = this.values.indexOf(evt.model.value)
                 const value = evt.model.value
 
-                if (this._autocomplete) {
+                if (this.autocomplete) {
                     this._hideTips()
                     if (index in this.values) {
                         this.splice("values", index, 1)
@@ -544,9 +542,10 @@
                 this.dispatchEvent(new CustomEvent("chip-removed", { detail: { index: index, value: value } }))
             }
 
-            _filterSource(selectedItem) {
+            _filterSource(selectedValue) {
+                console.log(selectedValue)
                 const index = this._source.findIndex((item) => {
-                    return this._computeLabel(item) === this._computeLabel(selectedItem)
+                    return this._computeValue(item) === selectedValue
                 })
 
                 if (index !== -1) {
@@ -595,14 +594,10 @@
             }
 
             _hideTips() {
-                if (this._autocomplete) {
+                if (this.autocomplete) {
                     this.shadowRoot.querySelector("#tips") ? this.shadowRoot.querySelector("#tips").scrollTop = 0 : ""
                     this.hidden = true
                 }
-            }
-
-            _computeAutocomplete(datasource) {
-                return !!datasource.length
             }
 
             /**
