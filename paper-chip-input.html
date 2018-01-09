@@ -174,10 +174,10 @@
             <label hidden$="[[_computeLabelVisibility(noLabelFloat,label,values.length)]]" aria-hidden="true" for="input" slot="label">[[label]]</label>
 
             <div container slot="input">
-                <dom-repeat items="[[values]]" as="item">
+                <dom-repeat items="[[values]]" as="value">
                     <template>
-                        <paper-chip value="[[_computeValue(item)]]" on-remove="_removeChip" removable single-line>
-                            <span slot="label" class="label">[[_computeLabel(item)]]</span>
+                        <paper-chip value="[[value]]" on-remove="_removeChip" removable single-line>
+                            <span slot="label" class="label">[[_lookupLabel(value)]]</span>
                         </paper-chip>
                     </template>
                 </dom-repeat>
@@ -283,7 +283,7 @@
                         value: function () {
                             return (data, value) =>
                                 data.filter(
-                                    (item) => item[this.displayProperty].toLowerCase().startsWith(value.toLowerCase())
+                                    (item) => this._computeLabel(item).toLowerCase().startsWith(value.toLowerCase())
                                 )
                         }
                     }
@@ -309,6 +309,12 @@
                     for (const index in children) {
                         const el = children[index]
                         if (el instanceof PaperChip && el.value !== undefined) {
+                            const item = {
+                                [this.displayProperty]: el.label,
+                                [this.valueProperty]: el.value
+                            }
+
+                            this.push("datasource", item)
                             this._pushChipByValue(el.value)
                             el.parentElement.removeChild(el)
                         }
@@ -361,11 +367,9 @@
                 if (this.$.nativeInput === evt.detail.keyboardEvent.composedPath()[0]) {
                     if (this.inputElement.value === "" && this.values.length > 0) {
                         var index = this.values.length
-                        var item = this.values[index - 1]
-                        var value = item[this.valueProperty] != null ? item[this.valueProperty] : item
+                        var value = this.values[index - 1]
                         this._popChip()
-                        this.dispatchEvent(new CustomEvent("chip-removed",
-                            { detail: { index: index-1, value: value } }))
+                        this.dispatchEvent(new CustomEvent("chip-removed", { detail: { index: index - 1, value: value } }))
                     }
                 }
             }
@@ -507,11 +511,7 @@
 
             _select(event) {
                 const input = this.inputElement
-                const item = {}
-                item[this.displayProperty] = event.target.labelText
-                item[this.valueProperty] = event.target.value
-
-                this.push("values", item)
+                this.push("values", event.target.value)
                 input.bindValue = ""
                 this._hideTips()
 
@@ -526,8 +526,8 @@
                 this._ensureValues()
 
                 // Possible since no chips with the same content are admitted
-                const index = this.values.indexOf(evt.model.item)
-                const value = evt.model.item[this.valueProperty]
+                const index = this.values.indexOf(evt.model.value)
+                const value = evt.model.value
 
                 if (this._autocomplete) {
                     this._hideTips()
@@ -541,12 +541,14 @@
                         this._ensurePlaceholder()
                     }
                 }
-                this.dispatchEvent(new CustomEvent("chip-removed",
-                    { detail: { index: index, value: value } }))
+                this.dispatchEvent(new CustomEvent("chip-removed", { detail: { index: index, value: value } }))
             }
 
             _filterSource(selectedItem) {
-                const index = this._source.findIndex((item) => { return item[this.displayProperty] === selectedItem[this.displayProperty] })
+                const index = this._source.findIndex((item) => {
+                    return this._computeLabel(item) === this._computeLabel(selectedItem)
+                })
+
                 if (index !== -1) {
                     this.splice("_source", index, 1)
                 }
@@ -562,22 +564,34 @@
 
             _includes(value) {
                 return this._source.filter((item) => {
-                    return item[this.displayProperty].toLowerCase().includes(value.toLowerCase())
+                    return this._computeLabel(item).toLowerCase().includes(value.toLowerCase())
                 })
             }
 
             _startsWith(value) {
                 return this._source.filter((item) => {
-                    return item[this.displayProperty].toLowerCase().startsWith(value.toLowerCase())
+                    return this._computeLabel(item).toLowerCase().startsWith(value.toLowerCase())
                 })
             }
 
             _computeValue(item) {
-                return this._autocomplete ? item[this.valueProperty] : item
+                return item[this.valueProperty] !== undefined ? item[this.valueProperty] : item
             }
 
             _computeLabel(item) {
-                return this._autocomplete ? item[this.displayProperty] : item
+                return item[this.displayProperty] ? item[this.displayProperty] : item
+            }
+
+            _lookupLabel(value) {
+                const item = this.datasource.find((item) => {
+                    return this._computeValue(item) === value
+                })
+
+                if (item !== undefined) {
+                    return this._computeLabel(item)
+                }
+
+                return value
             }
 
             _hideTips() {
