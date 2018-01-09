@@ -236,6 +236,10 @@ MIT © fabbricadigitale
                 @apply --layout-self-center;
             }
 
+            :host(:not([removable])) #label {
+                padding-right: 12px;
+            }
+
             :host([single-line]) #label {
                 padding-right: 12px;
             }
@@ -259,10 +263,6 @@ MIT © fabbricadigitale
                 max-width: var(--paper-chip-closed-label-max-width, 80px);
             }
 
-            :host(:not([removable])) #label .labelFallback,
-            :host(:not([removable])) #label ::slotted([slot="label"]) {
-                padding-right: 20px;
-            }
 
             #label ::slotted([slot="caption"]) {
                 display: none;
