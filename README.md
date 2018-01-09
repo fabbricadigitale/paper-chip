@@ -396,7 +396,7 @@ Following example should clarify the usage of this feature.
 
 Do you need **autocomplete** ?
 
-When you have a predefined and finite set of input values you can set the predefined values with `datasource` property.
+When you have a predefined and finite set of input values you can set the predefined values with `datasource` property. Don't forget to add the `autocomplete` attribute.
 
 <!--
 ```
@@ -410,7 +410,7 @@ When you have a predefined and finite set of input values you can set the predef
 ```
 -->
 ```html
-<paper-chip-input label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]'  placeholder="Add day"></paper-chip-input>
+<paper-chip-input autocomplete label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]'  placeholder="Add day"></paper-chip-input>
 ```
 
 #### Configure custom datasource properties
@@ -449,7 +449,7 @@ Set `filter` property with your custom *function*. The following lines of code w
 ```
 -->
 ```html
-<paper-chip-input id="weekdays" label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]' placeholder="Add day"></paper-chip-input>
+<paper-chip-input autocomplete id="weekdays" label="Weekdays" datasource='[{"value": "1", "label": "monday" },{"value": "2", "label": "tuesday"}, {"value": "3", "label": "wednesday"}, {"value": "4", "label": "thursday"}, {"value": "5", "label": "friday"}, {"value": "6", "label": "saturday"}, {"value": "7", "label": "sunday"}]' placeholder="Add day"></paper-chip-input>
 <script>
 let weekdays = document.querySelector("#weekdays")
 weekdays.filter = (data, value) => {
