@@ -417,7 +417,6 @@ MIT © fabbricadigitale
                     <div id="label">
 
                         <slot id="labelSlot" name="label">
-
                             <!-- fallback -->
                             <div class="labelFallback">
 
@@ -684,6 +683,7 @@ MIT © fabbricadigitale
             }
 
             get label() {
+
                 var nodes = this.$.labelSlot.assignedNodes()
                 if (nodes.length <= 0) {
                     nodes = this.$.fallbackLabelSlot.assignedNodes()
@@ -691,10 +691,17 @@ MIT © fabbricadigitale
 
                 var label = ""
                 for (var i = 0; i < nodes.length; i++) {
-                    label += nodes[i].textContent
+                    var node = nodes[i]
+
+                    if (node instanceof Text) {
+                        label += node.nodeValue
+                    } else if (node instanceof Element) {
+                        label += node.innerText
+                    }
                 }
 
                 return label.trim()
+
             }
 
         }
