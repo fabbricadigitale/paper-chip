@@ -35,7 +35,7 @@
 
     <test-fixture id="autocomplete">
         <template>
-            <paper-chip-input></paper-chip-input>
+            <paper-chip-input autocomplete></paper-chip-input>
         </template>
     </test-fixture>
 
@@ -47,7 +47,7 @@
 
     <test-fixture id="autocomplete-custom-event">
         <template>
-            <paper-chip-input></paper-chip-input>
+            <paper-chip-input autocomplete></paper-chip-input>
         </template>
     </test-fixture>
 
@@ -264,7 +264,7 @@
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
                     items[0].click()
-                    expect(element.values[0].label).to.equal('Alabama')
+                    expect(element.values[0]).to.equal('AL')
                     done()
                 })
             })
@@ -277,13 +277,11 @@
                     items[1].click()
 
                     flush(() => {
-                        expect(element.values[0].label).to.equal('Alaska')
-                        expect(element.values[0].value).to.equal('AK')
+                        expect(element.values[0]).to.equal('AK')
                         items[4].click()
 
                         flush(() => {
-                            expect(element.values[1].label).to.equal('Arkansas')
-                            expect(element.values[1].value).to.equal('AR')
+                            expect(element.values[1]).to.equal('AR')
                             done()
                         })
                     })
@@ -322,7 +320,7 @@
                         const items = element.shadowRoot.querySelectorAll("paper-item")
                         items[0].click()
 
-                        expect(element.values[0].label).to.equal('Alabama')
+                        expect(element.values[0]).to.equal('AL')
                         expect(element.hidden).to.be.true
 
                         done()
@@ -357,19 +355,19 @@
                 flush(() => {
                     const items = element.shadowRoot.querySelectorAll("paper-item")
                     items[0].click()
-                    expect(element.values[0].label).to.equal('Alabama')
+                    expect(element.values[0]).to.equal('AL')
 
                     enterCharacter(element, "A")
 
                     flush(() => {
                         items[0].click()
-                        expect(element.values[1].label).to.equal('Alaska')
+                        expect(element.values[1]).to.equal('AK')
 
                         enterCharacter(element, "A")
 
                         flush(() => {
                             items[2].click()
-                            expect(element.values[2].label).to.equal('Arkansas')
+                            expect(element.values[2]).to.equal('AR')
 
                             flush(() => {
                                 const [alabama, alaska, arkansas] = element.$.container.querySelectorAll("paper-chip")
@@ -377,24 +375,12 @@
                                 alaska.$.removeBtn.click()
 
                                 flush(() => {
-                                    expect(element.values).to.deep.equal([
-                                        {
-                                            label: "Alabama",
-                                            value: "AL"
-                                        },
-                                        {
-                                            label: "Arkansas",
-                                            value: "AR"
-                                        }
-                                    ])
+                                    expect(element.values).to.deep.equal(["AL", "AR"])
 
                                     arkansas.$.removeBtn.click()
 
                                     flush(() => {
-                                        expect(element.values).to.deep.equal([{
-                                            label: "Alabama",
-                                            value: "AL"
-                                        }])
+                                        expect(element.values).to.deep.equal(["AL"])
 
                                         const noMoreAlabama = alabama.remove()
 
@@ -416,20 +402,44 @@
         })
 
         suite("paper-chip-input fires chip-added/chip-removed", () => {
-            var input;
+            var input, inputWithAutocomplete;
             var chipAddedSpy, chipRemovedSpy;
 
-            setup(function () {
-                input = fixture('custom-event');
+            setup((done) => {
+                input = fixture('custom-event')
+                inputWithAutocomplete = fixture('autocomplete-custom-event')
+                inputWithAutocomplete.datasource = [
+                    {"label": "l1", "value": "v1"},
+                    {"label": "l2", "value": "v2"},
+                    {"label": "l3", "value": "v3"}
+                ]
+
                 chipAddedSpy = sinon.spy();
+                autoChipAddedSpy = sinon.spy();
                 chipRemovedSpy = sinon.spy();
 
                 input.addEventListener('chip-added', chipAddedSpy);
                 input.addEventListener('chip-removed', chipRemovedSpy);
-            });
+                inputWithAutocomplete.addEventListener('chip-added', autoChipAddedSpy)
+
+                flush(done)
+            })
+
+            test("fire chip-added event when select a chip from autocomplete dropdown", (done) => {
+                enterCharacter(inputWithAutocomplete, "l")
+
+                flush(() => {
+                    const items = inputWithAutocomplete.shadowRoot.querySelectorAll("paper-item")
+                    items[0].click()
+                })
+
+                Polymer.Base.async(function () {
+                    assert(autoChipAddedSpy.callCount > 0, 'chip-added fired');
+                    done();
+                }, 1);
+            })
 
             test("fire chip-added event when add a chip", (done) => {
-
                 flush(() => {
                     enterCharacter(input, "awesome-text")
                     MockInteractions.pressEnter(input.$.nativeInput)
