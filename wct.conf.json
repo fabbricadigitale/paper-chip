@@ -30,16 +30,6 @@
           "platform": "Windows 10",
           "version": "latest"
         },
-        {
-          "browserName": "chrome",
-          "platform": "Windows 10",
-          "version": "62"
-        },
-        {
-          "browserName": "chrome",
-          "platform": "Windows 10",
-          "version": "beta"
-        },
 
         {
           "browserName": "safari",
@@ -52,11 +42,6 @@
           "version": "10"
         },
         {
-          "browserName": "chrome",
-          "platform": "OS X 10.11",
-          "version": "62"
-        },
-        {
           "browserName": "firefox",
           "platform": "OS X 10.11",
           "version": "latest"
@@ -68,21 +53,12 @@
           "version": "10"
         },
         {
-          "browserName": "chrome",
-          "platform": "OS X 10.12",
-          "version": "62"
-        },
-        {
           "browserName": "firefox",
           "platform": "OS X 10.12",
           "version": "latest"
         },
 
-        {
-          "browserName": "chrome",
-          "platform": "linux",
-          "version": "62"
-        },
+
         {
           "browserName": "firefox",
           "platform": "linux",
