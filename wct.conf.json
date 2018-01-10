@@ -33,7 +33,7 @@
         {
           "browserName": "chrome",
           "platform": "Windows 10",
-          "version": "latest"
+          "version": "62"
         },
         {
           "browserName": "chrome",
@@ -54,7 +54,7 @@
         {
           "browserName": "chrome",
           "platform": "OS X 10.11",
-          "version": "latest"
+          "version": "62"
         },
         {
           "browserName": "firefox",
@@ -70,7 +70,7 @@
         {
           "browserName": "chrome",
           "platform": "OS X 10.12",
-          "version": "latest"
+          "version": "62"
         },
         {
           "browserName": "firefox",
@@ -81,7 +81,7 @@
         {
           "browserName": "chrome",
           "platform": "linux",
-          "version": "latest"
+          "version": "62"
         },
         {
           "browserName": "firefox",
