@@ -1,6 +1,6 @@
 {
   "name": "paper-chip",
-  "version": "0.11.2",
+  "version": "1.0.0",
   "description": "A chip web component made with Polymer 2 following Material Design guidelines",
   "main": "paper-chip.html",
   "repository": {

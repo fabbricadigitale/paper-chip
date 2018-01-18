@@ -1,3 +1,64 @@
+<a name="1.0.0"></a>
+# [1.0.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.2...v1.0.0) (2018-01-18)
+
+
+### Docs
+
+* Add titles to the sections ([b6c70635eaf94cf4d3b345cb3256bca1822705dc](https://github.com/fabbricadigitale/paper-chip/commit/b6c70635eaf94cf4d3b345cb3256bca1822705dc))
+* Add ToC ([17a38a3e54efe547745bdbc4a38d38f7f9363895](https://github.com/fabbricadigitale/paper-chip/commit/17a38a3e54efe547745bdbc4a38d38f7f9363895))
+* Document how to prefill an input with autocomplete  ([6ec97d7dc65c86d3c0177593fb48e633a9927c3a](https://github.com/fabbricadigitale/paper-chip/commit/6ec97d7dc65c86d3c0177593fb48e633a9927c3a))
+* Example about usage of datasource, values, and autocomplete properties ([c0bac6be635608b47efaf58995b22f673593a5b8](https://github.com/fabbricadigitale/paper-chip/commit/c0bac6be635608b47efaf58995b22f673593a5b8))
+* Example showing declarative input children ([01da53bce98adfc33c12d78b8f18e910284df80d](https://github.com/fabbricadigitale/paper-chip/commit/01da53bce98adfc33c12d78b8f18e910284df80d))
+* Improve usage examples ([9966856d905d73f55e0ee5e47b65c463ffce9a91](https://github.com/fabbricadigitale/paper-chip/commit/9966856d905d73f55e0ee5e47b65c463ffce9a91))
+* Minimal chip examples ([51ea52d4fd0fec38c32a5fcf4d5c20959a436321](https://github.com/fabbricadigitale/paper-chip/commit/51ea52d4fd0fec38c32a5fcf4d5c20959a436321))
+
+### Fix
+
+* Add check to verify if textContent already has a value  ([b7c7e1186b63db9902a7ef71566f6a02f117f529](https://github.com/fabbricadigitale/paper-chip/commit/b7c7e1186b63db9902a7ef71566f6a02f117f529)), closes [#53](https://github.com/fabbricadigitale/paper-chip/issues/53)
+* Always float label when special type input ([8ff7b5bbcaee4afda2a1c56cfb66e46ea4435b1d](https://github.com/fabbricadigitale/paper-chip/commit/8ff7b5bbcaee4afda2a1c56cfb66e46ea4435b1d))
+* Autocomplete list close itself when there isn't an input value  ([3a3af461dc4a0216f1e2474d9f8ba8d0e761cd0e](https://github.com/fabbricadigitale/paper-chip/commit/3a3af461dc4a0216f1e2474d9f8ba8d0e761cd0e)), closes [#54](https://github.com/fabbricadigitale/paper-chip/issues/54)
+* Correct input position when chips fill the cointainer ([b39ff8b9dbda02fd173cfe5c4bad639fa6e6ac61](https://github.com/fabbricadigitale/paper-chip/commit/b39ff8b9dbda02fd173cfe5c4bad639fa6e6ac61)), closes [#66](https://github.com/fabbricadigitale/paper-chip/issues/66)
+* Correct label text extraction ([95b458e5c4e4edba4f566622ccabc7356df66216](https://github.com/fabbricadigitale/paper-chip/commit/95b458e5c4e4edba4f566622ccabc7356df66216))
+* Correct visibility of non floating labels ([61a7791d771b291f7541f5b28b7ce4826218b03d](https://github.com/fabbricadigitale/paper-chip/commit/61a7791d771b291f7541f5b28b7ce4826218b03d))
+* CSS comment refers to right line ([34937ff1b15d56f4824b62512a7c612b39b16b1f](https://github.com/fabbricadigitale/paper-chip/commit/34937ff1b15d56f4824b62512a7c612b39b16b1f))
+* Handle focusout event in autocomplete mode  ([eb6d7eee42bab1175f4bf6c64f93d2f786df7221](https://github.com/fabbricadigitale/paper-chip/commit/eb6d7eee42bab1175f4bf6c64f93d2f786df7221)), closes [#56](https://github.com/fabbricadigitale/paper-chip/issues/56)
+* Input element full width ([607d882a6784fdf5810e791822defcfdcc8c9a4f](https://github.com/fabbricadigitale/paper-chip/commit/607d882a6784fdf5810e791822defcfdcc8c9a4f))
+* Label vertical alignment ([e7041950bf735b12a99878604823474ab06ee4f3](https://github.com/fabbricadigitale/paper-chip/commit/e7041950bf735b12a99878604823474ab06ee4f3))
+* Paper-chip's label padding in not removable chip case ([16c8f93d6a6a582b329440e307b7ecad01e7e65f](https://github.com/fabbricadigitale/paper-chip/commit/16c8f93d6a6a582b329440e307b7ecad01e7e65f))
+* Prevent chip submit if there are validation errors  ([209474e8ce94b2e66dea1b69fee6f74b7ef2552a](https://github.com/fabbricadigitale/paper-chip/commit/209474e8ce94b2e66dea1b69fee6f74b7ef2552a)), closes [#55](https://github.com/fabbricadigitale/paper-chip/issues/55)
+* Reference to the focusable element ([965aae43dfcc2c35a102924a80fc6cb375cec83f](https://github.com/fabbricadigitale/paper-chip/commit/965aae43dfcc2c35a102924a80fc6cb375cec83f))
+* Use composedPath() instead of raw array ([c090562e28b61d8bfbfd090c0d304a1895ca9bde](https://github.com/fabbricadigitale/paper-chip/commit/c090562e28b61d8bfbfd090c0d304a1895ca9bde))
+
+### New
+
+* Char counter ([cea76b4badde89a64dbbc33e87720767a0347716](https://github.com/fabbricadigitale/paper-chip/commit/cea76b4badde89a64dbbc33e87720767a0347716))
+* Expose paper-chip-input staged value ([b709525e244b1af08b5461d9937431b60c962e7a](https://github.com/fabbricadigitale/paper-chip/commit/b709525e244b1af08b5461d9937431b60c962e7a))
+* Implement all PaperInputBehavior's functionalities  ([1419c4a2d71705c2032863e4d55320aab68a14e4](https://github.com/fabbricadigitale/paper-chip/commit/1419c4a2d71705c2032863e4d55320aab68a14e4)), closes [#50](https://github.com/fabbricadigitale/paper-chip/issues/50) [#51](https://github.com/fabbricadigitale/paper-chip/issues/51) [#52](https://github.com/fabbricadigitale/paper-chip/issues/52)
+* Implementing chip-added and chip-removed ([1207efe5ba7cadbdf0d439b9c30bc35e547cd97c](https://github.com/fabbricadigitale/paper-chip/commit/1207efe5ba7cadbdf0d439b9c30bc35e547cd97c))
+* Insert chips within paper chip inputs declaratively  ([cda3b4b30858b7d2dc2c5dda800fe2dbd854ac19](https://github.com/fabbricadigitale/paper-chip/commit/cda3b4b30858b7d2dc2c5dda800fe2dbd854ac19))
+* Label API  ([5692202f49cca82d973c2773ef6863e11897565b](https://github.com/fabbricadigitale/paper-chip/commit/5692202f49cca82d973c2773ef6863e11897565b))
+* Show the value property as label when a label is missing  ([19f241b371a6b1c13428271258724d8ea3fffb3e](https://github.com/fabbricadigitale/paper-chip/commit/19f241b371a6b1c13428271258724d8ea3fffb3e)), closes [#44](https://github.com/fabbricadigitale/paper-chip/issues/44)
+* Slots for prefix and suffix ([5f9ffaebaf3ed08e8d40d99288b48583273d2340](https://github.com/fabbricadigitale/paper-chip/commit/5f9ffaebaf3ed08e8d40d99288b48583273d2340))
+* Super minimal chip grabbing label from text content within the light DOM  ([f9229ebcfd60421cba35592ac064107946abdf39](https://github.com/fabbricadigitale/paper-chip/commit/f9229ebcfd60421cba35592ac064107946abdf39))
+* Tests for paper-input like API ([b5455df268c498c372172c3e9a7ba5359bbeb3e8](https://github.com/fabbricadigitale/paper-chip/commit/b5455df268c498c372172c3e9a7ba5359bbeb3e8))
+
+### Update
+
+* Autocomplete must be explicitly enabled now ([67909adb33ba765f649538443122a1b3396a6c42](https://github.com/fabbricadigitale/paper-chip/commit/67909adb33ba765f649538443122a1b3396a6c42))
+* Chip added/removed tests now works ([641d5315cd8e0031934a7126d44bd2a050a991b6](https://github.com/fabbricadigitale/paper-chip/commit/641d5315cd8e0031934a7126d44bd2a050a991b6))
+* Container does not need a min height anymore ([c5662840d757b5351f5a55ae7cbde22bd976d6b3](https://github.com/fabbricadigitale/paper-chip/commit/c5662840d757b5351f5a55ae7cbde22bd976d6b3))
+* Contributing guidelines ([bd51eeb43510b2eaa043ec8479c25023a8310b18](https://github.com/fabbricadigitale/paper-chip/commit/bd51eeb43510b2eaa043ec8479c25023a8310b18))
+* Convert autocomplete conditional element to a template extension element ([ee89607b6c1abc540692015dd7c6230bb7fca910](https://github.com/fabbricadigitale/paper-chip/commit/ee89607b6c1abc540692015dd7c6230bb7fca910))
+* Demo for declarative children ([2e31fd118f3e615eb9098862b4b41d9493a48b11](https://github.com/fabbricadigitale/paper-chip/commit/2e31fd118f3e615eb9098862b4b41d9493a48b11))
+* New demo and docs about input field feature ([3a353478185455f7ee8d598cbbe09e396a813928](https://github.com/fabbricadigitale/paper-chip/commit/3a353478185455f7ee8d598cbbe09e396a813928))
+* Paper input container id ([9d6387d3b7c4e9b1451e5240a26a72bb1bae47e4](https://github.com/fabbricadigitale/paper-chip/commit/9d6387d3b7c4e9b1451e5240a26a72bb1bae47e4))
+* Removing chrome from local browsers ([72025e123dd0f3bf8bf3e0eafd0b6510583757b1](https://github.com/fabbricadigitale/paper-chip/commit/72025e123dd0f3bf8bf3e0eafd0b6510583757b1))
+* Removing the ability to use the label as a default value to avoid circular deps ([568638785b2592aabe428d80c9c466613f2f0817](https://github.com/fabbricadigitale/paper-chip/commit/568638785b2592aabe428d80c9c466613f2f0817))
+* Testing fallback value and label property behavior  ([0c91650221bccfda7af6611f8d99addbc5d4c728](https://github.com/fabbricadigitale/paper-chip/commit/0c91650221bccfda7af6611f8d99addbc5d4c728)), closes [#49](https://github.com/fabbricadigitale/paper-chip/issues/49)
+* Values property no more contains compound objects  ([14e5b520c6784ed679a38d0f83374ce044dcc6de](https://github.com/fabbricadigitale/paper-chip/commit/14e5b520c6784ed679a38d0f83374ce044dcc6de))
+
+
+
 <a name="0.11.2"></a>
 ## [0.11.2](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.1...v0.11.2) (2017-09-22)
 
