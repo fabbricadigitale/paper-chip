@@ -1,4 +1,6 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../polymer/lib/elements/dom-if.html">
+<link rel="import" href="../polymer/lib/elements/dom-repeat.html">
 <link rel="import" href="./paper-chip.html">
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
@@ -6,6 +8,7 @@
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../paper-input/paper-input-error.html">
 <link rel="import" href="../paper-input/paper-input-char-counter.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../paper-item/paper-item.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-material/paper-material.html">
@@ -177,6 +180,9 @@
                 <dom-repeat items="[[values]]" as="value">
                     <template>
                         <paper-chip value="[[value]]" on-remove="_removeChip" removable single-line>
+                            <template is="dom-if" if="[[_lookupHasIcon(value)]]">
+                                <iron-icon icon="[[_lookupIcon(value)]]" src="[[_lookupIconSrc(value)]]" slot="icon"></iron-icon>
+                            </template>
                             <span slot="label" class="label">[[_lookupLabel(value)]]</span>
                         </paper-chip>
                     </template>
@@ -209,9 +215,13 @@
                     <paper-listbox tabindex="0" id="list">
                         <dom-repeat items="[[_source]]">
                             <template>
-                                <paper-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" on-tap="_select">[[_computeLabel(item)]]
-                                    <paper-ripple></paper-ripple>
-                                </paper-item>
+                                <paper-icon-item tabindex="0" value="[[_computeValue(item)]]" label-text="[[_computeLabel(item)]]" icon="[[_computeIcon(item)]]" icon-src="[[_computeIconSrc(item)]]" on-tap="_select">
+                                     <template is="dom-if" if="[[_hasIcon(item)]]">
+                                         <iron-icon icon="[[_computeIcon(item)]]" src="[[_computeIconSrc(item)]]" slot="item-icon"></iron-icon>
+                                     </template>
+                                     [[_computeLabel(item)]]
+                                     <paper-ripple></paper-ripple>
+                                </paper-icon-item>
                             </template>
                         </dom-repeat>
                     </paper-listbox>
@@ -241,6 +251,14 @@
                     valueProperty: {
                         type: String,
                         value: "value"
+                    },
+                    iconProperty: {
+                        type: String,
+                        value: "icon"
+                    },
+                    iconSrcProperty: {
+                        type: String,
+                        value: "iconSrc"
                     },
                     hidden: {
                         type: Boolean,
@@ -309,7 +327,9 @@
                         if (el instanceof PaperChip && el.value !== undefined) {
                             const item = {
                                 [this.displayProperty]: el.label,
-                                [this.valueProperty]: el.value
+                                [this.valueProperty]: el.value,
+                                [this.iconProperty]: el.icon,
+                                [this.iconSrcProperty]: el.iconSrc
                             }
 
                             this.push("datasource", item)
@@ -572,6 +592,12 @@
                     return this._computeLabel(item).toLowerCase().startsWith(value.toLowerCase())
                 })
             }
+            
+            _lookupItem(value) {
+                return this.datasource.find((item) => {
+                    return this._computeValue(item) === value
+                })
+            }
 
             _computeValue(item) {
                 return item[this.valueProperty] !== undefined ? item[this.valueProperty] : item
@@ -582,9 +608,7 @@
             }
 
             _lookupLabel(value) {
-                const item = this.datasource.find((item) => {
-                    return this._computeValue(item) === value
-                })
+                const item = this._lookupItem(value)
 
                 if (item !== undefined) {
                     return this._computeLabel(item)
@@ -593,6 +617,48 @@
                 return value
             }
 
+            _computeIcon(item) {
+                return item[this.iconProperty] ? item[this.iconProperty] : ""
+            }
+
+            _computeIconSrc(item) {
+                return item[this.iconSrcProperty] ? item[this.iconSrcProperty] : ""
+            }
+
+            _lookupIcon(value) {
+                const item = this._lookupItem(value)
+
+                if (item !== undefined) {
+                    return this._computeIcon(item)
+                }
+
+                return ""
+            }
+
+            _lookupIconSrc(value) {
+                const item = this._lookupItem(value)
+
+                if (item !== undefined) {
+                    return this._computeIconSrc(item)
+                }
+
+                return ""
+            }
+
+            _hasIcon(item) {
+                return Boolean(this._computeIcon(item) || this._computeIconSrc(item))
+            }
+
+            _lookupHasIcon(value) {
+                const item = this._lookupItem(value)
+
+                if (item !== undefined) {
+                    return this._hasIcon(item)
+                }
+
+                return false
+            }
+                
             _hideTips() {
                 if (this.autocomplete) {
                     this.shadowRoot.querySelector("#tips") ? this.shadowRoot.querySelector("#tips").scrollTop = 0 : ""
