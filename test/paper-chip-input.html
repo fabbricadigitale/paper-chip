@@ -243,7 +243,7 @@
             test("showing suggested items works", (done) => {
                 enterCharacter(element, "A")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                     expect(items.length).to.equal(5)
                     done()
                 })
@@ -253,7 +253,7 @@
                 enterCharacter(element, "A")
                 enterCharacter(element, "l")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                     expect(items.length).to.equal(2)
                     done()
                 })
@@ -262,7 +262,7 @@
             test("clicking on suggested item adds it", (done) => {
                 enterCharacter(element, "A")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                     items[0].click()
                     expect(element.values[0]).to.equal('AL')
                     done()
@@ -272,7 +272,7 @@
             test("adding other suggested items works", (done) => {
                 enterCharacter(element, "A")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
 
                     items[1].click()
 
@@ -304,7 +304,7 @@
 
                 enterCharacter(element, "V")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                     expect(items.length).to.equal(6)
 
                     done()
@@ -317,7 +317,7 @@
                     expect(element.hidden).to.be.false
 
                     flush(() => {
-                        const items = element.shadowRoot.querySelectorAll("paper-item")
+                        const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                         items[0].click()
 
                         expect(element.values[0]).to.equal('AL')
@@ -353,7 +353,7 @@
             test("paper-chip elements within paper-chip-input (with autocomplete) works correctly ", (done) => {
                 enterCharacter(element, "A")
                 flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
+                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
                     items[0].click()
                     expect(element.values[0]).to.equal('AL')
 
@@ -429,7 +429,7 @@
                 enterCharacter(inputWithAutocomplete, "l")
 
                 flush(() => {
-                    const items = inputWithAutocomplete.shadowRoot.querySelectorAll("paper-item")
+                    const items = inputWithAutocomplete.shadowRoot.querySelectorAll("paper-icon-item")
                     items[0].click()
                 })
 
