@@ -17,6 +17,7 @@
     <link rel="import" href="../../paper-input/paper-input.html">
     <link rel="import" href="../../paper-input/paper-input-container.html">
     <link rel="import" href="../../iron-icons/iron-icons.html">
+    <link rel="import" href="../../iron-icons/places-icons.html">
     <link rel="import" href="../../iron-input/iron-input.html">
     <link rel="import" href="../paper-chip.html">
     <link rel="import" href="../paper-chip-input.html">
@@ -228,13 +229,13 @@
             </template>
         </demo-snippet>
 
-        <h3>Example chip input with datasource, pre-filled</h3>
+        <h3>Example chip input with datasource, pre-filled, including icon sources</h3>
 
         <demo-snippet>
             <template>
                 <paper-chip-input id="countries-values"
                 values='["IT"]'
-                datasource='[{"label":"+39", "value":"IT"},{"label":"+34", "value":"ES"}]'
+                datasource='[{"label":"+39", "value":"IT", "iconSrc":"http://flagpedia.net/data/flags/mini/it.png"},{"label":"+34", "value":"ES", "iconSrc":"http://flagpedia.net/data/flags/mini/es.png"}]'
                 label="Countries" placeholder="Add countries">
                 </paper-chip-input>
             </template>
@@ -256,11 +257,11 @@
             </template>
         </demo-snippet>
 
-        <h3>Example chip input with autocomplete and inline datasource</h3>
+        <h3>Example chip input with autocomplete and inline datasource including icons</h3>
 
         <demo-snippet>
             <template>
-                <paper-chip-input label="Weekdays" datasource='[{"key": "1", "value": "monday" },{"key": "2", "value": "tuesday"}, {"key": "3", "value": "wednesday"}, {"key": "4", "value": "thursday"}, {"key": "5", "value": "friday"}, {"key": "6", "value": "saturday"}, {"key": "7", "value": "sunday"}]'
+                <paper-chip-input label="Weekdays" datasource='[{"key": "1", "value": "monday", "icon": "work"},{"key": "2", "value": "tuesday", "icon": "work"}, {"key": "3", "value": "wednesday", "icon": "work"}, {"key": "4", "value": "thursday", "icon": "work"}, {"key": "5", "value": "friday", "icon": "work"}, {"key": "6", "value": "saturday", "icon": "shopping-cart"}, {"key": "7", "value": "sunday", "icon": "places:beach-access"}]'
                     display-property="value" value-property="key" placeholder="Add day" autocomplete></paper-chip-input>
             </template>
         </demo-snippet>
