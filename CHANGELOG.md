@@ -1,3 +1,17 @@
+<a name="1.1.0"></a>
+# [1.1.0](https://github.com/fabbricadigitale/paper-chip/compare/v1.0.0...v1.1.0) (2018-05-03)
+
+
+### Docs
+
+* Added examples for icon and iconSrc usage. ([8dd422574dcbb9844963ffc958fb2f78b14be274](https://github.com/fabbricadigitale/paper-chip/commit/8dd422574dcbb9844963ffc958fb2f78b14be274))
+
+### New
+
+* Icon support for paper-chip-input ([4cc5b5bb3c5ca20e8ce4d6c66c6515d615128f40](https://github.com/fabbricadigitale/paper-chip/commit/4cc5b5bb3c5ca20e8ce4d6c66c6515d615128f40))
+
+
+
 <a name="1.0.0"></a>
 # [1.0.0](https://github.com/fabbricadigitale/paper-chip/compare/v0.11.2...v1.0.0) (2018-01-18)
 
