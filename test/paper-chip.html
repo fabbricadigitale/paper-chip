@@ -7,8 +7,8 @@
 
     <title>paper-chip test</title>
 
-    <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
-    <script src="../../wct-browser-legacy/browser.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
 
     <script type="module" src="../paper-chip.js"></script>
 </head>
@@ -100,7 +100,7 @@ window.TestPaperChip = TestPaperChip
 
     <script type="module">
 import '../paper-chip.js';
-import { Base } from '../../@polymer/polymer/polymer-legacy.js';
+import { Base } from '@polymer/polymer/polymer-legacy.js';
 suite('paper-chip', () => {
     test('instantiating the element works', () => {
         const element = fixture('basic')
