@@ -7,11 +7,11 @@
 
     <title>paper-chip-input test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
-    <script src='../../iron-test-helpers/mock-interactions.js'></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
+    <script src="../node_modules/@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
 
-    <link rel="import" href="../paper-chip-input.html">
+    <script type="module" src="../paper-chip-input.js"></script>
 </head>
 
 <body>
@@ -51,93 +51,344 @@
         </template>
     </test-fixture>
 
-    <script>
+    <script type="module">
+import '../paper-chip-input.js';
+import { Base } from '@polymer/polymer/polymer-legacy.js';
 
-        function fireNativeInputEvent(input) {
-            var ev = new Event('input', { bubbles: true, cancelable: true, composed: true });
-            input.dispatchEvent(ev);
-        }
+function fireNativeInputEvent(input) {
+    var ev = new Event('input', { bubbles: true, cancelable: true, composed: true });
+    input.dispatchEvent(ev);
+}
 
-        function enterCharacter(chipInput, char) {
-            const nativeInput = chipInput.inputElement.inputElement
-            nativeInput.value += char
-            MockInteractions.keyDownOn(nativeInput, char.charCodeAt(char.length - 1))
-            fireNativeInputEvent(nativeInput)
-            MockInteractions.keyUpOn(nativeInput, char.charCodeAt(char.length - 1))
-        }
+function enterCharacter(chipInput, char) {
+    const nativeInput = chipInput.inputElement.inputElement
+    nativeInput.value += char
+    MockInteractions.keyDownOn(nativeInput, char.charCodeAt(char.length - 1))
+    fireNativeInputEvent(nativeInput)
+    MockInteractions.keyUpOn(nativeInput, char.charCodeAt(char.length - 1))
+}
 
-        suite('paper-chip-input', () => {
-            test('instantiating the element works', (done) => {
-                const element = fixture('basic')
+suite('paper-chip-input', () => {
+    test('instantiating the element works', (done) => {
+        const element = fixture('basic')
 
-                flush(() => {
-                    assert.instanceOf(element, PaperChipInput)
-                    done()
-                })
+        flush(() => {
+            assert.instanceOf(element, PaperChipInput)
+            done()
+        })
+    })
+
+    test('add a new chip', (done) => {
+        const input = fixture('add')
+        flush(() => {
+            enterCharacter(input, "A")
+            MockInteractions.pressEnter(input.$.nativeInput)
+            flush(() => {
+                expect(input.values).to.deep.equal(["A"])
+                done()
             })
+        })
+    })
 
-            test('add a new chip', (done) => {
-                const input = fixture('add')
+    test("remove a chip pressing backspace", (done) => {
+        const input = fixture('deletion')
+        flush(() => {
+            enterCharacter(input, "A")
+            MockInteractions.pressEnter(input.$.nativeInput)
+            expect(input.values).to.deep.equal(["A"])
+
+            MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
+
+            expect(input.values).to.deep.equal([])
+
+            done()
+        })
+    })
+
+    test("deleting paper-chip elements within paper-chip-input works correctly", (done) => {
+        const input = fixture('deletion')
+        flush(() => {
+            enterCharacter(input, "Ciccio")
+            MockInteractions.pressEnter(input.$.nativeInput)
+
+            enterCharacter(input, "Pluto")
+            MockInteractions.pressEnter(input.$.nativeInput)
+
+            enterCharacter(input, "Pippo")
+            MockInteractions.pressEnter(input.$.nativeInput)
+
+            expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
+
+            flush(() => {
+                const [ciccio, pluto, pippo] = input.$.container.querySelectorAll("paper-chip")
+
+                pluto.$.removeBtn.click()
+
                 flush(() => {
-                    enterCharacter(input, "A")
-                    MockInteractions.pressEnter(input.$.nativeInput)
+                    expect(input.values).to.deep.equal(["Ciccio", "Pippo"])
+
+                    pippo.$.removeBtn.click()
+
                     flush(() => {
-                        expect(input.values).to.deep.equal(["A"])
-                        done()
-                    })
-                })
-            })
 
-            test("remove a chip pressing backspace", (done) => {
-                const input = fixture('deletion')
-                flush(() => {
-                    enterCharacter(input, "A")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-                    expect(input.values).to.deep.equal(["A"])
+                        expect(input.values).to.deep.equal(["Ciccio"])
 
-                    MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
-
-                    expect(input.values).to.deep.equal([])
-
-                    done()
-                })
-            })
-
-            test("deleting paper-chip elements within paper-chip-input works correctly", (done) => {
-                const input = fixture('deletion')
-                flush(() => {
-                    enterCharacter(input, "Ciccio")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-
-                    enterCharacter(input, "Pluto")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-
-                    enterCharacter(input, "Pippo")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-
-                    expect(input.values).to.deep.equal(["Ciccio", "Pluto", "Pippo"])
-
-                    flush(() => {
-                        const [ciccio, pluto, pippo] = input.$.container.querySelectorAll("paper-chip")
-
-                        pluto.$.removeBtn.click()
+                        const noMoreCiccio = ciccio.remove()
 
                         flush(() => {
-                            expect(input.values).to.deep.equal(["Ciccio", "Pippo"])
+                            expect(input.values).to.deep.equal([])
+                            // Ensure that the self deletion of paper-chip is not executed
+                            // Since it's wrapped into a paper-chip-input which dom-repeat handles the deletion
+                            expect(noMoreCiccio).to.be.undefined
 
-                            pippo.$.removeBtn.click()
+                            done()
+                        })
+
+                    })
+
+                })
+
+            })
+        })
+
+    })
+
+    test("changing values property should trigger observer", done => {
+        let element = fixture('basic');
+        let object = { 'label': 'UMG', 'value': '$22bn' };
+        stub('paper-chip-input', {
+            _onValuesChanged: (values, numValues) => {
+                assert.deepEqual(values[0], object);
+                done();
+            }
+        });
+        element.push("values", object);
+    });
+
+})
+
+suite('paper-chip-input with autocomplete feature', () => {
+    let element, states
+
+    setup((done) => {
+        element = fixture('autocomplete')
+        states = [
+            { 'label': 'Alabama', 'value': 'AL' },
+            { 'label': 'Alaska', 'value': 'AK' },
+            { 'label': 'American Samoa', 'value': 'AS' },
+            { 'label': 'Arizona', 'value': 'AZ' },
+            { 'label': 'Arkansas', 'value': 'AR' },
+            { 'label': 'California', 'value': 'CA' },
+            { 'label': 'Colorado', 'value': 'CO' },
+            { 'label': 'Connecticut', 'value': 'CT' },
+            { 'label': 'Delaware', 'value': 'DE' },
+            { 'label': 'District Of Columbia', 'value': 'DC' },
+            { 'label': 'Federated States Of Micronesia', 'value': 'FM' },
+            { 'label': 'Florida', 'value': 'FL' },
+            { 'label': 'Georgia', 'value': 'GA' },
+            { 'label': 'Guam', 'value': 'GU' },
+            { 'label': 'Hawaii', 'value': 'HI' },
+            { 'label': 'Idaho', 'value': 'ID' },
+            { 'label': 'Illinois', 'value': 'IL' },
+            { 'label': 'Indiana', 'value': 'IN' },
+            { 'label': 'Iowa', 'value': 'IA' },
+            { 'label': 'Kansas', 'value': 'KS' },
+            { 'label': 'Kentucky', 'value': 'KY' },
+            { 'label': 'Louisiana', 'value': 'LA' },
+            { 'label': 'Maine', 'value': 'ME' },
+            { 'label': 'Marshall Islands', 'value': 'MH' },
+            { 'label': 'Maryland', 'value': 'MD' },
+            { 'label': 'Massachusetts', 'value': 'MA' },
+            { 'label': 'Michigan', 'value': 'MI' },
+            { 'label': 'Minnesota', 'value': 'MN' },
+            { 'label': 'Mississippi', 'value': 'MS' },
+            { 'label': 'Missouri', 'value': 'MO' },
+            { 'label': 'Montana', 'value': 'MT' },
+            { 'label': 'Nebraska', 'value': 'NE' },
+            { 'label': 'Nevada', 'value': 'NV' },
+            { 'label': 'New Hampshire', 'value': 'NH' },
+            { 'label': 'New Jersey', 'value': 'NJ' },
+            { 'label': 'New Mexico', 'value': 'NM' },
+            { 'label': 'New York', 'value': 'NY' },
+            { 'label': 'North Carolina', 'value': 'NC' },
+            { 'label': 'North Dakota', 'value': 'ND' },
+            { 'label': 'Northern Mariana Islands', 'value': 'MP' },
+            { 'label': 'Ohio', 'value': 'OH' },
+            { 'label': 'Oklahoma', 'value': 'OK' },
+            { 'label': 'Oregon', 'value': 'OR' },
+            { 'label': 'Palau', 'value': 'PW' },
+            { 'label': 'Pennsylvania', 'value': 'PA' },
+            { 'label': 'Puerto Rico', 'value': 'PR' },
+            { 'label': 'Rhode Island', 'value': 'RI' },
+            { 'label': 'South Carolina', 'value': 'SC' },
+            { 'label': 'South Dakota', 'value': 'SD' },
+            { 'label': 'Tennessee', 'value': 'TN' },
+            { 'label': 'Texas', 'value': 'TX' },
+            { 'label': 'Utah', 'value': 'UT' },
+            { 'label': 'Vermont', 'value': 'VT' },
+            { 'label': 'Virgin Islands', 'value': 'VI' },
+            { 'label': 'Virginia', 'value': 'VA' },
+            { 'label': 'Washington', 'value': 'WA' },
+            { 'label': 'West Virginia', 'value': 'WV' },
+            { 'label': 'Wisconsin', 'value': 'WI' },
+            { 'label': 'Wyoming', 'value': 'WY' }
+        ]
+        element.datasource = states
+        flush(done)
+    })
+
+    test("loading the datasource works", (done) => {
+        expect(element.datasource).to.equal(states)
+        done()
+    })
+
+    test("showing suggested items works", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+            expect(items.length).to.equal(5)
+            done()
+        })
+    })
+
+    test("redefining suggested items on every added char works", (done) => {
+        enterCharacter(element, "A")
+        enterCharacter(element, "l")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+            expect(items.length).to.equal(2)
+            done()
+        })
+    })
+
+    test("clicking on suggested item adds it", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+            items[0].click()
+            expect(element.values[0]).to.equal('AL')
+            done()
+        })
+    })
+
+    test("adding other suggested items works", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+
+            items[1].click()
+
+            flush(() => {
+                expect(element.values[0]).to.equal('AK')
+                items[4].click()
+
+                flush(() => {
+                    expect(element.values[1]).to.equal('AR')
+                    done()
+                })
+            })
+        })
+    })
+
+    test("clicking the escape key before selection hides the tips dropdown", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            expect(element.hidden).to.equal(false)
+            MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'escape')
+            expect(element.hidden).to.equal(true)
+            done()
+        })
+    })
+
+    test("customize filter logic works", (done) => {
+        element.filter = (data, value) =>
+            data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
+
+        enterCharacter(element, "V")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+            expect(items.length).to.equal(6)
+
+            done()
+        })
+    })
+
+    test("selecting suggestion hides the tips dropdown", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            expect(element.hidden).to.be.false
+
+            flush(() => {
+                const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+                items[0].click()
+
+                expect(element.values[0]).to.equal('AL')
+                expect(element.hidden).to.be.true
+
+                done()
+            })
+        })
+    })
+
+    test("entering a character without matches does not show the tips dropdown", (done) => {
+        enterCharacter(element, "X")
+        flush(() => {
+            expect(element.hidden).to.be.true
+
+            const items = element.shadowRoot.querySelectorAll("paper-item")
+            expect(items).to.have.lengthOf(0)
+
+            done()
+        })
+    })
+
+    test("entering values not in the data source must not be allowed", (done) => {
+        enterCharacter(element, "Ciccio")
+        MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'enter')
+        flush(() => {
+            expect(element.values).to.have.lengthOf(0)
+
+            done()
+        })
+    })
+
+    test("paper-chip elements within paper-chip-input (with autocomplete) works correctly ", (done) => {
+        enterCharacter(element, "A")
+        flush(() => {
+            const items = element.shadowRoot.querySelectorAll("paper-icon-item")
+            items[0].click()
+            expect(element.values[0]).to.equal('AL')
+
+            enterCharacter(element, "A")
+
+            flush(() => {
+                items[0].click()
+                expect(element.values[1]).to.equal('AK')
+
+                enterCharacter(element, "A")
+
+                flush(() => {
+                    items[2].click()
+                    expect(element.values[2]).to.equal('AR')
+
+                    flush(() => {
+                        const [alabama, alaska, arkansas] = element.$.container.querySelectorAll("paper-chip")
+
+                        alaska.$.removeBtn.click()
+
+                        flush(() => {
+                            expect(element.values).to.deep.equal(["AL", "AR"])
+
+                            arkansas.$.removeBtn.click()
 
                             flush(() => {
+                                expect(element.values).to.deep.equal(["AL"])
 
-                                expect(input.values).to.deep.equal(["Ciccio"])
-
-                                const noMoreCiccio = ciccio.remove()
+                                const noMoreAlabama = alabama.remove()
 
                                 flush(() => {
-                                    expect(input.values).to.deep.equal([])
-                                    // Ensure that the self deletion of paper-chip is not executed
-                                    // Since it's wrapped into a paper-chip-input which dom-repeat handles the deletion
-                                    expect(noMoreCiccio).to.be.undefined
+                                    expect(element.values).to.deep.equal([])
+                                    expect(noMoreAlabama).to.be.undefined
 
                                     done()
                                 })
@@ -145,326 +396,77 @@
                             })
 
                         })
-
-                    })
-                })
-
-            })
-
-            test("changing values property should trigger observer", done => {
-                let element = fixture('basic');
-                let object = { 'label': 'UMG', 'value': '$22bn' };
-                stub('paper-chip-input', {
-                    _onValuesChanged: (values, numValues) => {
-                        assert.deepEqual(values[0], object);
-                        done();
-                    }
-                });
-                element.push("values", object);
-            });
-
-        })
-
-        suite('paper-chip-input with autocomplete feature', () => {
-            let element, states
-
-            setup((done) => {
-                element = fixture('autocomplete')
-                states = [
-                    { 'label': 'Alabama', 'value': 'AL' },
-                    { 'label': 'Alaska', 'value': 'AK' },
-                    { 'label': 'American Samoa', 'value': 'AS' },
-                    { 'label': 'Arizona', 'value': 'AZ' },
-                    { 'label': 'Arkansas', 'value': 'AR' },
-                    { 'label': 'California', 'value': 'CA' },
-                    { 'label': 'Colorado', 'value': 'CO' },
-                    { 'label': 'Connecticut', 'value': 'CT' },
-                    { 'label': 'Delaware', 'value': 'DE' },
-                    { 'label': 'District Of Columbia', 'value': 'DC' },
-                    { 'label': 'Federated States Of Micronesia', 'value': 'FM' },
-                    { 'label': 'Florida', 'value': 'FL' },
-                    { 'label': 'Georgia', 'value': 'GA' },
-                    { 'label': 'Guam', 'value': 'GU' },
-                    { 'label': 'Hawaii', 'value': 'HI' },
-                    { 'label': 'Idaho', 'value': 'ID' },
-                    { 'label': 'Illinois', 'value': 'IL' },
-                    { 'label': 'Indiana', 'value': 'IN' },
-                    { 'label': 'Iowa', 'value': 'IA' },
-                    { 'label': 'Kansas', 'value': 'KS' },
-                    { 'label': 'Kentucky', 'value': 'KY' },
-                    { 'label': 'Louisiana', 'value': 'LA' },
-                    { 'label': 'Maine', 'value': 'ME' },
-                    { 'label': 'Marshall Islands', 'value': 'MH' },
-                    { 'label': 'Maryland', 'value': 'MD' },
-                    { 'label': 'Massachusetts', 'value': 'MA' },
-                    { 'label': 'Michigan', 'value': 'MI' },
-                    { 'label': 'Minnesota', 'value': 'MN' },
-                    { 'label': 'Mississippi', 'value': 'MS' },
-                    { 'label': 'Missouri', 'value': 'MO' },
-                    { 'label': 'Montana', 'value': 'MT' },
-                    { 'label': 'Nebraska', 'value': 'NE' },
-                    { 'label': 'Nevada', 'value': 'NV' },
-                    { 'label': 'New Hampshire', 'value': 'NH' },
-                    { 'label': 'New Jersey', 'value': 'NJ' },
-                    { 'label': 'New Mexico', 'value': 'NM' },
-                    { 'label': 'New York', 'value': 'NY' },
-                    { 'label': 'North Carolina', 'value': 'NC' },
-                    { 'label': 'North Dakota', 'value': 'ND' },
-                    { 'label': 'Northern Mariana Islands', 'value': 'MP' },
-                    { 'label': 'Ohio', 'value': 'OH' },
-                    { 'label': 'Oklahoma', 'value': 'OK' },
-                    { 'label': 'Oregon', 'value': 'OR' },
-                    { 'label': 'Palau', 'value': 'PW' },
-                    { 'label': 'Pennsylvania', 'value': 'PA' },
-                    { 'label': 'Puerto Rico', 'value': 'PR' },
-                    { 'label': 'Rhode Island', 'value': 'RI' },
-                    { 'label': 'South Carolina', 'value': 'SC' },
-                    { 'label': 'South Dakota', 'value': 'SD' },
-                    { 'label': 'Tennessee', 'value': 'TN' },
-                    { 'label': 'Texas', 'value': 'TX' },
-                    { 'label': 'Utah', 'value': 'UT' },
-                    { 'label': 'Vermont', 'value': 'VT' },
-                    { 'label': 'Virgin Islands', 'value': 'VI' },
-                    { 'label': 'Virginia', 'value': 'VA' },
-                    { 'label': 'Washington', 'value': 'WA' },
-                    { 'label': 'West Virginia', 'value': 'WV' },
-                    { 'label': 'Wisconsin', 'value': 'WI' },
-                    { 'label': 'Wyoming', 'value': 'WY' }
-                ]
-                element.datasource = states
-                flush(done)
-            })
-
-            test("loading the datasource works", (done) => {
-                expect(element.datasource).to.equal(states)
-                done()
-            })
-
-            test("showing suggested items works", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                    expect(items.length).to.equal(5)
-                    done()
-                })
-            })
-
-            test("redefining suggested items on every added char works", (done) => {
-                enterCharacter(element, "A")
-                enterCharacter(element, "l")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                    expect(items.length).to.equal(2)
-                    done()
-                })
-            })
-
-            test("clicking on suggested item adds it", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                    items[0].click()
-                    expect(element.values[0]).to.equal('AL')
-                    done()
-                })
-            })
-
-            test("adding other suggested items works", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-
-                    items[1].click()
-
-                    flush(() => {
-                        expect(element.values[0]).to.equal('AK')
-                        items[4].click()
-
-                        flush(() => {
-                            expect(element.values[1]).to.equal('AR')
-                            done()
-                        })
-                    })
-                })
-            })
-
-            test("clicking the escape key before selection hides the tips dropdown", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    expect(element.hidden).to.equal(false)
-                    MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'escape')
-                    expect(element.hidden).to.equal(true)
-                    done()
-                })
-            })
-
-            test("customize filter logic works", (done) => {
-                element.filter = (data, value) =>
-                    data.filter((item) => item[element.displayProperty].toLowerCase().includes(value.toLowerCase()))
-
-                enterCharacter(element, "V")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                    expect(items.length).to.equal(6)
-
-                    done()
-                })
-            })
-
-            test("selecting suggestion hides the tips dropdown", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    expect(element.hidden).to.be.false
-
-                    flush(() => {
-                        const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                        items[0].click()
-
-                        expect(element.values[0]).to.equal('AL')
-                        expect(element.hidden).to.be.true
-
-                        done()
-                    })
-                })
-            })
-
-            test("entering a character without matches does not show the tips dropdown", (done) => {
-                enterCharacter(element, "X")
-                flush(() => {
-                    expect(element.hidden).to.be.true
-
-                    const items = element.shadowRoot.querySelectorAll("paper-item")
-                    expect(items).to.have.lengthOf(0)
-
-                    done()
-                })
-            })
-
-            test("entering values not in the data source must not be allowed", (done) => {
-                enterCharacter(element, "Ciccio")
-                MockInteractions.pressAndReleaseKeyOn(element.$.nativeInput, undefined, [], 'enter')
-                flush(() => {
-                    expect(element.values).to.have.lengthOf(0)
-
-                    done()
-                })
-            })
-
-            test("paper-chip elements within paper-chip-input (with autocomplete) works correctly ", (done) => {
-                enterCharacter(element, "A")
-                flush(() => {
-                    const items = element.shadowRoot.querySelectorAll("paper-icon-item")
-                    items[0].click()
-                    expect(element.values[0]).to.equal('AL')
-
-                    enterCharacter(element, "A")
-
-                    flush(() => {
-                        items[0].click()
-                        expect(element.values[1]).to.equal('AK')
-
-                        enterCharacter(element, "A")
-
-                        flush(() => {
-                            items[2].click()
-                            expect(element.values[2]).to.equal('AR')
-
-                            flush(() => {
-                                const [alabama, alaska, arkansas] = element.$.container.querySelectorAll("paper-chip")
-
-                                alaska.$.removeBtn.click()
-
-                                flush(() => {
-                                    expect(element.values).to.deep.equal(["AL", "AR"])
-
-                                    arkansas.$.removeBtn.click()
-
-                                    flush(() => {
-                                        expect(element.values).to.deep.equal(["AL"])
-
-                                        const noMoreAlabama = alabama.remove()
-
-                                        flush(() => {
-                                            expect(element.values).to.deep.equal([])
-                                            expect(noMoreAlabama).to.be.undefined
-
-                                            done()
-                                        })
-
-                                    })
-
-                                })
-                            })
-                        })
                     })
                 })
             })
         })
+    })
+})
 
-        suite("paper-chip-input fires chip-added/chip-removed", () => {
-            var input, inputWithAutocomplete;
-            var chipAddedSpy, chipRemovedSpy;
+suite("paper-chip-input fires chip-added/chip-removed", () => {
+    var input, inputWithAutocomplete;
+    var chipAddedSpy, chipRemovedSpy;
 
-            setup((done) => {
-                input = fixture('custom-event')
-                inputWithAutocomplete = fixture('autocomplete-custom-event')
-                inputWithAutocomplete.datasource = [
-                    {"label": "l1", "value": "v1"},
-                    {"label": "l2", "value": "v2"},
-                    {"label": "l3", "value": "v3"}
-                ]
+    setup((done) => {
+        input = fixture('custom-event')
+        inputWithAutocomplete = fixture('autocomplete-custom-event')
+        inputWithAutocomplete.datasource = [
+            {"label": "l1", "value": "v1"},
+            {"label": "l2", "value": "v2"},
+            {"label": "l3", "value": "v3"}
+        ]
 
-                chipAddedSpy = sinon.spy();
-                autoChipAddedSpy = sinon.spy();
-                chipRemovedSpy = sinon.spy();
+        chipAddedSpy = sinon.spy();
+        autoChipAddedSpy = sinon.spy();
+        chipRemovedSpy = sinon.spy();
 
-                input.addEventListener('chip-added', chipAddedSpy);
-                input.addEventListener('chip-removed', chipRemovedSpy);
-                inputWithAutocomplete.addEventListener('chip-added', autoChipAddedSpy)
+        input.addEventListener('chip-added', chipAddedSpy);
+        input.addEventListener('chip-removed', chipRemovedSpy);
+        inputWithAutocomplete.addEventListener('chip-added', autoChipAddedSpy)
 
-                flush(done)
-            })
+        flush(done)
+    })
 
-            test("fire chip-added event when select a chip from autocomplete dropdown", (done) => {
-                enterCharacter(inputWithAutocomplete, "l")
+    test("fire chip-added event when select a chip from autocomplete dropdown", (done) => {
+        enterCharacter(inputWithAutocomplete, "l")
 
-                flush(() => {
-                    const items = inputWithAutocomplete.shadowRoot.querySelectorAll("paper-icon-item")
-                    items[0].click()
-                })
-
-                Polymer.Base.async(function () {
-                    assert(autoChipAddedSpy.callCount > 0, 'chip-added fired');
-                    done();
-                }, 1);
-            })
-
-            test("fire chip-added event when add a chip", (done) => {
-                flush(() => {
-                    enterCharacter(input, "awesome-text")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-                })
-                Polymer.Base.async(function () {
-                    assert(chipAddedSpy.callCount > 0, 'chip-added fired');
-                    done();
-                }, 1);
-            })
-
-            test("fire chip-removed event when remove a chip", (done) => {
-                flush(() => {
-                    enterCharacter(input, "awesome-text")
-                    MockInteractions.pressEnter(input.$.nativeInput)
-
-                    input.$.nativeInput.focus()
-                    MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
-                })
-                Polymer.Base.async(function () {
-                    assert(chipRemovedSpy.callCount > 0, 'chip-removed fired');
-                    done();
-                }, 1)
-            })
+        flush(() => {
+            const items = inputWithAutocomplete.shadowRoot.querySelectorAll("paper-icon-item")
+            items[0].click()
         })
-    </script>
+
+        Base.async(function () {
+            assert(autoChipAddedSpy.callCount > 0, 'chip-added fired');
+            done();
+        }, 1);
+    })
+
+    test("fire chip-added event when add a chip", (done) => {
+        flush(() => {
+            enterCharacter(input, "awesome-text")
+            MockInteractions.pressEnter(input.$.nativeInput)
+        })
+        Base.async(function () {
+            assert(chipAddedSpy.callCount > 0, 'chip-added fired');
+            done();
+        }, 1);
+    })
+
+    test("fire chip-removed event when remove a chip", (done) => {
+        flush(() => {
+            enterCharacter(input, "awesome-text")
+            MockInteractions.pressEnter(input.$.nativeInput)
+
+            input.$.nativeInput.focus()
+            MockInteractions.pressAndReleaseKeyOn(input.$.nativeInput, undefined, [], 'backspace')
+        })
+        Base.async(function () {
+            assert(chipRemovedSpy.callCount > 0, 'chip-removed fired');
+            done();
+        }, 1)
+    })
+})
+</script>
 </body>
 
 </html>

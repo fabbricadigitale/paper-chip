@@ -7,10 +7,10 @@
 
     <title>paper-chip test</title>
 
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/wct-browser-legacy/browser.js"></script>
 
-    <link rel="import" href="../paper-chip.html">
+    <script type="module" src="../paper-chip.js"></script>
 </head>
 
 <body>
@@ -55,23 +55,22 @@
     </test-fixture>
 
     <dom-module id="TestPaperChip">
-        <script>
-            HTMLImports.whenReady(function () {
-                class TestPaperChip extends PaperChip {
-                    static get is() { return 'test-paper-chip' }
-                    constructor() {
-                        super()
-                        this._disconnectedCallbackSpy = 0
-                    }
-                    disconnectedCallback() {
-                        super.disconnectedCallback()
-                        this._disconnectedCallbackSpy++
-                    }
-                }
-                customElements.define(TestPaperChip.is, TestPaperChip)
-                window.TestPaperChip = TestPaperChip
-            })
-        </script>
+        <script type="module">
+import '../paper-chip.js';
+class TestPaperChip extends PaperChip {
+    static get is() { return 'test-paper-chip' }
+    constructor() {
+        super()
+        this._disconnectedCallbackSpy = 0
+    }
+    disconnectedCallback() {
+        super.disconnectedCallback()
+        this._disconnectedCallbackSpy++
+    }
+}
+customElements.define(TestPaperChip.is, TestPaperChip)
+window.TestPaperChip = TestPaperChip
+</script>
     </dom-module>
 
     <test-fixture id="spy">
@@ -99,130 +98,132 @@
     </test-fixture>
 
 
-    <script>
-        suite('paper-chip', () => {
-            test('instantiating the element works', () => {
-                const element = fixture('basic')
-                flush(() => {
-                    assert.instanceOf(element, PaperChip)
-                })
-            })
-
-            test('focus a paper-chip with tabindex', (done) => {
-                const chip = fixture('has-tabindex')
-                chip.focus()
-                Polymer.Base.async(() => {
-                    assert.equal(chip.shadowRoot ? chip.shadowRoot.activeElement :
-                        document.activeElement, chip._focusableElement)
-                    done()
-                }, 1)
-            })
-
-            test('click on a paper-chip openable', (done) => {
-                const chip = fixture('openable')
-                chip.click()
-                Polymer.Base.async(function () {
-                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
-                    done()
-                }, 1)
-            })
-
-            test('remove a paper-chip clicking on remove button', (done) => {
-                const chip = fixture('removable')
-                chip.addEventListener("remove", () => {
-                    assert.isOk("ok", "paper-chip remove event has been launched")
-                    done()
-                }, false)
-                Polymer.Base.async(() => {
-                    chip.$.removeBtn.click()
-                }, 1)
-            })
-
-            test('removing a paper-chip via API returns itself', (done) => {
-                const chip = fixture('removable')
-                const parent = chip.parentElement
-                const removed = chip.remove()
-
-                flush(() => {
-                    expect(parent.querySelector('paper-chip[removable]')).to.be.null
-                    expect(chip).to.deep.equal(removed)
-                    done()
-                })
-            })
-
-            test('disconnect callback of paper-chip has been called', (done) => {
-                const chip = fixture('spy')
-                const removed = chip.remove()
-
-                flush(() => {
-                    expect(chip._disconnectedCallbackSpy).to.equal(1)
-                    expect(chip).to.deep.equal(removed)
-                    done()
-                })
-            })
-
-            test('paper-chip is not in DOM anymore', (done) => {
-                const chip = fixture('dom')
-                flush(() => {
-                    const parent = chip.parentElement
-                    chip.$.removeBtn.click()
-                    const element = parent.querySelector("#dom")
-                    expect(element).to.be.null
-                    done()
-                })
-            })
-
-            test("paper-chip doesn't hide on-tap event of distribuited child", (done) => {
-                const chip = fixture('button')
-
-                const btn = chip.querySelector("#btn")
-                btn.addEventListener('tap', () => {
-                    done()
-                })
-
-                chip.click()
-
-                Polymer.Base.async(function () {
-                    assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
-                    btn.click()
-                }, 1)
-            })
-
-            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 1
-            test("paper-chip with label and no value", (done) => {
-                const chip = fixture('case1')
-
-                flush(() => {
-                    expect(chip.value).to.be.undefined
-                    expect(chip.label).to.equal("onlyLabel")
-                    done()
-                })
-            })
-
-            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 2
-            test("paper-chip with value and no label", (done) => {
-                const chip = fixture('case2')
-
-                flush(() => {
-                    expect(chip.value).to.equal("onlyValue")
-                    expect(chip.label).to.equal("onlyValue")
-                    done()
-                })
-            })
-
-            // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 3
-            test("paper-chip with value and label", (done) => {
-                const chip = fixture('case3')
-
-                flush(() => {
-                    expect(chip.value).to.equal("xyz-value")
-                    expect(chip.label).to.equal("xyz-label")
-                    done()
-                })
-            })
-
+    <script type="module">
+import '../paper-chip.js';
+import { Base } from '@polymer/polymer/polymer-legacy.js';
+suite('paper-chip', () => {
+    test('instantiating the element works', () => {
+        const element = fixture('basic')
+        flush(() => {
+            assert.instanceOf(element, PaperChip)
         })
-    </script>
+    })
+
+    test('focus a paper-chip with tabindex', (done) => {
+        const chip = fixture('has-tabindex')
+        chip.focus()
+        Base.async(() => {
+            assert.equal(chip.shadowRoot ? chip.shadowRoot.activeElement :
+                document.activeElement, chip._focusableElement)
+            done()
+        }, 1)
+    })
+
+    test('click on a paper-chip openable', (done) => {
+        const chip = fixture('openable')
+        chip.click()
+        Base.async(function () {
+            assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
+            done()
+        }, 1)
+    })
+
+    test('remove a paper-chip clicking on remove button', (done) => {
+        const chip = fixture('removable')
+        chip.addEventListener("remove", () => {
+            assert.isOk("ok", "paper-chip remove event has been launched")
+            done()
+        }, false)
+        Base.async(() => {
+            chip.$.removeBtn.click()
+        }, 1)
+    })
+
+    test('removing a paper-chip via API returns itself', (done) => {
+        const chip = fixture('removable')
+        const parent = chip.parentElement
+        const removed = chip.remove()
+
+        flush(() => {
+            expect(parent.querySelector('paper-chip[removable]')).to.be.null
+            expect(chip).to.deep.equal(removed)
+            done()
+        })
+    })
+
+    test('disconnect callback of paper-chip has been called', (done) => {
+        const chip = fixture('spy')
+        const removed = chip.remove()
+
+        flush(() => {
+            expect(chip._disconnectedCallbackSpy).to.equal(1)
+            expect(chip).to.deep.equal(removed)
+            done()
+        })
+    })
+
+    test('paper-chip is not in DOM anymore', (done) => {
+        const chip = fixture('dom')
+        flush(() => {
+            const parent = chip.parentElement
+            chip.$.removeBtn.click()
+            const element = parent.querySelector("#dom")
+            expect(element).to.be.null
+            done()
+        })
+    })
+
+    test("paper-chip doesn't hide on-tap event of distribuited child", (done) => {
+        const chip = fixture('button')
+
+        const btn = chip.querySelector("#btn")
+        btn.addEventListener('tap', () => {
+            done()
+        })
+
+        chip.click()
+
+        Base.async(function () {
+            assert.isTrue(chip.hasAttribute("opened"), "paper-chip has been opened")
+            btn.click()
+        }, 1)
+    })
+
+    // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 1
+    test("paper-chip with label and no value", (done) => {
+        const chip = fixture('case1')
+
+        flush(() => {
+            expect(chip.value).to.be.undefined
+            expect(chip.label).to.equal("onlyLabel")
+            done()
+        })
+    })
+
+    // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 2
+    test("paper-chip with value and no label", (done) => {
+        const chip = fixture('case2')
+
+        flush(() => {
+            expect(chip.value).to.equal("onlyValue")
+            expect(chip.label).to.equal("onlyValue")
+            done()
+        })
+    })
+
+    // https://github.com/fabbricadigitale/paper-chip/issues/44, Use case 3
+    test("paper-chip with value and label", (done) => {
+        const chip = fixture('case3')
+
+        flush(() => {
+            expect(chip.value).to.equal("xyz-value")
+            expect(chip.label).to.equal("xyz-label")
+            done()
+        })
+    })
+
+})
+</script>
 </body>
 
 </html>

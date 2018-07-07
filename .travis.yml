@@ -6,15 +6,16 @@ addons:
   sauce_connect: true
   apt:
     packages:
-    - google-chrome-stable
+      - google-chrome-stable
 before_install:
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
-- sleep 3
+  - 'export DISPLAY=:99.0'
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
 script:
-- npm test
-- if [ "${TRAVIS_PULL_REQUEST}" != "false" ] && [ "${SAUCE_USERNAME}" != "" ]; then npm run test -- --plugin sauce --quiet; fi
+  - npm test
+  - 'if [ "${TRAVIS_PULL_REQUEST}" != "false" ] && [ "${SAUCE_USERNAME}" != "" ]; then npm run test -- --plugin sauce --quiet; fi'
 env:
   global:
     - secure: auaV8LlQ2k7cYctbS2hI0YpuKafNzI6Fk/aaIW3dACtZIr5ZNhloFycABTokskIIuQRwwmjHc3hMS86xr0CSzMHy9Acud1VkfXwtb3NUfaLp7sCREtSx4JAU5J9vJN3nOvSHRE94oKqKcTKDq/k3plkufC/xTnjhQtqDNVBDW/bqXHqbh0JCUKZjspITuNDzc0Sk8ME1cEYrGfS+fsdvug5OAtXDleuLOxbmkFF2HzhZMEjeGSpZ8yXR6Os3SsczfyNx5ihMYU3YrFwXRhJOwcunF3vIH+vRjODb1mWp5qk1MntOlP+OPddkyR3rF6A6/IReNsgC6x3KE2yL1MEHKrfUPJl6PHviUcwjyf0zEdY5CpR209xZVRvkndAdRIe1Tqtxu+piyJesS11xmkgwQg7z+MF9ckhk+IPaLeP0qkZ55qH4bngCaXiPszBol6TWKNljWpof/jJLLLXFSvxecY/QBpWEstBOq/DYPfTKNQLnrdx+B8rX0qafXogetUcNw7r6ZgkM8Iq5Jr3tptjAt7+sA+yLGjsRWZk8nIolRxaPPl6tXFJRCeALNJvpeyOfDRib1reoTEZpiD30J7K6/yDFoHL1s1pdkS5pAED0XlSYbLCikOx0p7O9z0ktXKfo5IUggweiqzgBdwjsA26o9hSzWGFvAFa7b+Nd+hJMJFs=
     - secure: pKCLqwePpWlOOf9s0BhXJ1guYowRgDiFnXcT/WAdbHVDutHohni4C2qwlE+hPpqEzljYYtAnVdnhU4YnqmdKB+PQv3nytAtTr8IqmpnBglEcwNnM16TLETMG862OKLzZlV3oCCpzq/BEEKv335pPGJ7Xpyh1kuzHajZch3PtXld+5Ts7HVwx6qBlLq17ZMKw3EPkcAd/E6nQv40yf2lJX+GPXLcmyEc1rko0VCh2ziz0kt6ZCTpXnX2idlV6gOYCWoT5sgj9pDpIATBHG0Mm0FWcummr/Hf28fp/qybLK8mkugYWnQwn+PqClQic1eH1LSywkNrNCir7FHYEzfJ2Iy7tpEz4EK2Qo1D6pebs8XW8gtuk+jzwSiqfH2jvhLxP0VdKN4+Lg6NhUfbi6hCAgqOh5u0N5W1D5ND0wUh+tl27q1PUo0c4GrzsNW6nWJyGIJacUVXuvKB2SB8qCtsT8zkVIHyjjZNIPqt45MD1uRkGkQeROgWmlqc/jZsFXF0lrIIAth49us+o1r4sTJjqO9HOrx6XN83QOOAwhK04GLQwauI5weC/DYC/dg3CFx2XukoMnc3aUSBMjy/e0cTFrnujITQ1ly02H1cumMj8xsjyzgUmi95WPGJni1s0W7ytkrgKTOw7W0NlR9N7fBf9B4m13RVDOEzTMIAjnxFguwY=
+
